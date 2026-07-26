@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jurnal Hafalan 5B - Anti Lag</title>
+    <!-- Font Arab yang elegan dari Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #fbbf24;
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.7);
+            --green-glow: #34d399;
+            --yellow-glow: #fbbf24;
+            --red-glow: #f87171;
+            /* Transparansi murni tanpa efek blur */
+            --glass-bg: rgba(255, 255, 255, 0.08); 
+            --glass-border: rgba(255, 255, 255, 0.15);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: linear-gradient(135deg, #022c22, #0f766e, #064e3b);
+            background-attachment: fixed;
+            color: var(--text-main);
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+            min-height: 100vh;
+        }
+
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translate3d(0, 30px, 0); }
+            to { opacity: 1; transform: translate3d(0, 0, 0); }
+        }
+
+        .glass {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+        }
+
+        /* Header */
+        header { padding: 40px 20px 20px; text-align: center; }
+        header h1 { font-size: 32px; font-weight: 800; letter-spacing: -1px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        header p { color: var(--gold); font-weight: 600; margin-top: 5px; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; }
+
+        /* Floating App Nav */
+        .floating-nav {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 95%;
+            max-width: 400px; 
+            display: flex;
+            padding: 8px;
+            border-radius: 40px;
+            z-index: 100;
+            background: rgba(15, 118, 110, 0.95); 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .floating-nav button {
+            flex: 1; background: transparent; border: none; color: var(--text-muted);
+            padding: 12px 0; font-size: 13px; font-weight: 600; border-radius: 30px;
+            cursor: pointer; transition: background 0.2s, color 0.2s; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+        }
+
+        .floating-nav button.active { background: rgba(255,255,255,0.15); color: var(--gold); }
+
+        /* Container & Tabs */
+        .container { padding: 20px 20px 100px; max-width: 800px; margin: auto; }
+        .tab-content { display: none; animation: slideUpFade 0.4s ease-out forwards; will-change: opacity, transform; }
+        .tab-content.active { display: block; }
+
+        /* Search */
+        .search-box {
+            width: 100%; padding: 16px 25px; margin-bottom: 25px;
+            background: rgba(0,0,0,0.25); border: 1px solid var(--glass-border);
+            border-radius: 30px; color: white; font-size: 16px;
+        }
+        .search-box::placeholder { color: var(--text-muted); }
+        .search-box:focus { outline: none; border-color: var(--gold); background: rgba(0,0,0,0.4); }
+
+        /* Murid Grid */
+        #muridList { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
+        .murid-card { padding: 15px 20px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: transform 0.15s ease; will-change: transform; }
+        .murid-card:active { transform: scale(0.97); background: rgba(255,255,255,0.15); }
+        
+        .avatar {
+            width: 45px; height: 45px; border-radius: 50%; flex-shrink: 0;
+            background: linear-gradient(135deg, var(--gold), #d97706);
+            display: flex; justify-content: center; align-items: center;
+            font-weight: 800; font-size: 18px; color: #000;
+        }
+        .murid-info { flex: 1; min-width: 0; }
+        .murid-nama { font-weight: 600; font-size: 16px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        
+        .status-dots { display: flex; gap: 6px; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; }
+        .dot.selesai { background-color: var(--green-glow); }
+        .dot.proses { background-color: var(--yellow-glow); }
+        .dot.belum { background-color: var(--red-glow); }
+
+        /* Arabic Typography */
+        .arabic-text { font-family: 'Amiri', serif; font-size: 26px; direction: rtl; line-height: 1.8; color: var(--gold); }
+
+        /* Target & Jadwal Cards */
+        .target-card { padding: 30px; margin-bottom: 20px; text-align: center; position: relative; overflow: hidden; }
+        .target-title { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 15px; }
+        .target-card::after { content: '❁'; position: absolute; right: -20px; bottom: -40px; font-size: 120px; color: rgba(255,255,255,0.04); z-index: -1; }
+
+        .jadwal-card { padding: 20px; margin-bottom: 15px; }
+        .jadwal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 12px; margin-bottom: 15px; }
+        .jadwal-hari { font-weight: 800; color: var(--gold); letter-spacing: 1px; text-transform: uppercase; font-size: 14px;}
+        .jadwal-imam { background: rgba(255,255,255,0.1); padding: 5px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; color: white; border: 1px solid rgba(255,255,255,0.2); }
+        .rakaat-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 8px; }
+        .rakaat-row:last-child { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
+        .rakaat-label { font-size: 13px; color: var(--text-muted); }
+
+        /* Modal */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center; align-items: flex-end; z-index: 1000;
+        }
+        .modal.open { display: flex; }
+        
+        .modal-content {
+            background: linear-gradient(180deg, #115e59 0%, #064e3b 100%);
+            width: 100%; max-width: 500px; padding: 40px 30px;
+            border-top-left-radius: 30px; border-top-right-radius: 30px;
+            border-top: 1px solid var(--glass-border);
+            animation: slideUpFade 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            will-change: transform, opacity;
+        }
+        .close-btn { position: absolute; top: 15px; right: 20px; width: 30px; height: 30px; font-size: 28px; cursor: pointer; color: rgba(255,255,255,0.5); display: flex; justify-content: center; align-items: center; }
+        #modalNama { font-size: 22px; text-align: center; margin-bottom: 30px; margin-top: -10px; font-weight: 800; color: var(--gold);}
+        .detail-row { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .detail-row:last-child { border-bottom: none; }
+        .detail-label { font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        .badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; color: #000; }
+        .badge.selesai { background: var(--green-glow); }
+        .badge.proses { background: var(--yellow-glow); }
+        .badge.belum { background: var(--red-glow); }
+
+        /* Desktop Fix */
+        @media (min-width: 768px) {
+            .modal { align-items: center; }
+            .modal-content { border-radius: 20px; border: 1px solid var(--glass-border); }
+            .murid-card:hover { transform: translateY(-3px); background: rgba(255,255,255,0.12); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>5B TORAJA</h1>
+        <p>Jurnal Mutaba'ah Hafalan</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- TAB 1: Daftar Ananda -->
+        <div id="daftar-murid" class="tab-content active">
+            <input type="text" id="searchInput" class="search-box" onkeyup="cariMurid()" placeholder="Cari nama ananda...">
+            <div id="muridList"></div>
+        </div>
+
+        <!-- TAB 2: Target Besok -->
+        <div id="target-besok" class="tab-content">
+            <div class="glass target-card">
+                <div class="target-title">Target Qur'an</div>
+                <div class="arabic-text">سُورَةُ المُلْكِ : ١-٥</div>
+            </div>
+            <div class="glass target-card">
+                <div class="target-title">Target Hadits</div>
+                <div class="arabic-text">فَضْلُ طَلَبِ العِلْمِ</div>
+            </div>
+            <div class="glass target-card">
+                <div class="target-title">Target Doa</div>
+                <div class="arabic-text">دُعَاءُ بَعْدَ التَّعَلُّمِ</div>
+            </div>
+        </div>
+
+        <!-- TAB 3: Jadwal Imam Dhuha (4 Raka'at) -->
+        <div id="jadwal-imam" class="tab-content">
+            
+            <!-- Senin -->
+            <div class="glass jadwal-card">
+                <div class="jadwal-header">
+                    <span class="jadwal-hari">Senin</span>
+                    <span class="jadwal-imam">Ahmad Faris</span>
+                </div>
+                <div class="rakaat-row">
+                    <span class="rakaat-label">Raka'at 1</span>
+                    <span class="arabic-text" style="font-size: 20px;">سُورَةُ الشَّمْسِ</span>
+                </div>
+                <div class="rakaat-row">
+                    <span class="rakaat-label">Raka'at 2</span>
+                    <span class="arabic-text" style="font-size: 20px;">سُورَةُ اللَّيْلِ</span>
+                </div>
+                <div class="rakaat-row">
+                    <span class="rakaat-label">Raka'at 3</span>
+                    <span class="arabic-text" style="font-size: 20px;">سُورَةُ الضُّحَى</span>
+                </div>
+                <div class="rakaat-row">
+                    <span class="rakaat-label">Raka'at 4</span>
+                    <span class="arabic-text" style="font-size: 20px;">سُورَةُ الشَّرْحِ</span>
+                </div>
+            </div>
+
+            <!-- Selasa -->
+            <div class="glass jadwal-card">
+                <div class="jadwal-header">
+                    <span class="jadwal-hari">Selasa</span>
+                    <span class="jadwal-imam">Bima Arya</span>
+                </div>
+                <div class="rakaat-row">
+                    <span class="rakaat-label">Raka'at 1</span>
+                    <span class="arabic-text" style="font-size: 20px;">سُورَةُ التِّينِ</span>
+                </div>
+                <div class="rakaat-row">
+                    <span class="rakaat-label">Raka'at 2</span>
+                    <span class="arabic-text" style="font-size: 20px;">سُورَةُ العَلَقِ</span>
+                </div>
+                <div class="rakaat-row">
+                    <span class="rakaat-label">Raka'at 3</span>
+                    <span class="arabic-text" style="font-size: 20px;">سُورَةُ القَدْرِ</span>
+                </div>
+                <div class="rakaat-row">
+                    <span class="rakaat-label">Raka'at 4</span>
+                    <span class="arabic-text" style="font-size: 20px;">سُورَةُ البَيِّنَةِ</span>
+                </div>
+            </div>
+
+            <!-- Rabu -->
+            <div class="glass jadwal-card">
+                <div class="jadwal-header">
+                    <span class="jadwal-hari">Rabu</span>
+                    <span class="jadwal-imam">Doni Prasetyo</span>
+                </div>
+                <div class="rakaat-row">
+                    <span class="rakaat-label">Raka'at 1</span>
+                    <span class="arabic-text" style="font-size: 20px;">سُورَةُ الزَّلْزَلَةِ</span>
+                </div>
+                <div class="rakaat-row">
+                    <span class="rakaat-label">Raka'at 2</span>
+                    <span class="arabic-text" style="font-size: 20px;">سُورَةُ العَادِيَاتِ</span>
+                </div>
+                <div class="rakaat-row">
+                    <span class="rakaat-label">Raka'at 3</span>
+                    <span class="arabic-text" style="font-size: 20px;">سُورَةُ القَارِعَةِ</span>
+                </div>
+                <div class="rakaat-row">
+                    <span class="rakaat-label">Raka'at 4</span>
+                    <span class="arabic-text" style="font-size: 20px;">سُورَةُ التَّكَاثُرِ</span>
+                </div>
+            </div>
+
+            <!-- Kamis -->
+            <div class="glass jadwal-card">
+                <div class="jadwal-header">
+                    <span class="jadwal-hari">Kamis</span>
+                    <span class="jadwal-imam">Fatih Syuhada</span>
+                </div>
+                <div class="rakaat-row">
+                    <span class="rakaat-label">Raka'at 1</span>
+                    <span class="arabic-text" style="font-size: 20px;">سُورَةُ العَصْرِ</span>
+                </div>
+                <div class="rakaat-row">
+                    <span class="rakaat-label">Raka'at 2</span>
+                    <span class="arabic-text" style="font-size: 20px;">سُورَةُ الهُمَزَةِ</span>
+                </div>
+                <div class="rakaat-row">
+                    <span class="rakaat-label">Raka'at 3</span>
+                    <span class="arabic-text" style="font-size: 20px;">سُورَةُ الفِيلِ</span>
+                </div>
+                <div class="rakaat-row">
+                    <span class="rakaat-label">Raka'at 4</span>
+                    <span class="arabic-text" style="font-size: 20px;">سُورَةُ قُرَيْشٍ</span>
+                </div>
+            </div>
+
+            <!-- Jumat -->
+            <div class="glass jadwal-card">
+                <div class="jadwal-header">
+                    <span class="jadwal-hari">Jumat</span>
+                    <span class="jadwal-imam">Hafiz Maulana</span>
+                </div>
+                <div class="rakaat-row">
+                    <span class="rakaat-label">Raka'at 1</span>
+                    <span class="arabic-text" style="font-size: 20px;">سُورَةُ المَاعُونِ</span>
+                </div>
+                <div class="rakaat-row">
+                    <span class="rakaat-label">Raka'at 2</span>
+                    <span class="arabic-text" style="font-size: 20px;">سُورَةُ الكَوْثَرِ</span>
+                </div>
+                <div class="rakaat-row">
+                    <span class="rakaat-label">Raka'at 3</span>
+                    <span class="arabic-text" style="font-size: 20px;">سُورَةُ الكَافِرُونَ</span>
+                </div>
+                <div class="rakaat-row">
+                    <span class="rakaat-label">Raka'at 4</span>
+                    <span class="arabic-text" style="font-size: 20px;">سُورَةُ الإِخْلَاصِ</span>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Floating Navigation -->
+    <nav class="floating-nav">
+        <button class="active" onclick="switchTab('daftar-murid', this)">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg>
+            Ananda
+        </button>
+        <button onclick="switchTab('target-besok', this)">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path><path d="M22 4L12 14.01l-3-3"></path></svg>
+            Target
+        </button>
+        <button onclick="switchTab('jadwal-imam', this)">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            Jadwal
+        </button>
+    </nav>
+
+    <!-- Modal Interaktif -->
+    <div id="progressModal" class="modal" onclick="closeModalOnBackdrop(event)">
+        <div class="modal-content">
+            <div class="close-btn" onclick="closeModal()">&times;</div>
+            <h2 id="modalNama">Nama</h2>
+            
+            <div class="detail-row">
+                <div class="detail-label">Qur'an</div>
+                <div class="arabic-text" id="modalQuran" style="font-size: 20px;"></div>
+                <span id="statusQuran" class="badge"></span>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Hadits</div>
+                <div class="arabic-text" id="modalHadits" style="font-size: 20px;"></div>
+                <span id="statusHadits" class="badge"></span>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Doa</div>
+                <div class="arabic-text" id="modalDoa" style="font-size: 20px;"></div>
+                <span id="statusDoa" class="badge"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dataMurid = [
+            { nama: "Ahmad Faris", quran: "سُورَةُ المُلْكِ", statusQuran: "proses", hadits: "حَدِيْثُ النِّيَّةِ", statusHadits: "selesai", doa: "دُعَاءُ دُخُولِ المَسْجِدِ", statusDoa: "selesai" },
+            { nama: "Aisyah Putri", quran: "سُورَةُ المُلْكِ", statusQuran: "selesai", hadits: "حَدِيْثُ النَّظَافَةِ", statusHadits: "proses", doa: "دُعَاءُ الخُرُوجِ مِنَ المَسْجِدِ", statusDoa: "belum" },
+            { nama: "Bima Arya", quran: "سُورَةُ المُلْكِ", statusQuran: "proses", hadits: "حَدِيْثُ النِّيَّةِ", statusHadits: "selesai", doa: "دُعَاءُ دُخُولِ المَسْجِدِ", statusDoa: "proses" }
+        ];
+
+        function getInitials(name) {
+            return name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+        }
+
+        function renderMurid() {
+            const list = document.getElementById('muridList');
+            list.innerHTML = '';
+            dataMurid.forEach((murid, index) => {
+                list.innerHTML += `
+                    <div class="glass murid-card" onclick="openModal(${index})">
+                        <div class="avatar">${getInitials(murid.nama)}</div>
+                        <div class="murid-info">
+                            <div class="murid-nama">${murid.nama}</div>
+                            <div class="status-dots">
+                                <span class="dot ${murid.statusQuran}"></span>
+                                <span class="dot ${murid.statusHadits}"></span>
+                                <span class="dot ${murid.statusDoa}"></span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function cariMurid() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.getElementsByClassName('murid-card');
+            for (let i = 0; i < cards.length; i++) {
+                let nama = cards[i].querySelector('.murid-nama').innerText.toLowerCase();
+                cards[i].style.display = nama.includes(input) ? "flex" : "none";
+            }
+        }
+
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.floating-nav button').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        function openModal(index) {
+            const murid = dataMurid[index];
+            document.getElementById('modalNama').innerText = murid.nama;
+            
+            document.getElementById('modalQuran').innerText = murid.quran;
+            setLabelStatus('statusQuran', murid.statusQuran);
+            
+            document.getElementById('modalHadits').innerText = murid.hadits;
+            setLabelStatus('statusHadits', murid.statusHadits);
+            
+            document.getElementById('modalDoa').innerText = murid.doa;
+            setLabelStatus('statusDoa', murid.statusDoa);
+
+            document.body.style.overflow = 'hidden';
+            document.getElementById('progressModal').classList.add('open');
+        }
+
+        function setLabelStatus(elementId, status) {
+            const el = document.getElementById(elementId);
+            el.className = 'badge ' + status;
+            if(status === 'selesai') el.innerText = 'Tuntas';
+            else if(status === 'proses') el.innerText = 'Proses';
+            else el.innerText = 'Belum';
+        }
+
+        function closeModal() {
+            document.body.style.overflow = '';
+            document.getElementById('progressModal').classList.remove('open');
+        }
+
+        function closeModalOnBackdrop(event) {
+            if (event.target.id === 'progressModal') { closeModal(); }
+        }
+
+        renderMurid();
+    </script>
+</body>
+</html>

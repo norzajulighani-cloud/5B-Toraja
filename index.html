@@ -284,7 +284,7 @@
         .detail-row:last-child { border-bottom: none; padding-bottom: 0; }
         .detail-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
         .detail-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
-        .detail-value { font-size: 18px; color: var(--gold); font-family: 'Amiri', serif; text-align: right; direction: rtl;}
+        .detail-value { font-size: 16px; font-weight: 600; color: var(--gold); font-family: 'Lora', serif; text-align: center; direction: ltr; letter-spacing: 0.5px; }
         
         .badge { padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; color: #000; }
         .badge.selesai { background: var(--green-glow); }
@@ -498,177 +498,176 @@
         // ==========================================
         // 1. DATA MURID (PRESENSI 5B TORAJA)
         // ==========================================
-                        const dataMurid = [
+        const dataMurid = [
             { 
                 nama: "Afifa Nor Sa'adah", 
-                quran: "سُورَةُ البَقَرَةِ : ١٥-١٦", statusQuran: "selesai", 
-                hafalanTerakhir: "سُورَةُ البَقَرَةِ : ١٢١",
+                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
+                hafalanTerakhir: "Surah Al-Baqarah ayat 121",
                 hadits: "Hadits Memberi Syafa'at", statusHadits: "selesai", 
                 doa: "Doa Agar Hujan Reda", statusDoa: "belum",
                 targetTercapai: false
             },
             { 
                 nama: "Ahmad Ameer Asy Syathir", 
-                quran: "سُورَةُ البَقَرَةِ : ١٥-١٦", statusQuran: "selesai", 
-                hafalanTerakhir: "سُورَةُ البَقَرَةِ : ٥٢",
+                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
+                hafalanTerakhir: "Surah Al-Baqarah ayat 52",
                 hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
                 doa: "Doa Agar Hujan Reda", statusDoa: "belum",
                 targetTercapai: false
             },
             { 
                 nama: "Ahmad Mutawalli", 
-                quran: "سُورَةُ البَقَرَةِ : ١٥-١٦", statusQuran: "selesai", 
-                hafalanTerakhir: "سُورَةُ البَقَرَةِ : ١٢٥",
+                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
+                hafalanTerakhir: "Surah Al-Baqarah ayat 125",
                 hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
                 doa: "Doa Agar Hujan Reda", statusDoa: "belum",
                 targetTercapai: false
             },
             { 
                 nama: "Aisya Zhafara Effendi", 
-                quran: "سُورَةُ البَقَرَةِ : ١٥-١٦", statusQuran: "selesai", 
-                hafalanTerakhir: "سُورَةُ البَقَرَةِ : ٢١",
+                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
+                hafalanTerakhir: "Surah Al-Baqarah ayat 21",
                 hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
                 doa: "Doa Agar Hujan Reda", statusDoa: "belum",
                 targetTercapai: false
             },
             { 
                 nama: "Fahma Mustaghfirah Muthiah", 
-                quran: "سُورَةُ البَقَرَةِ : ١٥-١٦", statusQuran: "selesai", 
-                hafalanTerakhir: "سُورَةُ البَقَرَةِ : ٣٣",
+                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
+                hafalanTerakhir: "Surah Al-Baqarah ayat 33",
                 hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
                 doa: "Doa Agar Hujan Reda", statusDoa: "belum",
                 targetTercapai: false
             },
             { 
                 nama: "Faiz", 
-                quran: "سُورَةُ البَقَرَةِ : ١٥-١٦", statusQuran: "selesai", 
-                hafalanTerakhir: "سُورَةُ البَقَرَةِ : ٧٢",
+                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
+                hafalanTerakhir: "Surah Al-Baqarah ayat 72",
                 hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
                 doa: "Doa Agar Hujan Reda", statusDoa: "belum",
                 targetTercapai: false
             },
             { 
                 nama: "Kayra Aziza", 
-                quran: "سُورَةُ البَقَرَةِ : ١٥-١٦", statusQuran: "selesai", 
-                hafalanTerakhir: "سُورَةُ البَقَرَةِ : ١٩",
+                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
+                hafalanTerakhir: "Surah Al-Baqarah ayat 19",
                 hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
                 doa: "Doa Agar Hujan Reda", statusDoa: "belum",
                 targetTercapai: false
             },
             { 
                 nama: "Keisha Karunia Azka", 
-                quran: "سُورَةُ البَقَرَةِ : ١٥-١٦", statusQuran: "selesai", 
-                hafalanTerakhir: "سُورَةُ البَقَرَةِ : ٩٨",
+                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
+                hafalanTerakhir: "Surah Al-Baqarah ayat 98",
                 hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
                 doa: "Doa Agar Hujan Reda", statusDoa: "belum",
                 targetTercapai: false
             },
             { 
                 nama: "M. Adrian Faeyza", 
-                quran: "سُورَةُ البَقَرَةِ : ١٥-١٦", statusQuran: "selesai", 
-                hafalanTerakhir: "سُورَةُ البَقَرَةِ : ٣٢",
+                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
+                hafalanTerakhir: "Surah Al-Baqarah ayat 32",
                 hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
                 doa: "Doa Agar Hujan Reda", statusDoa: "belum",
                 targetTercapai: false
             },
             { 
                 nama: "Muhammad Aditya Yusuf", 
-                quran: "سُورَةُ البَقَرَةِ : ١٥-١٦", statusQuran: "selesai", 
-                hafalanTerakhir: "سُورَةُ البَقَرَةِ : ١٩",
+                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
+                hafalanTerakhir: "Surah Al-Baqarah ayat 19",
                 hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
                 doa: "Doa Agar Hujan Reda", statusDoa: "belum",
                 targetTercapai: false
             },
             { 
                 nama: "Muhammad Adnan Abiyu", 
-                quran: "سُورَةُ البَقَرَةِ : ١٥-١٦", statusQuran: "belum", 
-                hafalanTerakhir: "سُورَةُ البَقَرَةِ : ٧",
+                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "belum", 
+                hafalanTerakhir: "Surah Al-Baqarah ayat 7",
                 hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
                 doa: "Doa Agar Hujan Reda", statusDoa: "belum",
                 targetTercapai: false
             },
             { 
                 nama: "Muhammad Al Farisi Maulana", 
-                quran: "سُورَةُ البَقَرَةِ : ١٥-١٦", statusQuran: "selesai", 
-                hafalanTerakhir: "سُورَةُ البَقَرَةِ : ١٨٧",
+                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
+                hafalanTerakhir: "Surah Al-Baqarah ayat 187",
                 hadits: "Hadits Memberi Syafa'at", statusHadits: "selesai", 
                 doa: "Doa Agar Hujan Reda", statusDoa: "belum",
                 targetTercapai: false
             },
             { 
                 nama: "Muhammad Habibi Fadhilah", 
-                quran: "سُورَةُ البَقَرَةِ : ١٥-١٦", statusQuran: "selesai", 
-                hafalanTerakhir: "سُورَةُ البَقَرَةِ : ٣٩",
+                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
+                hafalanTerakhir: "Surah Al-Baqarah ayat 39",
                 hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
                 doa: "Doa Agar Hujan Reda", statusDoa: "belum",
                 targetTercapai: false
             },
             { 
                 nama: "Muhammad Hafidz Anshari", 
-                quran: "سُورَةُ البَقَرَةِ : ١٥-١٦", statusQuran: "selesai", 
-                hafalanTerakhir: "سُورَةُ البَقَرَةِ : ٣٤",
+                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
+                hafalanTerakhir: "Surah Al-Baqarah ayat 34",
                 hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
                 doa: "Doa Agar Hujan Reda", statusDoa: "belum",
                 targetTercapai: false
             },
             { 
                 nama: "Muhammad Irza Rahman", 
-                quran: "سُورَةُ البَقَرَةِ : ١٥-١٦", statusQuran: "selesai", 
-                hafalanTerakhir: "سُورَةُ البَقَرَةِ : ٣٨",
+                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
+                hafalanTerakhir: "Surah Al-Baqarah ayat 38",
                 hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
                 doa: "Doa Agar Hujan Reda", statusDoa: "belum",
                 targetTercapai: false
             },
             { 
                 nama: "Muhammad Ridha'e", 
-                quran: "سُورَةُ البَقَرَةِ : ١٥-١٦", statusQuran: "selesai", 
-                hafalanTerakhir: "سُورَةُ البَقَرَةِ : ٤٩",
+                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
+                hafalanTerakhir: "Surah Al-Baqarah ayat 49",
                 hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
                 doa: "Doa Agar Hujan Reda", statusDoa: "belum",
                 targetTercapai: false
             },
             { 
                 nama: "Najwan Azhim Muntazhar", 
-                quran: "سُورَةُ البَقَرَةِ : ١٥-١٦", statusQuran: "selesai", 
-                hafalanTerakhir: "سُورَةُ البَقَرَةِ : ٥٨",
+                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
+                hafalanTerakhir: "Surah Al-Baqarah ayat 58",
                 hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
                 doa: "Doa Agar Hujan Reda", statusDoa: "belum",
                 targetTercapai: false
             },
             { 
                 nama: "Nayla Khalishah Mumtazah", 
-                quran: "سُورَةُ البَقَرَةِ : ١٥-١٦", statusQuran: "selesai", 
-                hafalanTerakhir: "سُورَةُ البَقَرَةِ : ٦٥",
+                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
+                hafalanTerakhir: "Surah Al-Baqarah ayat 65",
                 hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
                 doa: "Doa Agar Hujan Reda", statusDoa: "belum",
                 targetTercapai: false
             },
             { 
                 nama: "Rafa", 
-                quran: "سُورَةُ البَقَرَةِ : ١٥-١٦", statusQuran: "selesai", 
-                hafalanTerakhir: "سُورَةُ البَقَرَةِ : ٣١",
+                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
+                hafalanTerakhir: "Surah Al-Baqarah ayat 31",
                 hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
                 doa: "Doa Agar Hujan Reda", statusDoa: "belum",
                 targetTercapai: false
             },
             { 
                 nama: "Raisa Khalifah", 
-                quran: "سُورَةُ البَقَرَةِ : ١٥-١٦", statusQuran: "selesai", 
-                hafalanTerakhir: "سُورَةُ البَقَرَةِ : ٣٢",
+                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
+                hafalanTerakhir: "Surah Al-Baqarah ayat 32",
                 hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
                 doa: "Doa Agar Hujan Reda", statusDoa: "belum",
                 targetTercapai: false
             },
             { 
                 nama: "Washfa Anindya Fairuz", 
-                quran: "سُورَةُ البَقَرَةِ : ١٥-١٦", statusQuran: "belum", 
-                hafalanTerakhir: "سُورَةُ البَقَرَةِ : ٧",
+                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "belum", 
+                hafalanTerakhir: "Surah Al-Baqarah ayat 7",
                 hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
                 doa: "Doa Agar Hujan Reda", statusDoa: "belum",
                 targetTercapai: false
             }
         ];
-
 
 
         // ==========================================

@@ -20,15 +20,14 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body { 
+                body { 
             font-family: 'Inter', sans-serif; 
-            /* Latar Belakang Mesh Gradient Modern */
             background-color: #022c22;
             background-image: 
                 radial-gradient(circle at 15% 50%, rgba(15, 118, 110, 0.45), transparent 50%),
                 radial-gradient(circle at 85% 30%, rgba(6, 78, 59, 0.8), transparent 50%),
                 radial-gradient(circle at 50% 100%, rgba(20, 184, 166, 0.15), transparent 50%);
-            background-attachment: fixed;
+            /* background-attachment: fixed; <-- DIHAPUS AGAR TIDAK LAG */
             color: var(--text-main);
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
@@ -45,19 +44,8 @@
             pointer-events: none;
         }
 
-        body::before {
-            font-size: 70vh; 
-            top: -15vh;
-            left: -20vw;
-            transform: rotate(25deg);
-        }
-
-        body::after {
-            font-size: 90vh;
-            bottom: -20vh;
-            right: -25vw;
-            transform: rotate(-15deg);
-        }
+        body::before { font-size: 70vh; top: -15vh; left: -20vw; transform: rotate(25deg); }
+        body::after { font-size: 90vh; bottom: -20vh; right: -25vw; transform: rotate(-15deg); }
 
         @keyframes slideUpFade {
             from { opacity: 0; transform: translate3d(0, 30px, 0); }
@@ -70,41 +58,20 @@
             100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        .glass {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-        }
+        .glass { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px; }
 
-        /* Header */
-        header { padding: 40px 20px 20px; text-align: center; }
+        /* Header & Icon Admin */
+        header { padding: 40px 20px 20px; text-align: center; position: relative; }
         header h1 { font-size: 32px; font-weight: 800; letter-spacing: -1px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
         header p { color: var(--gold); font-weight: 600; margin-top: 5px; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; }
 
-        /* Floating App Nav (Diperlebar untuk 3 Tombol) */
-        .floating-nav {
-            position: fixed;
-            bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 95%;
-            max-width: 420px; 
-            display: flex;
-            padding: 8px;
-            border-radius: 40px;
-            z-index: 100;
-            background: rgba(15, 118, 110, 0.95); 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            backdrop-filter: blur(10px);
-        }
+        .admin-lock { position: absolute; top: 20px; right: 20px; font-size: 20px; cursor: pointer; opacity: 0.5; transition: 0.3s; z-index: 10; }
+        .admin-lock:hover { opacity: 1; }
+        .admin-badge { display: none; background: var(--gold); color: #000; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; position: absolute; top: 20px; left: 20px; z-index: 10; }
 
-        .floating-nav button {
-            flex: 1; background: transparent; border: none; color: var(--text-muted);
-            padding: 10px 0; font-size: 12px; font-weight: 600; border-radius: 30px;
-            cursor: pointer; transition: background 0.2s, color 0.2s; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
-        }
-
+        /* Floating App Nav */
+        .floating-nav { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); width: 95%; max-width: 420px; display: flex; padding: 8px; border-radius: 40px; z-index: 100; background: rgba(15, 118, 110, 0.98); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .floating-nav button { flex: 1; background: transparent; border: none; color: var(--text-muted); padding: 10px 0; font-size: 12px; font-weight: 600; border-radius: 30px; cursor: pointer; transition: background 0.2s, color 0.2s; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
         .floating-nav button.active { background: rgba(255,255,255,0.15); color: var(--gold); }
 
         /* Container & Tabs */
@@ -113,12 +80,7 @@
         .tab-content.active { display: block; }
 
         /* Search */
-        .search-box {
-            width: 100%; padding: 16px 25px; margin-bottom: 25px;
-            background: rgba(0,0,0,0.25); border: 1px solid var(--glass-border);
-            border-radius: 30px; color: white; font-size: 16px;
-            backdrop-filter: blur(5px);
-        }
+        .search-box { width: 100%; padding: 16px 25px; margin-bottom: 25px; background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border); border-radius: 30px; color: white; font-size: 16px; }
         .search-box::placeholder { color: var(--text-muted); }
         .search-box:focus { outline: none; border-color: var(--gold); background: rgba(0,0,0,0.4); }
 
@@ -127,12 +89,7 @@
         .murid-card { padding: 15px 20px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: transform 0.15s ease; will-change: transform; position: relative; overflow: hidden; }
         .murid-card:active { transform: scale(0.97); background: rgba(255,255,255,0.15); }
         
-        .avatar {
-            width: 45px; height: 45px; border-radius: 50%; flex-shrink: 0;
-            background: linear-gradient(135deg, var(--gold), #d97706);
-            display: flex; justify-content: center; align-items: center;
-            font-weight: 800; font-size: 18px; color: #000;
-        }
+        .avatar { width: 45px; height: 45px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg, var(--gold), #d97706); display: flex; justify-content: center; align-items: center; font-weight: 800; font-size: 18px; color: #000; }
         .murid-info { flex: 1; min-width: 0; position: relative; z-index: 1; }
         .murid-nama { font-weight: 600; font-size: 16px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-main); }
         
@@ -145,39 +102,11 @@
         /* Arabic Typography */
         .arabic-text { font-family: 'Amiri', serif; font-size: 22px; direction: rtl; line-height: 1.8; color: var(--gold); }
 
-        /* ==================================
-           MADING GRID (PAPAN PENGUMUMAN) 
-           ================================== */
+        /* MADING GRID */
         .mading-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-        .mading-card { 
-            background: var(--glass-bg); 
-            border: 1px solid var(--glass-border); 
-            border-radius: 25px; 
-            padding: 25px 15px; 
-            text-align: center; 
-            cursor: pointer; 
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            position: relative; 
-            overflow: hidden; 
-        }
+        .mading-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 25px; padding: 25px 15px; text-align: center; cursor: pointer; transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: relative; overflow: hidden; }
         .mading-card:active { transform: scale(0.95); background: rgba(255,255,255,0.15); }
-        .mading-card::after {
-            content: '❁'; 
-            position: absolute;
-            right: -25px;
-            bottom: -45px;
-            font-size: 140px;
-            color: rgba(255, 255, 255, 0.05); 
-            pointer-events: none; 
-            z-index: 0;
-            transform: rotate(15deg);
-        }
+        .mading-card::after { content: '❁'; position: absolute; right: -25px; bottom: -45px; font-size: 140px; color: rgba(255, 255, 255, 0.05); pointer-events: none; z-index: 0; transform: rotate(15deg); }
         .mading-icon, .mading-title { position: relative; z-index: 1; } 
         .mading-icon { font-size: 40px; margin-bottom: 5px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));}
         .mading-title { font-size: 13px; font-weight: 700; color: var(--gold); line-height: 1.4; }
@@ -192,122 +121,110 @@
         audio::-webkit-media-controls-panel { background-color: rgba(255, 255, 255, 0.95); }
         .audio-hint { font-size: 11px; color: var(--text-muted); text-align: center; }
 
-        /* ==================================
-           GALLERY DOKUMENTASI HARI INI
-           ================================== */
-        /* Mengubah grid menjadi 1 kolom penuh */
+        /* GALLERY DOKUMENTASI */
         .gallery-grid { display: grid; grid-template-columns: 1fr; gap: 20px; } 
-        
-        .gallery-card { 
-            padding: 15px; display: flex; flex-direction: column; gap: 15px; 
-            cursor: default; 
-        }
-        
-        .foto-placeholder { 
-            width: 100%; 
-            aspect-ratio: 4 / 3; /* Format pas untuk foto */
-            border-radius: 15px; 
-            background: rgba(0,0,0,0.25); 
-            border: 1px dashed rgba(255,255,255,0.15); 
-            display: flex; justify-content: center; align-items: center; 
-            overflow: hidden; position: relative;
-        }
+        .gallery-card { padding: 15px; display: flex; flex-direction: column; gap: 15px; cursor: default; }
+        .foto-placeholder { width: 100%; aspect-ratio: 4 / 3; border-radius: 15px; background: rgba(0,0,0,0.25); border: 1px dashed rgba(255,255,255,0.15); display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative;}
         .foto-icon { font-size: 40px; opacity: 0.4; }
         .foto-real { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; }
-        
-        /* Wrapper untuk teks dan tombol download agar sejajar */
         .gallery-info-wrapper { display: flex; justify-content: space-between; align-items: center; padding: 0 5px; }
-        
         .gallery-text { text-align: left; }
         .gallery-caption { font-size: 15px; font-weight: 700; color: var(--text-main); line-height: 1.3;}
         .gallery-time { font-size: 12px; color: var(--gold); display: block; margin-top: 4px; font-weight: 600;}
-        
-        /* Tombol Download */
-        .download-btn {
-            background: rgba(52, 211, 153, 0.15); 
-            color: var(--green-glow); 
-            border: 1px solid rgba(52, 211, 153, 0.4); 
-            padding: 8px 16px; 
-            border-radius: 20px; 
-            font-size: 12px; 
-            font-weight: 700; 
-            text-decoration: none; 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 6px;
-            transition: all 0.2s;
-            position: relative;
-            z-index: 2; /* Agar bisa diklik jika ada overlap */
-        }
+        .download-btn { background: rgba(52, 211, 153, 0.15); color: var(--green-glow); border: 1px solid rgba(52, 211, 153, 0.4); padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; position: relative; z-index: 2; }
         .download-btn:active { transform: scale(0.95); background: rgba(52, 211, 153, 0.3); }
 
-        /* ==================================
-           MODAL UMUM
-           ================================== */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px); justify-content: center; align-items: flex-end; z-index: 1000; padding: 15px; }
+        /* MODALS */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); justify-content: center; align-items: flex-end; z-index: 1000; padding: 15px; }
         .modal.open { display: flex; }
         .close-btn { position: absolute; top: 15px; right: 20px; width: 30px; height: 30px; font-size: 28px; cursor: pointer; color: rgba(255,255,255,0.5); display: flex; justify-content: center; align-items: center; z-index: 10;}
         
-        .modal-profil { 
-            background: linear-gradient(180deg, #115e59 0%, #064e3b 100%); 
-            width: 100%; max-width: 450px; padding: 35px 25px; 
-            border-radius: 30px; 
-            border: 1px solid var(--glass-border); 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-            animation: slideUpFade 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
-            position: relative;
-        }
-        
+        .modal-profil { background: linear-gradient(180deg, #115e59 0%, #064e3b 100%); width: 100%; max-width: 450px; padding: 35px 25px; border-radius: 30px; border: 1px solid var(--glass-border); box-shadow: 0 15px 35px rgba(0,0,0,0.4); animation: slideUpFade 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; position: relative; max-height: 85vh; overflow-y: auto; }
         .modal.center-modal { align-items: center; }
-        .modal-mading {
-            background: linear-gradient(180deg, #115e59 0%, #064e3b 100%); 
-            width: 100%; max-width: 450px; padding: 35px 25px; 
-            border-radius: 25px; 
-            border: 1px solid var(--glass-border); 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            animation: popUpBubble 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
-            position: relative;
-            max-height: 80vh;
-            overflow-y: auto; 
-        }
+        .modal-mading { background: linear-gradient(180deg, #115e59 0%, #064e3b 100%); width: 100%; max-width: 450px; padding: 35px 25px; border-radius: 25px; border: 1px solid var(--glass-border); box-shadow: 0 20px 50px rgba(0,0,0,0.5); animation: popUpBubble 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; position: relative; max-height: 80vh; overflow-y: auto; }
         .modal-mading-title { font-size: 18px; font-weight: 800; color: var(--gold); text-align: center; margin-bottom: 20px; margin-top: -5px; padding: 0 20px; line-height: 1.4;}
 
         .modal-header { text-align: center; margin-bottom: 25px; }
         .modal-avatar { width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), #d97706); display: inline-flex; justify-content: center; align-items: center; font-weight: 800; font-size: 28px; color: #000; margin-bottom: 10px; box-shadow: 0 5px 15px rgba(253, 230, 138, 0.2);}
         #modalNama { font-size: 22px; font-weight: 800; color: white;}
 
-        .notif-bubble { padding: 12px 15px; border-radius: 15px; font-size: 13px; font-weight: 600; text-align: center; margin-bottom: 25px; display: flex; align-items: center; gap: 8px; justify-content: center; }
-        .notif-success { background: rgba(52, 211, 153, 0.15); color: var(--green-glow); border: 1px solid rgba(52, 211, 153, 0.3); }
-        .notif-pending { background: rgba(253, 230, 138, 0.15); color: var(--gold); border: 1px solid rgba(253, 230, 138, 0.3); }
+        /* ==================================
+           DESAIN MODAL "ELEGANT FLOW" (TIDAK KAKU)
+           ================================== */
+        .modal-body-scroll { display: flex; flex-direction: column; gap: 0; margin-top: 15px; }
 
-        .detail-row { display: flex; flex-direction: column; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
-        .detail-row:last-child { border-bottom: none; padding-bottom: 0; }
-        .detail-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
-        .detail-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
-        .detail-value { font-size: 16px; font-weight: 600; color: var(--gold); font-family: 'Lora', serif; text-align: center; direction: ltr; letter-spacing: 0.5px; }
+        .detail-card {
+            background: transparent; 
+            border: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 0;
+            padding: 16px 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .detail-card:last-child { border-bottom: none; }
         
-        .badge { padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; color: #000; }
-        .badge.selesai { background: var(--green-glow); }
-        .badge.proses { background: var(--yellow-glow); }
-        .badge.belum { background: var(--red-glow); }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
-                /* Penyesuaian Font Lora & Arah Teks untuk Hadits dan Doa di Modal */
-        #modalHadits, #modalDoa {
-            font-family: 'Lora', serif;
-            font-size: 16px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            direction: ltr; /* Mengembalikan teks agar dibaca dari kiri ke kanan */
+        /* Highlight khusus untuk pesan penyemangat agar terlihat hangat */
+        .highlight-card { 
+            background: linear-gradient(90deg, rgba(253, 230, 138, 0.08) 0%, transparent 100%); 
+            border-left: 3px solid var(--gold); 
+            padding-left: 15px; 
+            border-radius: 0 12px 12px 0;
+            border-bottom: none;
+            margin-bottom: 10px;
         }
         
+        .detail-header { display: flex; align-items: center; gap: 12px; margin-bottom: 2px; }
+        .detail-icon { font-size: 18px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
+        .detail-label { font-size: 11px; color: var(--gold); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 800; opacity: 0.9;}
+
+        /* Penyesuaian input saat mode ADMIN (Bisa diketik) */
+        .admin-input { width: 100%; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.3); color: white; font-family: 'Inter', sans-serif; font-size: 15px; outline: none; text-align: left; padding: 12px 15px; font-weight: 600; transition: 0.2s;}
+        .admin-input:focus { border: 1px solid var(--gold); background: rgba(0,0,0,0.6); box-shadow: 0 0 10px rgba(253, 230, 138, 0.2); }
+        .admin-select { width: 100%; padding: 12px 15px; border-radius: 12px; background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.15); outline: none; font-weight: bold; text-align: left; cursor: pointer; font-size: 14px; transition: 0.2s;}
+        .admin-select:focus { border: 1px solid var(--gold); }
+
+        /* AJAIBNYA DI SINI: Saat mode baca, input & select melebur jadi teks elegan */
+        .admin-input:disabled { background: transparent; border: none; padding: 0; font-size: 17px; color: #fff; font-family: 'Lora', serif; margin-top: 4px; line-height: 1.4;}
+        textarea.admin-input:disabled { font-style: italic; color: rgba(255,255,255,0.9); font-size: 15px; opacity: 0.9;}
+        
+        /* Select di mode baca berubah jadi "Kapsul Estetik" */
+        .admin-select:disabled { 
+            appearance: none; -webkit-appearance: none; 
+            background: rgba(255,255,255,0.1); 
+            border: 1px solid rgba(255,255,255,0.15); 
+            color: var(--gold); 
+            font-size: 11px; 
+            padding: 5px 14px; 
+            pointer-events: none; 
+            border-radius: 20px; 
+            width: max-content; 
+            margin-top: 5px; 
+            font-weight: 800; 
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-save { width: 100%; background: var(--green-glow); color: #000; border: none; padding: 14px; border-radius: 15px; font-weight: 800; font-size: 15px; margin-top: 20px; cursor: pointer; transition: 0.2s; box-shadow: 0 5px 15px rgba(52, 211, 153, 0.3);}
+        .btn-save:active { transform: scale(0.95); }
+        .btn-login { width: 100%; background: var(--gold); color: #000; border: none; padding: 14px; border-radius: 15px; font-weight: 800; font-size: 15px; margin-top: 20px; cursor: pointer; transition: 0.2s;}
+        .btn-login:active { transform: scale(0.95); }
+
+        ::-webkit-scrollbar { width: 6px; }
+
+        /* FORM ADMIN */
+
+        #modalHadits, #modalDoa { font-family: 'Lora', serif; font-size: 16px; font-weight: 600; letter-spacing: 0.5px; direction: ltr; }
     </style>
 </head>
 <body>
 
     <header>
+        <!-- Ikon Admin Baru -->
+        <span class="admin-badge" id="adminBadge">MODE ADMIN</span>
+        <div class="admin-lock" onclick="toggleLogin()">🔒</div>
+
         <h1>5B TORAJA</h1>
         <p>Jurnal Mutaba'ah Hafalan</p>
     </header>
@@ -317,28 +234,26 @@
         <!-- TAB 1: Daftar Ananda -->
         <div id="tab-ananda" class="tab-content active">
             <input type="text" id="searchInput" class="search-box" onkeyup="cariMurid()" placeholder="Pencarian nama ananda...">
-            <div id="muridList"></div>
+            <div id="muridList">
+                <div style="text-align: center; color: var(--gold); margin-top: 20px;">Memuat data dari server...</div>
+            </div>
         </div>
 
         <!-- TAB 2: Papan Pengumuman -->
         <div id="tab-pengumuman" class="tab-content">
             <div class="mading-grid">
-                
                 <div class="mading-card" onclick="openMading('jadwal-imam')">
                     <div class="mading-icon">🕌</div>
                     <div class="mading-title">Jadwal Imam<br>Sholat Dhuha</div>
                 </div>
-                
                 <div class="mading-card" onclick="openMading('target-quran')">
                     <div class="mading-icon">📖</div>
                     <div class="mading-title">Target Hafalan<br>Al-Qur'an Besok</div>
                 </div>
-                
                 <div class="mading-card" onclick="openMading('target-hadits')">
                     <div class="mading-icon">📜</div>
                     <div class="mading-title">Target Mingguan<br>Hadits & Doa</div>
                 </div>
-                
                 <div class="mading-card" onclick="openMading('jadwal-murajaah')">
                     <div class="mading-icon">🔄</div>
                     <div class="mading-title">Jadwal Muraja'ah<br>Harian</div>
@@ -352,18 +267,13 @@
 
         <!-- TAB 3: Dokumentasi Hari Ini -->
         <div id="tab-dokumentasi" class="tab-content">
-            <!-- Menambahkan header kecil untuk informasi tanggal -->
             <div style="text-align: center; margin-bottom: 20px; font-size: 14px; font-weight: 600; color: var(--gold);">
                 Dokumentasi Kegiatan<br>Rabu, 29 Juli 2026
             </div>
-
             <div class="gallery-grid">
-                
-                <!-- Dokumentasi 1: Sholat Dhuha -->
                 <div class="glass gallery-card">
                     <div class="foto-placeholder">
                         <span class="foto-icon">📸</span>
-                        <!-- Tag img sudah diaktifkan dan path disesuaikan -->
                         <img src="dhuha.jpg" class="foto-real" alt="Sholat Dhuha">
                     </div>
                     <div class="gallery-info-wrapper">
@@ -371,14 +281,9 @@
                             <div class="gallery-caption">Sholat Dhuha</div>
                             <span class="gallery-time">08:00 - 08.20 WITA</span>
                         </div>
-                        <!-- Link download juga disesuaikan -->
-                        <a href="dhuha.jpg" download="Dhuha-5B-Toraja.jpg" class="download-btn">
-                            ⬇️ Simpan
-                        </a>
+                        <a href="dhuha.jpg" download="Dhuha-5B-Toraja.jpg" class="download-btn">⬇️ Simpan</a>
                     </div>
                 </div>
-
-                <!-- Dokumentasi 2: Zikir Pagi -->
                 <div class="glass gallery-card">
                     <div class="foto-placeholder">
                         <span class="foto-icon">📿</span>
@@ -389,13 +294,9 @@
                             <div class="gallery-caption">Pembacaan Zikir Pagi</div>
                             <span class="gallery-time">08:00 - 08:20 WITA</span>
                         </div>
-                        <a href="zikir.jpg" download="Zikir-5B-Toraja.jpg" class="download-btn">
-                            ⬇️ Simpan
-                        </a>
+                        <a href="zikir.jpg" download="Zikir-5B-Toraja.jpg" class="download-btn">⬇️ Simpan</a>
                     </div>
                 </div>
-
-                <!-- Dokumentasi 3: Muraja'ah -->
                 <div class="glass gallery-card">
                     <div class="foto-placeholder">
                         <span class="foto-icon">📖</span>
@@ -406,17 +307,14 @@
                             <div class="gallery-caption">Muraja'ah Hafalan</div>
                             <span class="gallery-time">08:45 - 09:10 WITA</span>
                         </div>
-                        <a href="murajaah.jpg" download="Murajaah-5B-Toraja.jpg" class="download-btn">
-                            ⬇️ Simpan
-                        </a>
+                        <a href="murajaah.jpg" download="Murajaah-5B-Toraja.jpg" class="download-btn">⬇️ Simpan</a>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 
-    <!-- Floating Navigation (Sekarang 3 Tombol) -->
+    <!-- Floating Navigation -->
     <nav class="floating-nav">
         <button class="active" onclick="switchTab('tab-ananda', this)">
             <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg>
@@ -426,254 +324,140 @@
             <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
             Pengumuman
         </button>
-        <!-- Tombol Dokumentasi -->
         <button onclick="switchTab('tab-dokumentasi', this)">
             <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
             Dokumentasi
         </button>
     </nav>
 
-    <!-- MODAL 1: Profil Ananda -->
+    <!-- MODAL 1: Profil Ananda & Edit Admin -->
     <div id="progressModal" class="modal" onclick="closeModalOnBackdrop(event, 'progressModal')">
         <div class="modal-profil">
             <div class="close-btn" onclick="closeModal('progressModal')">&times;</div>
             
-            <div class="modal-header">
-                <div class="modal-avatar" id="modalInitials">AF</div>
-                <h2 id="modalNama">Nama Ananda</h2>
+            <div class="modal-header" style="margin-bottom: 5px;">
+                <div class="modal-avatar" id="modalInitials" style="box-shadow: 0 0 20px rgba(253, 230, 138, 0.2);">AF</div>
+                <h2 id="modalNama" style="font-size: 24px; margin-top: 5px;">Nama Ananda</h2>
             </div>
 
-            <div id="notifTarget" class="notif-bubble notif-pending">
-                <span id="notifIcon">⏳</span>
-                <span id="notifText">Ananda masih dalam proses mencapai target hafalan minggu ini.</span>
-            </div>
+            <input type="hidden" id="editId">
             
-            <!-- TARGET HAFALAN QUR'AN HARIAN -->
-            <div class="detail-row">
-                <div class="detail-header">
-                    <span class="detail-label">Target Hafalan Harian</span>
-                    <span id="statusQuran" class="badge"></span>
+            <div class="modal-body-scroll">
+                
+                <div class="detail-card highlight-card">
+                    <div class="detail-header">
+                        <div class="detail-icon">💌</div>
+                        <span class="detail-label">Pesan untuk Ananda</span>
+                    </div>
+                    <textarea id="editPesan" class="admin-input" rows="3" style="resize: none;" placeholder="Tulis pesan penyemangat di sini..." disabled></textarea>
                 </div>
-                <div class="detail-value" id="modalQuran"></div>
+
+                <div class="detail-card">
+                    <div class="detail-header">
+                        <div class="detail-icon">📖</div>
+                        <span class="detail-label">Target Hafalan Harian</span>
+                    </div>
+                    <input type="text" id="editQuran" class="admin-input" disabled>
+                    <select id="editStatusQuran" class="admin-select" disabled>
+                        <option value="selesai">Tuntas</option>
+                        <option value="proses">Proses</option>
+                        <option value="belum">Belum</option>
+                    </select>
+                </div>
+
+                <div class="detail-card" style="border-left: 4px solid var(--gold);">
+                    <div class="detail-header">
+                        <div class="detail-icon">🔖</div>
+                        <span class="detail-label">Hafalan Terakhir</span>
+                    </div>
+                    <input type="text" id="editHafalanTerakhir" class="admin-input" style="color: var(--gold);" disabled>
+                </div>
+                
+                <div class="detail-card">
+                    <div class="detail-header">
+                        <div class="detail-icon">📜</div>
+                        <span class="detail-label">Hafalan Hadits</span>
+                    </div>
+                    <input type="text" id="editHadits" class="admin-input" disabled>
+                    <select id="editStatusHadits" class="admin-select" disabled>
+                        <option value="selesai">Tuntas</option>
+                        <option value="proses">Proses</option>
+                        <option value="belum">Belum</option>
+                    </select>
+                </div>
+                
+                <div class="detail-card">
+                    <div class="detail-header">
+                        <div class="detail-icon">🤲</div>
+                        <span class="detail-label">Hafalan Doa</span>
+                    </div>
+                    <input type="text" id="editDoa" class="admin-input" disabled>
+                    <select id="editStatusDoa" class="admin-select" disabled>
+                        <option value="selesai">Tuntas</option>
+                        <option value="proses">Proses</option>
+                        <option value="belum">Belum</option>
+                    </select>
+                </div>
+
             </div>
 
-            <!-- HAFALAN TERAKHIR (BARIS BARU) -->
-            <div class="detail-row">
-                <div class="detail-header">
-                    <span class="detail-label">Hafalan Terakhir</span>
-                    <!-- Dikosongkan jika tidak butuh badge status di sini -->
-                </div>
-                <div class="detail-value" id="modalHafalanTerakhir"></div>
-            </div>
-            
-            <div class="detail-row">
-                <div class="detail-header">
-                    <span class="detail-label">Hafalan Hadits</span>
-                    <span id="statusHadits" class="badge"></span>
-                </div>
-                <div class="detail-value" id="modalHadits"></div>
-            </div>
-            
-            <div class="detail-row">
-                <div class="detail-header">
-                    <span class="detail-label">Hafalan Doa</span>
-                    <span id="statusDoa" class="badge"></span>
-                </div>
-                <div class="detail-value" id="modalDoa"></div>
-            </div>
+            <button id="btnSaveMurid" class="btn-save" style="display:none;" onclick="simpanDataMurid()">Simpan Perubahan</button>
         </div>
     </div>
+
 
     <!-- MODAL 2: Mading Pengumuman -->
     <div id="madingModal" class="modal center-modal" onclick="closeModalOnBackdrop(event, 'madingModal')">
         <div class="modal-mading">
             <div class="close-btn" onclick="closeModal('madingModal')">&times;</div>
             <h2 id="madingTitle" class="modal-mading-title">Judul Mading</h2>
-            
             <div id="madingContent"></div>
         </div>
     </div>
 
-    <script>
-        // ==========================================
-        // 1. DATA MURID (PRESENSI 5B TORAJA)
-        // ==========================================
-        const dataMurid = [
-            { 
-                nama: "Afifa Nor Sa'adah", 
-                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
-                hafalanTerakhir: "Surah Al-Baqarah ayat 121",
-                hadits: "Hadits Memberi Syafa'at", statusHadits: "selesai", 
-                doa: "Doa Agar Hujan Reda", statusDoa: "belum",
-                targetTercapai: false
-            },
-            { 
-                nama: "Ahmad Ameer Asy Syathir", 
-                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
-                hafalanTerakhir: "Surah Al-Baqarah ayat 52",
-                hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
-                doa: "Doa Agar Hujan Reda", statusDoa: "belum",
-                targetTercapai: false
-            },
-            { 
-                nama: "Ahmad Mutawalli", 
-                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
-                hafalanTerakhir: "Surah Al-Baqarah ayat 125",
-                hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
-                doa: "Doa Agar Hujan Reda", statusDoa: "belum",
-                targetTercapai: false
-            },
-            { 
-                nama: "Aisya Zhafara Effendi", 
-                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
-                hafalanTerakhir: "Surah Al-Baqarah ayat 21",
-                hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
-                doa: "Doa Agar Hujan Reda", statusDoa: "belum",
-                targetTercapai: false
-            },
-            { 
-                nama: "Fahma Mustaghfirah Muthiah", 
-                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
-                hafalanTerakhir: "Surah Al-Baqarah ayat 33",
-                hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
-                doa: "Doa Agar Hujan Reda", statusDoa: "belum",
-                targetTercapai: false
-            },
-            { 
-                nama: "Faiz", 
-                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
-                hafalanTerakhir: "Surah Al-Baqarah ayat 72",
-                hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
-                doa: "Doa Agar Hujan Reda", statusDoa: "belum",
-                targetTercapai: false
-            },
-            { 
-                nama: "Kayra Aziza", 
-                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
-                hafalanTerakhir: "Surah Al-Baqarah ayat 19",
-                hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
-                doa: "Doa Agar Hujan Reda", statusDoa: "belum",
-                targetTercapai: false
-            },
-            { 
-                nama: "Keisha Karunia Azka", 
-                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
-                hafalanTerakhir: "Surah Al-Baqarah ayat 98",
-                hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
-                doa: "Doa Agar Hujan Reda", statusDoa: "belum",
-                targetTercapai: false
-            },
-            { 
-                nama: "M. Adrian Faeyza", 
-                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
-                hafalanTerakhir: "Surah Al-Baqarah ayat 32",
-                hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
-                doa: "Doa Agar Hujan Reda", statusDoa: "belum",
-                targetTercapai: false
-            },
-            { 
-                nama: "Muhammad Aditya Yusuf", 
-                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
-                hafalanTerakhir: "Surah Al-Baqarah ayat 19",
-                hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
-                doa: "Doa Agar Hujan Reda", statusDoa: "belum",
-                targetTercapai: false
-            },
-            { 
-                nama: "Muhammad Adnan Abiyu", 
-                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "belum", 
-                hafalanTerakhir: "Surah Al-Baqarah ayat 7",
-                hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
-                doa: "Doa Agar Hujan Reda", statusDoa: "belum",
-                targetTercapai: false
-            },
-            { 
-                nama: "Muhammad Al Farisi Maulana", 
-                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
-                hafalanTerakhir: "Surah Al-Baqarah ayat 187",
-                hadits: "Hadits Memberi Syafa'at", statusHadits: "selesai", 
-                doa: "Doa Agar Hujan Reda", statusDoa: "belum",
-                targetTercapai: false
-            },
-            { 
-                nama: "Muhammad Habibi Fadhilah", 
-                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
-                hafalanTerakhir: "Surah Al-Baqarah ayat 39",
-                hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
-                doa: "Doa Agar Hujan Reda", statusDoa: "belum",
-                targetTercapai: false
-            },
-            { 
-                nama: "Muhammad Hafidz Anshari", 
-                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
-                hafalanTerakhir: "Surah Al-Baqarah ayat 34",
-                hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
-                doa: "Doa Agar Hujan Reda", statusDoa: "belum",
-                targetTercapai: false
-            },
-            { 
-                nama: "Muhammad Irza Rahman", 
-                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
-                hafalanTerakhir: "Surah Al-Baqarah ayat 38",
-                hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
-                doa: "Doa Agar Hujan Reda", statusDoa: "belum",
-                targetTercapai: false
-            },
-            { 
-                nama: "Muhammad Ridha'e", 
-                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
-                hafalanTerakhir: "Surah Al-Baqarah ayat 49",
-                hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
-                doa: "Doa Agar Hujan Reda", statusDoa: "belum",
-                targetTercapai: false
-            },
-            { 
-                nama: "Najwan Azhim Muntazhar", 
-                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
-                hafalanTerakhir: "Surah Al-Baqarah ayat 58",
-                hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
-                doa: "Doa Agar Hujan Reda", statusDoa: "belum",
-                targetTercapai: false
-            },
-            { 
-                nama: "Nayla Khalishah Mumtazah", 
-                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
-                hafalanTerakhir: "Surah Al-Baqarah ayat 65",
-                hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
-                doa: "Doa Agar Hujan Reda", statusDoa: "belum",
-                targetTercapai: false
-            },
-            { 
-                nama: "Rafa", 
-                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
-                hafalanTerakhir: "Surah Al-Baqarah ayat 31",
-                hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
-                doa: "Doa Agar Hujan Reda", statusDoa: "belum",
-                targetTercapai: false
-            },
-            { 
-                nama: "Raisa Khalifah", 
-                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", 
-                hafalanTerakhir: "Surah Al-Baqarah ayat 32",
-                hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
-                doa: "Doa Agar Hujan Reda", statusDoa: "belum",
-                targetTercapai: false
-            },
-            { 
-                nama: "Washfa Anindya Fairuz", 
-                quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "belum", 
-                hafalanTerakhir: "Surah Al-Baqarah ayat 7",
-                hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", 
-                doa: "Doa Agar Hujan Reda", statusDoa: "belum",
-                targetTercapai: false
-            }
-        ];
+    <!-- MODAL 3: Login Admin -->
+    <div id="loginModal" class="modal center-modal" onclick="closeModalOnBackdrop(event, 'loginModal')">
+        <div class="modal-profil" style="max-width: 350px;">
+            <div class="close-btn" onclick="closeModal('loginModal')">&times;</div>
+            <h2 style="text-align: center; color: var(--gold); margin-bottom: 20px;">Login Admin</h2>
+            <div id="loginForm">
+                <input type="email" id="adminEmail" class="admin-input" placeholder="Email Admin">
+                <input type="password" id="adminPassword" class="admin-input" placeholder="Password" style="margin-top: 15px;">
+                <button class="btn-login" onclick="loginAdmin()">Masuk Mode Edit</button>
+            </div>
+            <div id="logoutForm" style="display: none; text-align: center;">
+                <p style="margin-bottom: 15px; font-size: 14px;">Anda sedang berada dalam Mode Admin.</p>
+                <button class="btn-login" style="background: var(--red-glow); color: white; margin-top:0;" onclick="logoutAdmin()">Keluar (Logout)</button>
+            </div>
+        </div>
+    </div>
 
+    <!-- FIREBASE & LOGIKA UTAMA -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, collection, onSnapshot, doc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBDKfmReRO4M8DMUN8VB2Rmzh7AgkzYA4g",
+            authDomain: "b-toraja.firebaseapp.com",
+            projectId: "b-toraja",
+            storageBucket: "b-toraja.firebasestorage.app",
+            messagingSenderId: "738438625873",
+            appId: "1:738438625873:web:5ced29512ce68c34d55670"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        let dataMuridDinamis = [];
+        let isAdmin = false;
 
         // ==========================================
-        // 2. DATA MADING (PENGUMUMAN) - HTML Dinamis
+        // DATA MADING ASLI ANDA
         // ==========================================
-                const dataMading = {
+        const dataMading = {
             'jadwal-imam': {
                 title: "🕌 Jadwal Imam Sholat Dhuha",
                 html: `
@@ -682,25 +466,21 @@
                     <div class="info-row"><span class="info-label">Raka'at 2</span><span class="info-value" style="color: var(--gold);">Al-Insyiqaq ayat 7-12</span></div>
                     <div class="info-row"><span class="info-label">Raka'at 3</span><span class="info-value" style="color: var(--gold);">Al-Insyiqaq ayat 13-18</span></div>
                     <div class="info-row"><span class="info-label">Raka'at 4</span><span class="info-value" style="color: var(--gold);">Al-Insyiqaq ayat 19-25</span></div>
-
                     <div class="hari-badge">Selasa - Rafa</div>
                     <div class="info-row"><span class="info-label">Raka'at 1</span><span class="info-value" style="color: var(--gold);">Al-Buruj ayat 1-5</span></div>
                     <div class="info-row"><span class="info-label">Raka'at 2</span><span class="info-value" style="color: var(--gold);">Al-Buruj ayat 6-10</span></div>
                     <div class="info-row"><span class="info-label">Raka'at 3</span><span class="info-value" style="color: var(--gold);">Al-Buruj ayat 11-16</span></div>
                     <div class="info-row"><span class="info-label">Raka'at 4</span><span class="info-value" style="color: var(--gold);">Al-Buruj ayat 17-22</span></div>
-
                     <div class="hari-badge">Rabu - Ahmad Ameer Asy Syathir</div>
                     <div class="info-row"><span class="info-label">Raka'at 1</span><span class="info-value" style="color: var(--gold);">At-Thariq ayat 1-5</span></div>
                     <div class="info-row"><span class="info-label">Raka'at 2</span><span class="info-value" style="color: var(--gold);">At-Thariq ayat 6-9</span></div>
                     <div class="info-row"><span class="info-label">Raka'at 3</span><span class="info-value" style="color: var(--gold);">At-Thariq ayat 10-14</span></div>
                     <div class="info-row"><span class="info-label">Raka'at 4</span><span class="info-value" style="color: var(--gold);">At-Thariq ayat 15-17</span></div>
-
                     <div class="hari-badge">Kamis - Ahmad Mutawalli</div>
                     <div class="info-row"><span class="info-label">Raka'at 1</span><span class="info-value" style="color: var(--gold);">Al-A'la ayat 1-5</span></div>
                     <div class="info-row"><span class="info-label">Raka'at 2</span><span class="info-value" style="color: var(--gold);">Al-A'la ayat 6-10</span></div>
                     <div class="info-row"><span class="info-label">Raka'at 3</span><span class="info-value" style="color: var(--gold);">Al-A'la ayat 11-15</span></div>
                     <div class="info-row"><span class="info-label">Raka'at 4</span><span class="info-value" style="color: var(--gold);">Al-A'la ayat 16-19</span></div>
-
                     <div class="hari-badge">Jum'at - Faiz</div>
                     <div class="info-row"><span class="info-label">Raka'at 1</span><span class="info-value" style="color: var(--gold);">Al-Ghasyiyah ayat 1-8</span></div>
                     <div class="info-row"><span class="info-label">Raka'at 2</span><span class="info-value" style="color: var(--gold);">Al-Ghasyiyah ayat 9-15</span></div>
@@ -714,13 +494,8 @@
                     <div class="info-row" style="flex-direction: column; align-items: center; gap: 5px; padding: 15px 0;">
                         <span class="info-label">Mohon Sambil Buka Al-Qur'an, ya 😇</span>
                         <span class="info-value" style="color: var(--gold); font-size: 20px; text-align: center;">Surah Al-Baqarah<br>Ayat 15 - 16</span>
-                        
-                        <!-- Tempat Audio Quran Lokal -->
                         <div class="audio-wrapper">
-                            <audio controls>
-                                <source src="audio-quran.mp3" type="audio/mpeg">
-                                Browser tidak mendukung pemutar audio.
-                            </audio>
+                            <audio controls><source src="audio-quran.mp3" type="audio/mpeg">Browser tidak mendukung pemutar audio.</audio>
                             <span class="audio-hint">Dibacakan oleh Ustadz Nasrullah, S.Pd</span>
                         </div>
                     </div>
@@ -729,33 +504,22 @@
             'target-hadits': {
                 title: "📜 Target Mingguan Hadits & Doa",
                 html: `
-                    <!-- HADITS -->
                     <div class="info-row" style="flex-direction: column; align-items: center; gap: 8px; text-align: center; padding-bottom: 20px;">
                         <span class="hari-badge" style="margin-top: 0; margin-bottom: 5px;">Hadits Memberi Syafa'at</span>
                         <div class="arabic-text" style="font-size: 26px; margin: 10px 0;">أَنَا أَوَّلُ النَّاسِ يَشْفَعُ فِي الْجَنَّةِ</div>
                         <span style="font-size: 13px; font-style: italic; color: var(--text-muted); line-height: 1.5;">"Saya (Rasulullah) adalah orang yang pertama memberikan syafa'at di surga" <br><strong style="color:var(--gold)">(HR. Muslim)</strong></span>
-                        
-                        <!-- Tempat Audio Hadits Lokal -->
                         <div class="audio-wrapper" style="margin-top: 10px;">
-                            <audio controls>
-                                <source src="audio-hadits.mp3" type="audio/mpeg">
-                            </audio>
+                            <audio controls><source src="audio-hadits.mp3" type="audio/mpeg"></audio>
                             <span class="audio-hint">Dibacakan oleh Ustadz Nasrullah, S.Pd</span>
                         </div>
                     </div>
-                    
-                    <!-- DOA -->
                     <div class="info-row" style="flex-direction: column; align-items: center; gap: 8px; text-align: center; border-bottom: none; margin-top: 5px;">
                         <span class="hari-badge" style="margin-top: 0; margin-bottom: 5px; background: rgba(52, 211, 153, 0.15); color: var(--green-glow); border: 1px solid rgba(52, 211, 153, 0.3);">Doa Agar Hujan Reda</span>
                         <div class="arabic-text" style="font-size: 24px; margin: 10px 0; line-height: 2;">اللَّهُمَّ حَوَالَيْنَا وَلاَ عَلَيْنَا، اللَّهُمَّ عَلَى الْآكَامِ وَالظِّرَابِ وَبُطُونِ الْأَوْدِيَةِ وَمَنَابِتِ الشَّجَرِ</div>
                         <span style="font-size: 11px; font-weight: 800; color: var(--gold); margin-bottom: 8px; line-height: 1.5;">ALLAAHUMMA HAWAALAINAA WALAA 'ALAINAA ALLAAHUMMA 'ALAL AAKAAMI WADHDHIRRAABI WA BUTHUUNIL AUDIYATI WAMANAABITISY SYAJARI</span>
                         <span style="font-size: 13px; font-style: italic; color: var(--text-muted); line-height: 1.5;">"Ya Allah, curahkanlah hujan kepada kami, tapi jangan membahayakan kami, curahkanlah hujan di atas bukit, pegunungan, lembah-lembah dan hutan belantara" <br><strong style="color:var(--gold)">(HR. Bukhari - Muslim)</strong></span>
-                        
-                        <!-- Tempat Audio Doa Lokal -->
                         <div class="audio-wrapper" style="margin-top: 10px;">
-                            <audio controls>
-                                <source src="audio-doa.mp3" type="audio/mpeg">
-                            </audio>
+                            <audio controls><source src="audio-doa.mp3" type="audio/mpeg"></audio>
                             <span class="audio-hint">Dibacakan oleh Ustadz Nasrullah, S.Pd</span>
                         </div>
                     </div>
@@ -764,43 +528,30 @@
             'jadwal-murajaah': {
                 title: "🔄 Jadwal Muraja'ah Harian",
                 html: `
-                    <div class="hari-badge" style="display: block; text-align: center; margin-bottom: 15px; margin-top: 5px; background: rgba(52, 211, 153, 0.15); color: var(--green-glow); border: 1px solid rgba(52, 211, 153, 0.3);">
-                        Target Hari Ini
-                    </div>
-                    
+                    <div class="hari-badge" style="display: block; text-align: center; margin-bottom: 15px; margin-top: 5px; background: rgba(52, 211, 153, 0.15); color: var(--green-glow); border: 1px solid rgba(52, 211, 153, 0.3);">Target Hari Ini</div>
                     <div class="info-row" style="flex-direction: column; align-items: flex-start; gap: 6px;">
-                        <span class="info-label" style="color: var(--gold); font-weight: 800;">Sesi Pagi</span>
-                        <span class="info-value" style="text-align: left;">Surah Al-Baqarah ayat 1 - 74</span>
+                        <span class="info-label" style="color: var(--gold); font-weight: 800;">Sesi Pagi</span><span class="info-value" style="text-align: left;">Surah Al-Baqarah ayat 1 - 74</span>
                     </div>
-                    
                     <div class="info-row" style="flex-direction: column; align-items: flex-start; gap: 6px; border-bottom: none;">
-                        <span class="info-label" style="color: var(--gold); font-weight: 800;">Sesi Sore</span>
-                        <span class="info-value" style="text-align: left;">Surah Al-Baqarah ayat 1 - 74</span>
+                        <span class="info-label" style="color: var(--gold); font-weight: 800;">Sesi Sore</span><span class="info-value" style="text-align: left;">Surah Al-Baqarah ayat 1 - 74</span>
                     </div>
                 `
             },
-                           'jadwal-tilawah': {
+            'jadwal-tilawah': {
                 title: "🎙️ Jadwal Tilawah Live",
                 html: `
                     <div class="hari-badge">Senin, 24 Agustus</div>
                     <div class="info-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
-                        <span class="info-label" style="color: var(--text-main); font-weight: bold;">Faiz</span>
-                        <span class="info-value" style="color: var(--gold); text-align: left;">At-Thalaq - At-Tahrim</span>
+                        <span class="info-label" style="color: var(--text-main); font-weight: bold;">Faiz</span><span class="info-value" style="color: var(--gold); text-align: left;">At-Thalaq - At-Tahrim</span>
                     </div>
-
                     <div class="hari-badge">Rabu, 26 Agustus</div>
                     <div class="info-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
-                        <span class="info-label" style="color: var(--text-main); font-weight: bold;">Ahmad Mutawalli</span>
-                        <span class="info-value" style="color: var(--gold); text-align: left;">An-Naba - Al-Infitar</span>
+                        <span class="info-label" style="color: var(--text-main); font-weight: bold;">Ahmad Mutawalli</span><span class="info-value" style="color: var(--gold); text-align: left;">An-Naba - Al-Infitar</span>
                     </div>
-
                     <div class="hari-badge">3 September</div>
                     <div class="info-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
-                        <span class="info-label" style="color: var(--text-main); font-weight: bold;">Muhammad Al Farisi Maulana</span>
-                        <span class="info-value" style="color: var(--gold); text-align: left;">Al-Haqqah - Nuh</span>
+                        <span class="info-label" style="color: var(--text-main); font-weight: bold;">Muhammad Al Farisi Maulana</span><span class="info-value" style="color: var(--gold); text-align: left;">Al-Haqqah - Nuh</span>
                     </div>
-
-                    <!-- Kotak Catatan -->
                     <div style="margin-top: 20px; padding: 15px; background: rgba(253, 230, 138, 0.1); border: 1px dashed var(--gold); border-radius: 15px;">
                         <div style="color: var(--gold); font-weight: bold; margin-bottom: 10px; font-size: 14px;">📝 Catatan:</div>
                         <ul style="color: var(--text-main); font-size: 13px; margin-left: 18px; line-height: 1.6;">
@@ -813,19 +564,49 @@
         };
 
         // ==========================================
-        // FUNGSI-FUNGSI LOGIKA
+        // LISTENER AUTHENTICATION & FIRESTORE
         // ==========================================
-        function getInitials(name) {
-            return name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-        }
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                isAdmin = true;
+                document.getElementById('adminBadge').style.display = 'block';
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('logoutForm').style.display = 'block';
+            } else {
+                isAdmin = false;
+                document.getElementById('adminBadge').style.display = 'none';
+                document.getElementById('loginForm').style.display = 'block';
+                document.getElementById('logoutForm').style.display = 'none';
+            }
+        });
 
-        function renderMurid() {
+        onSnapshot(collection(db, "murid"), (snapshot) => {
+            if(snapshot.empty) {
+                // Trigger Data Seed jika database kosong
+                seedInitialData();
+            } else {
+                dataMuridDinamis = [];
+                snapshot.forEach((doc) => {
+                    dataMuridDinamis.push({ id: doc.id, ...doc.data() });
+                });
+                // Mengurutkan berdasarkan nama (A-Z)
+                dataMuridDinamis.sort((a,b) => a.nama.localeCompare(b.nama));
+                window.renderMurid();
+            }
+        });
+
+        // ==========================================
+        // FUNGSI-FUNGSI LOGIKA (Menjadi Global window.)
+        // ==========================================
+        window.getInitials = (name) => name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+
+        window.renderMurid = () => {
             const list = document.getElementById('muridList');
             list.innerHTML = '';
-            dataMurid.forEach((murid, index) => {
+            dataMuridDinamis.forEach((murid, index) => {
                 list.innerHTML += `
-                    <div class="glass murid-card" onclick="openModal(${index})">
-                        <div class="avatar">${getInitials(murid.nama)}</div>
+                    <div class="glass murid-card" onclick="window.openModal(${index})">
+                        <div class="avatar">${window.getInitials(murid.nama)}</div>
                         <div class="murid-info">
                             <div class="murid-nama">${murid.nama}</div>
                             <div class="status-dots">
@@ -837,18 +618,18 @@
                     </div>
                 `;
             });
-        }
+        };
 
-        function cariMurid() {
+        window.cariMurid = () => {
             const input = document.getElementById('searchInput').value.toLowerCase();
             const cards = document.getElementsByClassName('murid-card');
             for (let i = 0; i < cards.length; i++) {
                 let nama = cards[i].querySelector('.murid-nama').innerText.toLowerCase();
                 cards[i].style.display = nama.includes(input) ? "flex" : "none";
             }
-        }
+        };
 
-        function switchTab(tabId, btn) {
+        window.switchTab = (tabId, btn) => {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.floating-nav button').forEach(b => b.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
@@ -856,64 +637,47 @@
             
             const audios = document.querySelectorAll('audio');
             audios.forEach(audio => audio.pause());
-        }
+        };
 
-                function openModal(index) {
-            const murid = dataMurid[index];
+                window.openModal = (index) => {
+            const murid = dataMuridDinamis[index];
             document.getElementById('modalNama').innerText = murid.nama;
-            document.getElementById('modalInitials').innerText = getInitials(murid.nama);
+            document.getElementById('modalInitials').innerText = window.getInitials(murid.nama);
             
-            const notifBox = document.getElementById('notifTarget');
-            const notifIcon = document.getElementById('notifIcon');
-            const notifText = document.getElementById('notifText');
-            
-            if(murid.targetTercapai) {
-                notifBox.className = "notif-bubble notif-success";
-                notifIcon.innerText = "✅";
-                notifText.innerText = "Alhamdulillah, ananda telah mencapai target hafalan minggu ini.";
-            } else {
-                notifBox.className = "notif-bubble notif-pending";
-                notifIcon.innerText = "⏳";
-                notifText.innerText = "Ananda masih dalam proses mencapai target hafalan minggu ini.";
-            }
+            document.getElementById('editId').value = murid.id;
+            // Menampilkan pesan (jika kosong, berikan teks default)
+            document.getElementById('editPesan').value = murid.pesanGuru || "Terus semangat muraja'ah dan menambah hafalannya ya, Nak!";
 
-            // Target Hafalan Qur'an
-            document.getElementById('modalQuran').innerText = murid.quran;
-            setLabelStatus('statusQuran', murid.statusQuran);
-            
-            // TAMPILKAN HAFALAN TERAKHIR (TAMBAHAN BARU)
-            document.getElementById('modalHafalanTerakhir').innerText = murid.hafalanTerakhir || "-"; 
-            
-            // Hadits & Doa
-            document.getElementById('modalHadits').innerText = murid.hadits;
-            setLabelStatus('statusHadits', murid.statusHadits);
-            
-            document.getElementById('modalDoa').innerText = murid.doa;
-            setLabelStatus('statusDoa', murid.statusDoa);
+            document.getElementById('editQuran').value = murid.quran;
+            document.getElementById('editStatusQuran').value = murid.statusQuran;
+            document.getElementById('editHafalanTerakhir').value = murid.hafalanTerakhir || "-";
+            document.getElementById('editHadits').value = murid.hadits;
+            document.getElementById('editStatusHadits').value = murid.statusHadits;
+            document.getElementById('editDoa').value = murid.doa;
+            document.getElementById('editStatusDoa').value = murid.statusDoa;
 
+// Kunci atau Buka Form Berdasarkan Status Admin
+const inputs = document.querySelectorAll('#progressModal input.admin-input, #progressModal select.admin-select, #progressModal textarea.admin-input');
+            inputs.forEach(input => {
+                input.disabled = !isAdmin;
+            });
+            
+            document.getElementById('btnSaveMurid').style.display = isAdmin ? 'block' : 'none';
             document.body.style.overflow = 'hidden';
             document.getElementById('progressModal').classList.add('open');
-        }
+        };
 
 
-        function openMading(id) {
+        window.openMading = (id) => {
             const data = dataMading[id];
             document.getElementById('madingTitle').innerHTML = data.title;
             document.getElementById('madingContent').innerHTML = data.html;
             
             document.body.style.overflow = 'hidden';
             document.getElementById('madingModal').classList.add('open');
-        }
+        };
 
-        function setLabelStatus(elementId, status) {
-            const el = document.getElementById(elementId);
-            el.className = 'badge ' + status;
-            if(status === 'selesai') el.innerText = 'Tuntas';
-            else if(status === 'proses') el.innerText = 'Proses';
-            else el.innerText = 'Belum';
-        }
-
-        function closeModal(modalId) {
+        window.closeModal = (modalId) => {
             document.body.style.overflow = '';
             document.getElementById(modalId).classList.remove('open');
             
@@ -921,13 +685,96 @@
                 const audios = document.getElementById('madingModal').querySelectorAll('audio');
                 audios.forEach(audio => audio.pause());
             }
-        }
+        };
 
-        function closeModalOnBackdrop(event, modalId) {
-            if (event.target.id === modalId) { closeModal(modalId); }
-        }
+        window.closeModalOnBackdrop = (event, modalId) => {
+            if (event.target.id === modalId) { window.closeModal(modalId); }
+        };
 
-        renderMurid();
+        // ==========================================
+        // FUNGSI ADMIN & FIRESTORE WRITE
+        // ==========================================
+        window.toggleLogin = () => {
+            document.getElementById('loginModal').classList.add('open');
+        };
+
+        window.loginAdmin = () => {
+            const email = document.getElementById('adminEmail').value;
+            const pass = document.getElementById('adminPassword').value;
+            signInWithEmailAndPassword(auth, email, pass)
+                .then(() => { alert("Login Berhasil! Anda kini bisa mengedit data murid."); window.closeModal('loginModal'); })
+                .catch(error => alert("Login gagal: Periksa email & password Anda."));
+        };
+        
+        window.logoutAdmin = () => {
+            signOut(auth).then(() => { alert("Logout berhasil."); window.closeModal('loginModal'); });
+        };
+
+        window.simpanDataMurid = async () => {
+            if(!isAdmin) return alert("Anda bukan admin!");
+            
+            const btn = document.getElementById('btnSaveMurid');
+            btn.innerText = "Menyimpan...";
+            
+            const id = document.getElementById('editId').value;
+            const muridRef = doc(db, "murid", id);
+            
+            try {
+                await updateDoc(muridRef, {
+                    // Menyimpan pesan yang diketik admin
+                    pesanGuru: document.getElementById('editPesan').value,
+                    quran: document.getElementById('editQuran').value,
+                    statusQuran: document.getElementById('editStatusQuran').value,
+                    hafalanTerakhir: document.getElementById('editHafalanTerakhir').value,
+                    hadits: document.getElementById('editHadits').value,
+                    statusHadits: document.getElementById('editStatusHadits').value,
+                    doa: document.getElementById('editDoa').value,
+                    statusDoa: document.getElementById('editStatusDoa').value
+                });
+
+                btn.innerText = "Simpan Perubahan";
+                window.closeModal('progressModal');
+            } catch (error) {
+                alert("Gagal menyimpan: " + error.message);
+                btn.innerText = "Simpan Perubahan";
+            }
+        };
+
+        // ============================================
+        // FUNGSI UPLOAD DATA LAMA (21 MURID ASLI) 
+        // ============================================
+        async function seedInitialData() {
+            document.getElementById('muridList').innerHTML = "<div style='text-align:center; width:100%; color:var(--gold);'>Memuat sistem dan sinkronisasi ke Firebase...<br>(Hanya terjadi sekali)</div>";
+            
+            const dataLamaUtuh = [
+                { nama: "Afifa Nor Sa'adah", quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 121", hadits: "Hadits Memberi Syafa'at", statusHadits: "selesai", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
+                { nama: "Ahmad Ameer Asy Syathir", quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 52", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
+                { nama: "Ahmad Mutawalli", quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 125", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
+                { nama: "Aisya Zhafara Effendi", quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 21", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
+                { nama: "Fahma Mustaghfirah Muthiah", quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 33", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
+                { nama: "Faiz", quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 72", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
+                { nama: "Kayra Aziza", quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 19", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
+                { nama: "Keisha Karunia Azka", quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 98", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
+                { nama: "M. Adrian Faeyza", quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 32", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
+                { nama: "Muhammad Aditya Yusuf", quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 19", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
+                { nama: "Muhammad Adnan Abiyu", quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "belum", hafalanTerakhir: "Surah Al-Baqarah ayat 7", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
+                { nama: "Muhammad Al Farisi Maulana", quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 187", hadits: "Hadits Memberi Syafa'at", statusHadits: "selesai", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
+                { nama: "Muhammad Habibi Fadhilah", quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 39", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
+                { nama: "Muhammad Hafidz Anshari", quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 34", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
+                { nama: "Muhammad Irza Rahman", quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 38", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
+                { nama: "Muhammad Ridha'e", quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 49", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
+                { nama: "Najwan Azhim Muntazhar", quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 58", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
+                { nama: "Nayla Khalishah Mumtazah", quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 65", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
+                { nama: "Rafa", quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 31", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
+                { nama: "Raisa Khalifah", quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 32", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
+                { nama: "Washfa Anindya Fairuz", quran: "Surah Al-Baqarah ayat 15-16", statusQuran: "belum", hafalanTerakhir: "Surah Al-Baqarah ayat 7", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false }
+            ];
+
+            for (const murid of dataLamaUtuh) {
+                const newDocRef = doc(collection(db, "murid"));
+                await setDoc(newDocRef, murid);
+            }
+        }
     </script>
 </body>
 </html>

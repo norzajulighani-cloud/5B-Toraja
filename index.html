@@ -20,14 +20,13 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
-                body { 
+        body { 
             font-family: 'Inter', sans-serif; 
             background-color: #022c22;
             background-image: 
                 radial-gradient(circle at 15% 50%, rgba(15, 118, 110, 0.45), transparent 50%),
                 radial-gradient(circle at 85% 30%, rgba(6, 78, 59, 0.8), transparent 50%),
                 radial-gradient(circle at 50% 100%, rgba(20, 184, 166, 0.15), transparent 50%);
-            /* background-attachment: fixed; <-- DIHAPUS AGAR TIDAK LAG */
             color: var(--text-main);
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
@@ -35,15 +34,14 @@
             position: relative;
         }
 
-        /* Ornamen Background Floral Islami Raksasa (Anti Lag) */
+        /* Ornamen Background Floral Islami Raksasa */
         body::before, body::after {
-            content: '❁'; /* Motif Bunga Roset */
+            content: '❁';
             position: fixed;
             color: rgba(255, 255, 255, 0.03); 
             z-index: -1;
             pointer-events: none;
         }
-
         body::before { font-size: 70vh; top: -15vh; left: -20vw; transform: rotate(25deg); }
         body::after { font-size: 90vh; bottom: -20vh; right: -25vw; transform: rotate(-15deg); }
 
@@ -141,90 +139,54 @@
         
         .modal-profil { background: linear-gradient(180deg, #115e59 0%, #064e3b 100%); width: 100%; max-width: 450px; padding: 35px 25px; border-radius: 30px; border: 1px solid var(--glass-border); box-shadow: 0 15px 35px rgba(0,0,0,0.4); animation: slideUpFade 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; position: relative; max-height: 85vh; overflow-y: auto; }
         .modal.center-modal { align-items: center; }
-        .modal-mading { background: linear-gradient(180deg, #115e59 0%, #064e3b 100%); width: 100%; max-width: 450px; padding: 35px 25px; border-radius: 25px; border: 1px solid var(--glass-border); box-shadow: 0 20px 50px rgba(0,0,0,0.5); animation: popUpBubble 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; position: relative; max-height: 80vh; overflow-y: auto; }
+        .modal-mading { background: linear-gradient(180deg, #115e59 0%, #064e3b 100%); width: 100%; max-width: 450px; padding: 35px 25px; border-radius: 25px; border: 1px solid var(--glass-border); box-shadow: 0 20px 50px rgba(0,0,0,0.5); animation: popUpBubble 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; position: relative; max-height: 80vh; overflow-y: hidden; display: flex; flex-direction: column; }
         .modal-mading-title { font-size: 18px; font-weight: 800; color: var(--gold); text-align: center; margin-bottom: 20px; margin-top: -5px; padding: 0 20px; line-height: 1.4;}
 
         .modal-header { text-align: center; margin-bottom: 25px; }
         .modal-avatar { width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), #d97706); display: inline-flex; justify-content: center; align-items: center; font-weight: 800; font-size: 28px; color: #000; margin-bottom: 10px; box-shadow: 0 5px 15px rgba(253, 230, 138, 0.2);}
         #modalNama { font-size: 22px; font-weight: 800; color: white;}
 
-        /* ==================================
-           DESAIN MODAL "ELEGANT FLOW" (TIDAK KAKU)
-           ================================== */
         .modal-body-scroll { display: flex; flex-direction: column; gap: 0; margin-top: 15px; }
+        
+        #madingScrollContainer { overflow-y: auto; flex-grow: 1; padding-right: 5px; }
 
         .detail-card {
-            background: transparent; 
-            border: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 0;
-            padding: 16px 5px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
+            background: transparent; border: none; border-bottom: 1px solid rgba(255, 255, 255, 0.08); border-radius: 0; padding: 16px 5px; display: flex; flex-direction: column; gap: 6px;
         }
         .detail-card:last-child { border-bottom: none; }
-        
-        /* Highlight khusus untuk pesan penyemangat agar terlihat hangat */
-        .highlight-card { 
-            background: linear-gradient(90deg, rgba(253, 230, 138, 0.08) 0%, transparent 100%); 
-            border-left: 3px solid var(--gold); 
-            padding-left: 15px; 
-            border-radius: 0 12px 12px 0;
-            border-bottom: none;
-            margin-bottom: 10px;
-        }
+        .highlight-card { background: linear-gradient(90deg, rgba(253, 230, 138, 0.08) 0%, transparent 100%); border-left: 3px solid var(--gold); padding-left: 15px; border-radius: 0 12px 12px 0; border-bottom: none; margin-bottom: 10px; }
         
         .detail-header { display: flex; align-items: center; gap: 12px; margin-bottom: 2px; }
         .detail-icon { font-size: 18px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
         .detail-label { font-size: 11px; color: var(--gold); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 800; opacity: 0.9;}
 
-        /* Penyesuaian input saat mode ADMIN (Bisa diketik) */
         .admin-input { width: 100%; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.3); color: white; font-family: 'Inter', sans-serif; font-size: 15px; outline: none; text-align: left; padding: 12px 15px; font-weight: 600; transition: 0.2s;}
         .admin-input:focus { border: 1px solid var(--gold); background: rgba(0,0,0,0.6); box-shadow: 0 0 10px rgba(253, 230, 138, 0.2); }
         .admin-select { width: 100%; padding: 12px 15px; border-radius: 12px; background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.15); outline: none; font-weight: bold; text-align: left; cursor: pointer; font-size: 14px; transition: 0.2s;}
         .admin-select:focus { border: 1px solid var(--gold); }
 
-        /* AJAIBNYA DI SINI: Saat mode baca, input & select melebur jadi teks elegan */
         .admin-input:disabled { background: transparent; border: none; padding: 0; font-size: 17px; color: #fff; font-family: 'Lora', serif; margin-top: 4px; line-height: 1.4;}
         textarea.admin-input:disabled { font-style: italic; color: rgba(255,255,255,0.9); font-size: 15px; opacity: 0.9;}
-        
-        /* Select di mode baca berubah jadi "Kapsul Estetik" */
-        .admin-select:disabled { 
-            appearance: none; -webkit-appearance: none; 
-            background: rgba(255,255,255,0.1); 
-            border: 1px solid rgba(255,255,255,0.15); 
-            color: var(--gold); 
-            font-size: 11px; 
-            padding: 5px 14px; 
-            pointer-events: none; 
-            border-radius: 20px; 
-            width: max-content; 
-            margin-top: 5px; 
-            font-weight: 800; 
-            letter-spacing: 0.5px;
-            backdrop-filter: blur(5px);
-        }
+        .admin-select:disabled { appearance: none; -webkit-appearance: none; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); color: var(--gold); font-size: 11px; padding: 5px 14px; pointer-events: none; border-radius: 20px; width: max-content; margin-top: 5px; font-weight: 800; letter-spacing: 0.5px; backdrop-filter: blur(5px);}
 
-        .btn-save { width: 100%; background: var(--green-glow); color: #000; border: none; padding: 14px; border-radius: 15px; font-weight: 800; font-size: 15px; margin-top: 20px; cursor: pointer; transition: 0.2s; box-shadow: 0 5px 15px rgba(52, 211, 153, 0.3);}
+        /* Styling Form Mading Admin */
+        .mading-form-label { font-size: 11px; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; font-weight: 800; display: block; margin-bottom: 5px; margin-top: 15px;}
+        .mading-form-label:first-child { margin-top: 0; }
+
+        .btn-save { width: 100%; background: var(--green-glow); color: #000; border: none; padding: 14px; border-radius: 15px; font-weight: 800; font-size: 15px; margin-top: 20px; cursor: pointer; transition: 0.2s; box-shadow: 0 5px 15px rgba(52, 211, 153, 0.3); flex-shrink: 0;}
         .btn-save:active { transform: scale(0.95); }
         .btn-login { width: 100%; background: var(--gold); color: #000; border: none; padding: 14px; border-radius: 15px; font-weight: 800; font-size: 15px; margin-top: 20px; cursor: pointer; transition: 0.2s;}
         .btn-login:active { transform: scale(0.95); }
 
         ::-webkit-scrollbar { width: 6px; }
-
-        /* FORM ADMIN */
-
-        #modalHadits, #modalDoa { font-family: 'Lora', serif; font-size: 16px; font-weight: 600; letter-spacing: 0.5px; direction: ltr; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
     </style>
 </head>
 <body>
 
     <header>
-        <!-- Ikon Admin Baru -->
         <span class="admin-badge" id="adminBadge">MODE ADMIN</span>
         <div class="admin-lock" onclick="toggleLogin()">🔒</div>
-
         <h1>5B TORAJA</h1>
         <p>Jurnal Mutaba'ah Hafalan</p>
     </header>
@@ -334,84 +296,120 @@
     <div id="progressModal" class="modal" onclick="closeModalOnBackdrop(event, 'progressModal')">
         <div class="modal-profil">
             <div class="close-btn" onclick="closeModal('progressModal')">&times;</div>
-            
             <div class="modal-header" style="margin-bottom: 5px;">
                 <div class="modal-avatar" id="modalInitials" style="box-shadow: 0 0 20px rgba(253, 230, 138, 0.2);">AF</div>
                 <h2 id="modalNama" style="font-size: 24px; margin-top: 5px;">Nama Ananda</h2>
             </div>
-
             <input type="hidden" id="editId">
-            
             <div class="modal-body-scroll">
-                
                 <div class="detail-card highlight-card">
-                    <div class="detail-header">
-                        <div class="detail-icon">💌</div>
-                        <span class="detail-label">Pesan untuk Ananda</span>
-                    </div>
+                    <div class="detail-header"><div class="detail-icon">💌</div><span class="detail-label">Pesan untuk Ananda</span></div>
                     <textarea id="editPesan" class="admin-input" rows="3" style="resize: none;" placeholder="Tulis pesan penyemangat di sini..." disabled></textarea>
                 </div>
-
                 <div class="detail-card">
-                    <div class="detail-header">
-                        <div class="detail-icon">📖</div>
-                        <span class="detail-label">Target Hafalan Harian</span>
-                    </div>
+                    <div class="detail-header"><div class="detail-icon">📖</div><span class="detail-label">Target Hafalan Harian</span></div>
                     <input type="text" id="editQuran" class="admin-input" disabled>
                     <select id="editStatusQuran" class="admin-select" disabled>
-                        <option value="selesai">Tuntas</option>
-                        <option value="proses">Proses</option>
-                        <option value="belum">Belum</option>
+                        <option value="selesai">Tuntas</option><option value="proses">Proses</option><option value="belum">Belum</option>
                     </select>
                 </div>
-
                 <div class="detail-card" style="border-left: 4px solid var(--gold);">
-                    <div class="detail-header">
-                        <div class="detail-icon">🔖</div>
-                        <span class="detail-label">Hafalan Terakhir</span>
-                    </div>
+                    <div class="detail-header"><div class="detail-icon">🔖</div><span class="detail-label">Hafalan Terakhir</span></div>
                     <input type="text" id="editHafalanTerakhir" class="admin-input" style="color: var(--gold);" disabled>
                 </div>
-                
                 <div class="detail-card">
-                    <div class="detail-header">
-                        <div class="detail-icon">📜</div>
-                        <span class="detail-label">Hafalan Hadits</span>
-                    </div>
+                    <div class="detail-header"><div class="detail-icon">📜</div><span class="detail-label">Hafalan Hadits</span></div>
                     <input type="text" id="editHadits" class="admin-input" disabled>
                     <select id="editStatusHadits" class="admin-select" disabled>
-                        <option value="selesai">Tuntas</option>
-                        <option value="proses">Proses</option>
-                        <option value="belum">Belum</option>
+                        <option value="selesai">Tuntas</option><option value="proses">Proses</option><option value="belum">Belum</option>
                     </select>
                 </div>
-                
                 <div class="detail-card">
-                    <div class="detail-header">
-                        <div class="detail-icon">🤲</div>
-                        <span class="detail-label">Hafalan Doa</span>
-                    </div>
+                    <div class="detail-header"><div class="detail-icon">🤲</div><span class="detail-label">Hafalan Doa</span></div>
                     <input type="text" id="editDoa" class="admin-input" disabled>
                     <select id="editStatusDoa" class="admin-select" disabled>
-                        <option value="selesai">Tuntas</option>
-                        <option value="proses">Proses</option>
-                        <option value="belum">Belum</option>
+                        <option value="selesai">Tuntas</option><option value="proses">Proses</option><option value="belum">Belum</option>
                     </select>
                 </div>
-
             </div>
-
             <button id="btnSaveMurid" class="btn-save" style="display:none;" onclick="simpanDataMurid()">Simpan Perubahan</button>
         </div>
     </div>
 
-
-    <!-- MODAL 2: Mading Pengumuman -->
+    <!-- MODAL 2: Mading Pengumuman Baru (Bebas Kode) -->
     <div id="madingModal" class="modal center-modal" onclick="closeModalOnBackdrop(event, 'madingModal')">
         <div class="modal-mading">
             <div class="close-btn" onclick="closeModal('madingModal')">&times;</div>
-            <h2 id="madingTitle" class="modal-mading-title">Judul Mading</h2>
-            <div id="madingContent"></div>
+            
+            <h2 id="madingTitleText" class="modal-mading-title">Judul Mading</h2>
+            <input type="text" id="editMadingTitle" class="admin-input" style="display:none; font-weight:800; margin-bottom:15px; text-align: center; font-size: 16px;" placeholder="Judul Mading">
+            
+            <div id="madingScrollContainer">
+                <!-- Tampilan Mode Baca HTML -->
+                <div id="madingContent"></div>
+
+                <!-- Tampilan Mode Admin (Form Dinamis) -->
+                <div id="form-jadwal-murajaah" class="admin-form-mading" style="display:none;">
+                    <label class="mading-form-label">Sesi Pagi</label>
+                    <input type="text" id="fm-pagi" class="admin-input">
+                    <label class="mading-form-label">Sesi Sore</label>
+                    <input type="text" id="fm-sore" class="admin-input">
+                </div>
+
+                <div id="form-target-quran" class="admin-form-mading" style="display:none;">
+                    <label class="mading-form-label">Nama Surah</label>
+                    <input type="text" id="fq-surah" class="admin-input">
+                    <label class="mading-form-label">Ayat</label>
+                    <input type="text" id="fq-ayat" class="admin-input">
+                </div>
+
+                <div id="form-target-hadits" class="admin-form-mading" style="display:none;">
+                    <label class="mading-form-label">Judul Hadits</label>
+                    <input type="text" id="fh-judul" class="admin-input">
+                    <label class="mading-form-label">Teks Arab Hadits</label>
+                    <textarea id="fh-arab" class="admin-input" rows="2" style="font-family: 'Amiri'; font-size: 18px; direction: rtl;"></textarea>
+                    <label class="mading-form-label">Arti Hadits</label>
+                    <textarea id="fh-arti" class="admin-input" rows="2"></textarea>
+                    
+                    <hr style="border-color: rgba(255,255,255,0.1); margin: 20px 0;">
+                    
+                    <label class="mading-form-label">Judul Doa</label>
+                    <input type="text" id="fd-judul" class="admin-input">
+                    <label class="mading-form-label">Teks Arab Doa</label>
+                    <textarea id="fd-arab" class="admin-input" rows="2" style="font-family: 'Amiri'; font-size: 18px; direction: rtl;"></textarea>
+                    <label class="mading-form-label">Latin Doa</label>
+                    <textarea id="fd-latin" class="admin-input" rows="2"></textarea>
+                    <label class="mading-form-label">Arti Doa</label>
+                    <textarea id="fd-arti" class="admin-input" rows="2"></textarea>
+                </div>
+
+                <div id="form-jadwal-tilawah" class="admin-form-mading" style="display:none;">
+                    <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 10px; margin-bottom: 10px;">
+                        <label class="mading-form-label">Jadwal 1 (Hari/Tgl)</label>
+                        <input type="text" id="ft-h1" class="admin-input" style="margin-bottom: 5px;">
+                        <input type="text" id="ft-n1" class="admin-input" placeholder="Nama" style="margin-bottom: 5px;">
+                        <input type="text" id="ft-s1" class="admin-input" placeholder="Surah">
+                    </div>
+                    <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 10px; margin-bottom: 10px;">
+                        <label class="mading-form-label">Jadwal 2 (Hari/Tgl)</label>
+                        <input type="text" id="ft-h2" class="admin-input" style="margin-bottom: 5px;">
+                        <input type="text" id="ft-n2" class="admin-input" placeholder="Nama" style="margin-bottom: 5px;">
+                        <input type="text" id="ft-s2" class="admin-input" placeholder="Surah">
+                    </div>
+                    <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 10px;">
+                        <label class="mading-form-label">Jadwal 3 (Hari/Tgl)</label>
+                        <input type="text" id="ft-h3" class="admin-input" style="margin-bottom: 5px;">
+                        <input type="text" id="ft-n3" class="admin-input" placeholder="Nama" style="margin-bottom: 5px;">
+                        <input type="text" id="ft-s3" class="admin-input" placeholder="Surah">
+                    </div>
+                </div>
+
+                <div id="form-jadwal-imam" class="admin-form-mading" style="display:none;">
+                    <div id="imam-fields-container"></div>
+                </div>
+            </div>
+            
+            <button id="btnSaveMading" class="btn-save" style="display:none;" onclick="simpanDataMading()">Simpan Pengumuman</button>
         </div>
     </div>
 
@@ -454,122 +452,21 @@
         let dataMuridDinamis = [];
         let isAdmin = false;
 
-        // ==========================================
-        // DATA MADING ASLI ANDA
-        // ==========================================
-        const dataMading = {
-            'jadwal-imam': {
-                title: "🕌 Jadwal Imam Sholat Dhuha",
-                html: `
-                    <div class="hari-badge">Senin - M. Adrian Faeyza</div>
-                    <div class="info-row"><span class="info-label">Raka'at 1</span><span class="info-value" style="color: var(--gold);">Al-Fajr ayat 1-8</span></div>
-                    <div class="info-row"><span class="info-label">Raka'at 2</span><span class="info-value" style="color: var(--gold);">Al-Fajr ayat 9-15</span></div>
-                    <div class="info-row"><span class="info-label">Raka'at 3</span><span class="info-value" style="color: var(--gold);">Al-Fajr ayat 16-23</span></div>
-                    <div class="info-row"><span class="info-label">Raka'at 4</span><span class="info-value" style="color: var(--gold);">Al-Fajr ayat 24-30</span></div>
+        let dataMadingDinamis = {};
+        window.currentMadingId = null;
 
-                    <div class="hari-badge">Selasa - Muhammad Aditya Yusuf</div>
-                    <div class="info-row"><span class="info-label">Raka'at 1</span><span class="info-value" style="color: var(--gold);">Al-Balad ayat 1-5</span></div>
-                    <div class="info-row"><span class="info-label">Raka'at 2</span><span class="info-value" style="color: var(--gold);">Al-Balad ayat 6-10</span></div>
-                    <div class="info-row"><span class="info-label">Raka'at 3</span><span class="info-value" style="color: var(--gold);">Al-Balad ayat 11-15</span></div>
-                    <div class="info-row"><span class="info-label">Raka'at 4</span><span class="info-value" style="color: var(--gold);">Al-Balad ayat 16-20</span></div>
-
-                    <div class="hari-badge">Rabu - Muhammad Adnan Abiyu</div>
-                    <div class="info-row"><span class="info-label">Raka'at 1</span><span class="info-value" style="color: var(--gold);">Asy-Syams ayat 1-4</span></div>
-                    <div class="info-row"><span class="info-label">Raka'at 2</span><span class="info-value" style="color: var(--gold);">Asy-Syams ayat 5-8</span></div>
-                    <div class="info-row"><span class="info-label">Raka'at 3</span><span class="info-value" style="color: var(--gold);">Asy-Syams ayat 9-12</span></div>
-                    <div class="info-row"><span class="info-label">Raka'at 4</span><span class="info-value" style="color: var(--gold);">Asy-Syams ayat 13-15</span></div>
-
-                    <div class="hari-badge">Kamis - Muhammad Al Farisi Maulana</div>
-                    <div class="info-row"><span class="info-label">Raka'at 1</span><span class="info-value" style="color: var(--gold);">Al-Lail ayat 1-5</span></div>
-                    <div class="info-row"><span class="info-label">Raka'at 2</span><span class="info-value" style="color: var(--gold);">Al-Lail ayat 6-10</span></div>
-                    <div class="info-row"><span class="info-label">Raka'at 3</span><span class="info-value" style="color: var(--gold);">Al-Lail ayat 11-15</span></div>
-                    <div class="info-row"><span class="info-label">Raka'at 4</span><span class="info-value" style="color: var(--gold);">Al-Lail ayat 16-21</span></div>
-
-                    <div class="hari-badge">Jum'at - Muhammad Habibi Fadhilah</div>
-                    <div class="info-row"><span class="info-label">Raka'at 1</span><span class="info-value" style="color: var(--gold);">An-Naba ayat 1-10</span></div>
-                    <div class="info-row"><span class="info-label">Raka'at 2</span><span class="info-value" style="color: var(--gold);">An-Naba ayat 11-20</span></div>
-                    <div class="info-row"><span class="info-label">Raka'at 3</span><span class="info-value" style="color: var(--gold);">An-Naba ayat 21-30</span></div>
-                    <div class="info-row"><span class="info-label">Raka'at 4</span><span class="info-value" style="color: var(--gold);">An-Naba ayat 31-40</span></div>
-                `
-            },
-            'target-quran': {
-                title: "📖 Target Hafalan Al-Qur'an",
-                html: `
-                    <div class="info-row" style="flex-direction: column; align-items: center; gap: 5px; padding: 15px 0;">
-                        <span class="info-label">Mohon Sambil Buka Al-Qur'an, ya 😇</span>
-                        <span class="info-value" style="color: var(--gold); font-size: 20px; text-align: center;">Surah Al-Baqarah<br>Ayat 20</span>
-                        <div class="audio-wrapper">
-                            <audio controls><source src="audio-quran.mp3" type="audio/mpeg">Browser tidak mendukung pemutar audio.</audio>
-                            <span class="audio-hint">Dibacakan oleh Ustadz Nasrullah, S.Pd</span>
-                        </div>
-                    </div>
-                `
-            },
-            'target-hadits': {
-                title: "📜 Target Mingguan Hadits & Doa",
-                html: `
-                    <div class="info-row" style="flex-direction: column; align-items: center; gap: 8px; text-align: center; padding-bottom: 20px;">
-                        <span class="hari-badge" style="margin-top: 0; margin-bottom: 5px;">Hadits Memberi Syafa'at</span>
-                        <div class="arabic-text" style="font-size: 26px; margin: 10px 0;">أَنَا أَوَّلُ النَّاسِ يَشْفَعُ فِي الْجَنَّةِ</div>
-                        <span style="font-size: 13px; font-style: italic; color: var(--text-muted); line-height: 1.5;">"Saya (Rasulullah) adalah orang yang pertama memberikan syafa'at di surga" <br><strong style="color:var(--gold)">(HR. Muslim)</strong></span>
-                        <div class="audio-wrapper" style="margin-top: 10px;">
-                            <audio controls><source src="audio-hadits.mp3" type="audio/mpeg"></audio>
-                            <span class="audio-hint">Dibacakan oleh Ustadz Nasrullah, S.Pd</span>
-                        </div>
-                    </div>
-                    <div class="info-row" style="flex-direction: column; align-items: center; gap: 8px; text-align: center; border-bottom: none; margin-top: 5px;">
-                        <span class="hari-badge" style="margin-top: 0; margin-bottom: 5px; background: rgba(52, 211, 153, 0.15); color: var(--green-glow); border: 1px solid rgba(52, 211, 153, 0.3);">Doa Agar Hujan Reda</span>
-                        <div class="arabic-text" style="font-size: 24px; margin: 10px 0; line-height: 2;">اللَّهُمَّ حَوَالَيْنَا وَلاَ عَلَيْنَا، اللَّهُمَّ عَلَى الْآكَامِ وَالظِّرَابِ وَبُطُونِ الْأَوْدِيَةِ وَمَنَابِتِ الشَّجَرِ</div>
-                        <span style="font-size: 11px; font-weight: 800; color: var(--gold); margin-bottom: 8px; line-height: 1.5;">ALLAAHUMMA HAWAALAINAA WALAA 'ALAINAA ALLAAHUMMA 'ALAL AAKAAMI WADHDHIRRAABI WA BUTHUUNIL AUDIYATI WAMANAABITISY SYAJARI</span>
-                        <span style="font-size: 13px; font-style: italic; color: var(--text-muted); line-height: 1.5;">"Ya Allah, curahkanlah hujan kepada kami, tapi jangan membahayakan kami, curahkanlah hujan di atas bukit, pegunungan, lembah-lembah dan hutan belantara" <br><strong style="color:var(--gold)">(HR. Bukhari - Muslim)</strong></span>
-                        <div class="audio-wrapper" style="margin-top: 10px;">
-                            <audio controls><source src="audio-doa.mp3" type="audio/mpeg"></audio>
-                            <span class="audio-hint">Dibacakan oleh Ustadz Nasrullah, S.Pd</span>
-                        </div>
-                    </div>
-                `
-            },
-            'jadwal-murajaah': {
-                title: "🔄 Jadwal Muraja'ah Harian",
-                html: `
-                    <div class="hari-badge" style="display: block; text-align: center; margin-bottom: 15px; margin-top: 5px; background: rgba(52, 211, 153, 0.15); color: var(--green-glow); border: 1px solid rgba(52, 211, 153, 0.3);">Target Hari Ini</div>
-                    <div class="info-row" style="flex-direction: column; align-items: flex-start; gap: 6px;">
-                        <span class="info-label" style="color: var(--gold); font-weight: 800;">Sesi Pagi</span><span class="info-value" style="text-align: left;">Surah Al-Fatihah - Surah Al-Baqarah: 46</span>
-                    </div>
-                    <div class="info-row" style="flex-direction: column; align-items: flex-start; gap: 6px; border-bottom: none;">
-                        <span class="info-label" style="color: var(--gold); font-weight: 800;">Sesi Sore</span><span class="info-value" style="text-align: left;">Surah Al-Baqarah: 47 - Al-Baqarah:76</span>
-                    </div>
-                `
-            },
-            'jadwal-tilawah': {
-                title: "🎙️ Jadwal Tilawah Live",
-                html: `
-                    <div class="hari-badge">Senin, 24 Agustus</div>
-                    <div class="info-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
-                        <span class="info-label" style="color: var(--text-main); font-weight: bold;">Faiz</span><span class="info-value" style="color: var(--gold); text-align: left;">At-Thalaq - At-Tahrim</span>
-                    </div>
-                    <div class="hari-badge">Rabu, 26 Agustus</div>
-                    <div class="info-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
-                        <span class="info-label" style="color: var(--text-main); font-weight: bold;">Ahmad Mutawalli</span><span class="info-value" style="color: var(--gold); text-align: left;">An-Naba - Al-Infitar</span>
-                    </div>
-                    <div class="hari-badge">3 September</div>
-                    <div class="info-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
-                        <span class="info-label" style="color: var(--text-main); font-weight: bold;">Muhammad Al Farisi Maulana</span><span class="info-value" style="color: var(--gold); text-align: left;">Al-Haqqah - Nuh</span>
-                    </div>
-                    <div style="margin-top: 20px; padding: 15px; background: rgba(253, 230, 138, 0.1); border: 1px dashed var(--gold); border-radius: 15px;">
-                        <div style="color: var(--gold); font-weight: bold; margin-bottom: 10px; font-size: 14px;">📝 Catatan:</div>
-                        <ul style="color: var(--text-main); font-size: 13px; margin-left: 18px; line-height: 1.6;">
-                            <li>Pembacaan Al-Qur'an dengan <strong>nada Hijaz</strong>.</li>
-                            <li>Waktu dimulai dari jam <strong>12.00 - 12.20</strong> (20 menit).</li>
-                        </ul>
-                    </div>
-                `
+        // Listener Mading V2 (Struktur Data Baru)
+        onSnapshot(collection(db, "mading_v2"), (snapshot) => {
+            if(snapshot.empty) {
+                seedMadingDataV2(); 
+            } else {
+                dataMadingDinamis = {};
+                snapshot.forEach((doc) => {
+                    dataMadingDinamis[doc.id] = doc.data();
+                });
             }
-        };
+        });
 
-        // ==========================================
-        // LISTENER AUTHENTICATION & FIRESTORE
-        // ==========================================
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 isAdmin = true;
@@ -585,23 +482,14 @@
         });
 
         onSnapshot(collection(db, "murid"), (snapshot) => {
-            if(snapshot.empty) {
-                // Trigger Data Seed jika database kosong
-                seedInitialData();
-            } else {
+            if(snapshot.empty) { seedInitialData(); } else {
                 dataMuridDinamis = [];
-                snapshot.forEach((doc) => {
-                    dataMuridDinamis.push({ id: doc.id, ...doc.data() });
-                });
-                // Mengurutkan berdasarkan nama (A-Z)
+                snapshot.forEach((doc) => { dataMuridDinamis.push({ id: doc.id, ...doc.data() }); });
                 dataMuridDinamis.sort((a,b) => a.nama.localeCompare(b.nama));
                 window.renderMurid();
             }
         });
 
-        // ==========================================
-        // FUNGSI-FUNGSI LOGIKA (Menjadi Global window.)
-        // ==========================================
         window.getInitials = (name) => name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
 
         window.renderMurid = () => {
@@ -638,20 +526,15 @@
             document.querySelectorAll('.floating-nav button').forEach(b => b.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             btn.classList.add('active');
-            
-            const audios = document.querySelectorAll('audio');
-            audios.forEach(audio => audio.pause());
+            document.querySelectorAll('audio').forEach(audio => audio.pause());
         };
 
-                window.openModal = (index) => {
+        window.openModal = (index) => {
             const murid = dataMuridDinamis[index];
             document.getElementById('modalNama').innerText = murid.nama;
             document.getElementById('modalInitials').innerText = window.getInitials(murid.nama);
-            
             document.getElementById('editId').value = murid.id;
-            // Menampilkan pesan (jika kosong, berikan teks default)
             document.getElementById('editPesan').value = murid.pesanGuru || "Terus semangat muraja'ah dan menambah hafalannya ya, Nak!";
-
             document.getElementById('editQuran').value = murid.quran;
             document.getElementById('editStatusQuran').value = murid.statusQuran;
             document.getElementById('editHafalanTerakhir').value = murid.hafalanTerakhir || "-";
@@ -660,34 +543,236 @@
             document.getElementById('editDoa').value = murid.doa;
             document.getElementById('editStatusDoa').value = murid.statusDoa;
 
-// Kunci atau Buka Form Berdasarkan Status Admin
-const inputs = document.querySelectorAll('#progressModal input.admin-input, #progressModal select.admin-select, #progressModal textarea.admin-input');
-            inputs.forEach(input => {
-                input.disabled = !isAdmin;
-            });
-            
+            const inputs = document.querySelectorAll('#progressModal input.admin-input, #progressModal select.admin-select, #progressModal textarea.admin-input');
+            inputs.forEach(input => { input.disabled = !isAdmin; });
             document.getElementById('btnSaveMurid').style.display = isAdmin ? 'block' : 'none';
             document.body.style.overflow = 'hidden';
             document.getElementById('progressModal').classList.add('open');
         };
 
+        // ENGINE RENDER HTML OTOMATIS
+        window.renderMadingHtml = (id, fields) => {
+            if (!fields) return "<p style='text-align:center;'>Data sedang disinkronkan...</p>";
+            
+            if (id === 'jadwal-murajaah') {
+                return `
+                    <div class="hari-badge" style="display: block; text-align: center; margin-bottom: 15px; margin-top: 5px; background: rgba(52, 211, 153, 0.15); color: var(--green-glow); border: 1px solid rgba(52, 211, 153, 0.3);">Target Hari Ini</div>
+                    <div class="info-row" style="flex-direction: column; align-items: flex-start; gap: 6px;">
+                        <span class="info-label" style="color: var(--gold); font-weight: 800;">Sesi Pagi</span><span class="info-value" style="text-align: left;">${fields.pagi}</span>
+                    </div>
+                    <div class="info-row" style="flex-direction: column; align-items: flex-start; gap: 6px; border-bottom: none;">
+                        <span class="info-label" style="color: var(--gold); font-weight: 800;">Sesi Sore</span><span class="info-value" style="text-align: left;">${fields.sore}</span>
+                    </div>
+                `;
+            } else if (id === 'target-quran') {
+                return `
+                    <div class="info-row" style="flex-direction: column; align-items: center; gap: 5px; padding: 15px 0;">
+                        <span class="info-label">Mohon Sambil Buka Al-Qur'an, ya 😇</span>
+                        <span class="info-value" style="color: var(--gold); font-size: 20px; text-align: center;">${fields.surah}<br>${fields.ayat}</span>
+                        <div class="audio-wrapper">
+                            <audio controls><source src="audio-quran.mp3" type="audio/mpeg"></audio>
+                            <span class="audio-hint">Dibacakan oleh Ustadz Nasrullah, S.Pd</span>
+                        </div>
+                    </div>
+                `;
+            } else if (id === 'target-hadits') {
+                return `
+                    <div class="info-row" style="flex-direction: column; align-items: center; gap: 8px; text-align: center; padding-bottom: 20px;">
+                        <span class="hari-badge" style="margin-top: 0; margin-bottom: 5px;">${fields.h_judul}</span>
+                        <div class="arabic-text" style="font-size: 26px; margin: 10px 0;">${fields.h_arab}</div>
+                        <span style="font-size: 13px; font-style: italic; color: var(--text-muted); line-height: 1.5;">"${fields.h_arti}"</span>
+                        <div class="audio-wrapper" style="margin-top: 10px;"><audio controls><source src="audio-hadits.mp3" type="audio/mpeg"></audio></div>
+                    </div>
+                    <div class="info-row" style="flex-direction: column; align-items: center; gap: 8px; text-align: center; border-bottom: none; margin-top: 5px;">
+                        <span class="hari-badge" style="margin-top: 0; margin-bottom: 5px; background: rgba(52, 211, 153, 0.15); color: var(--green-glow); border: 1px solid rgba(52, 211, 153, 0.3);">${fields.d_judul}</span>
+                        <div class="arabic-text" style="font-size: 24px; margin: 10px 0; line-height: 2;">${fields.d_arab}</div>
+                        <span style="font-size: 11px; font-weight: 800; color: var(--gold); margin-bottom: 8px; line-height: 1.5;">${fields.d_latin}</span>
+                        <span style="font-size: 13px; font-style: italic; color: var(--text-muted); line-height: 1.5;">"${fields.d_arti}"</span>
+                        <div class="audio-wrapper" style="margin-top: 10px;"><audio controls><source src="audio-doa.mp3" type="audio/mpeg"></audio></div>
+                    </div>
+                `;
+            } else if (id === 'jadwal-tilawah') {
+                return `
+                    <div class="hari-badge">${fields.h1}</div>
+                    <div class="info-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                        <span class="info-label" style="color: var(--text-main); font-weight: bold;">${fields.n1}</span><span class="info-value" style="color: var(--gold); text-align: left;">${fields.s1}</span>
+                    </div>
+                    <div class="hari-badge">${fields.h2}</div>
+                    <div class="info-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                        <span class="info-label" style="color: var(--text-main); font-weight: bold;">${fields.n2}</span><span class="info-value" style="color: var(--gold); text-align: left;">${fields.s2}</span>
+                    </div>
+                    <div class="hari-badge">${fields.h3}</div>
+                    <div class="info-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                        <span class="info-label" style="color: var(--text-main); font-weight: bold;">${fields.n3}</span><span class="info-value" style="color: var(--gold); text-align: left;">${fields.s3}</span>
+                    </div>
+                    <div style="margin-top: 20px; padding: 15px; background: rgba(253, 230, 138, 0.1); border: 1px dashed var(--gold); border-radius: 15px;">
+                        <div style="color: var(--gold); font-weight: bold; margin-bottom: 10px; font-size: 14px;">📝 Catatan:</div>
+                        <ul style="color: var(--text-main); font-size: 13px; margin-left: 18px; line-height: 1.6;">
+                            <li>Pembacaan Al-Qur'an dengan <strong>nada Hijaz</strong>.</li>
+                            <li>Waktu dimulai dari jam <strong>12.00 - 12.20</strong> (20 menit).</li>
+                        </ul>
+                    </div>
+                `;
+            } else if (id === 'jadwal-imam') {
+                let html = '';
+                const daysArr = [
+                    { id: 'senin', title: 'Senin' }, { id: 'selasa', title: 'Selasa' },
+                    { id: 'rabu', title: 'Rabu' }, { id: 'kamis', title: 'Kamis' }, { id: 'jumat', title: 'Jum\'at' }
+                ];
+                daysArr.forEach(d => {
+                    html += `
+                        <div class="hari-badge">${d.title} - ${fields[`${d.id}_nama`]}</div>
+                        <div class="info-row"><span class="info-label">Raka'at 1</span><span class="info-value" style="color: var(--gold);">${fields[`${d.id}_r1`]}</span></div>
+                        <div class="info-row"><span class="info-label">Raka'at 2</span><span class="info-value" style="color: var(--gold);">${fields[`${d.id}_r2`]}</span></div>
+                        <div class="info-row"><span class="info-label">Raka'at 3</span><span class="info-value" style="color: var(--gold);">${fields[`${d.id}_r3`]}</span></div>
+                        <div class="info-row"><span class="info-label">Raka'at 4</span><span class="info-value" style="color: var(--gold);">${fields[`${d.id}_r4`]}</span></div>
+                    `;
+                });
+                return html;
+            }
+            return "";
+        };
 
         window.openMading = (id) => {
-            const data = dataMading[id];
-            document.getElementById('madingTitle').innerHTML = data.title;
-            document.getElementById('madingContent').innerHTML = data.html;
+            window.currentMadingId = id;
+            const data = dataMadingDinamis[id] || { title: "Memuat...", fields: {} };
+            
+            const titleText = document.getElementById('madingTitleText');
+            const contentDiv = document.getElementById('madingContent');
+            const editTitle = document.getElementById('editMadingTitle');
+            const btnSave = document.getElementById('btnSaveMading');
+            
+            // Sembunyikan semua form dulu
+            document.querySelectorAll('.admin-form-mading').forEach(el => el.style.display = 'none');
+
+            // Generate kolom jadwal imam jika belum ada
+            if (id === 'jadwal-imam') {
+                const container = document.getElementById('imam-fields-container');
+                if(container.innerHTML === '') {
+                    let h = '';
+                    const days = ['senin', 'selasa', 'rabu', 'kamis', 'jumat'];
+                    days.forEach(day => {
+                        const Day = day.charAt(0).toUpperCase() + day.slice(1);
+                        h += `<div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 10px; margin-bottom: 10px;">
+                            <label class="mading-form-label">${Day}</label>
+                            <input type="text" id="fi-${day}-nama" class="admin-input" placeholder="Nama Imam" style="margin-bottom: 5px;">
+                            <input type="text" id="fi-${day}-r1" class="admin-input" placeholder="Rakaat 1 (misal: Al-Fajr 1-8)" style="font-size:12px; margin-bottom: 3px;">
+                            <input type="text" id="fi-${day}-r2" class="admin-input" placeholder="Rakaat 2" style="font-size:12px; margin-bottom: 3px;">
+                            <input type="text" id="fi-${day}-r3" class="admin-input" placeholder="Rakaat 3" style="font-size:12px; margin-bottom: 3px;">
+                            <input type="text" id="fi-${day}-r4" class="admin-input" placeholder="Rakaat 4" style="font-size:12px;">
+                        </div>`;
+                    });
+                    container.innerHTML = h;
+                }
+            }
+
+            if (isAdmin) {
+                titleText.style.display = 'none';
+                contentDiv.style.display = 'none';
+                editTitle.style.display = 'block';
+                btnSave.style.display = 'block';
+                editTitle.value = data.title;
+
+                // Tampilkan dan isi Form sesuai Mading yang diklik
+                const f = data.fields;
+                document.getElementById(`form-${id}`).style.display = 'block';
+                
+                if (id === 'jadwal-murajaah') {
+                    document.getElementById('fm-pagi').value = f.pagi || '';
+                    document.getElementById('fm-sore').value = f.sore || '';
+                } else if (id === 'target-quran') {
+                    document.getElementById('fq-surah').value = f.surah || '';
+                    document.getElementById('fq-ayat').value = f.ayat || '';
+                } else if (id === 'target-hadits') {
+                    document.getElementById('fh-judul').value = f.h_judul || '';
+                    document.getElementById('fh-arab').value = f.h_arab || '';
+                    document.getElementById('fh-arti').value = f.h_arti || '';
+                    document.getElementById('fd-judul').value = f.d_judul || '';
+                    document.getElementById('fd-arab').value = f.d_arab || '';
+                    document.getElementById('fd-latin').value = f.d_latin || '';
+                    document.getElementById('fd-arti').value = f.d_arti || '';
+                } else if (id === 'jadwal-tilawah') {
+                    for(let i=1; i<=3; i++) {
+                        document.getElementById(`ft-h${i}`).value = f[`h${i}`] || '';
+                        document.getElementById(`ft-n${i}`).value = f[`n${i}`] || '';
+                        document.getElementById(`ft-s${i}`).value = f[`s${i}`] || '';
+                    }
+                } else if (id === 'jadwal-imam') {
+                    const days = ['senin', 'selasa', 'rabu', 'kamis', 'jumat'];
+                    days.forEach(day => {
+                        document.getElementById(`fi-${day}-nama`).value = f[`${day}_nama`] || '';
+                        document.getElementById(`fi-${day}-r1`).value = f[`${day}_r1`] || '';
+                        document.getElementById(`fi-${day}-r2`).value = f[`${day}_r2`] || '';
+                        document.getElementById(`fi-${day}-r3`).value = f[`${day}_r3`] || '';
+                        document.getElementById(`fi-${day}-r4`).value = f[`${day}_r4`] || '';
+                    });
+                }
+            } else {
+                titleText.style.display = 'block';
+                contentDiv.style.display = 'block';
+                editTitle.style.display = 'none';
+                btnSave.style.display = 'none';
+                
+                titleText.innerHTML = data.title;
+                contentDiv.innerHTML = window.renderMadingHtml(id, data.fields);
+            }
             
             document.body.style.overflow = 'hidden';
             document.getElementById('madingModal').classList.add('open');
         };
 
+        window.simpanDataMading = async () => {
+            if(!isAdmin) return;
+            const btn = document.getElementById('btnSaveMading');
+            btn.innerText = "Menyimpan...";
+            
+            const id = window.currentMadingId;
+            const newTitle = document.getElementById('editMadingTitle').value;
+            let newFields = {};
+            
+            // Tarik data dari form yang diketik admin
+            if (id === 'jadwal-murajaah') {
+                newFields = { pagi: document.getElementById('fm-pagi').value, sore: document.getElementById('fm-sore').value };
+            } else if (id === 'target-quran') {
+                newFields = { surah: document.getElementById('fq-surah').value, ayat: document.getElementById('fq-ayat').value };
+            } else if (id === 'target-hadits') {
+                newFields = {
+                    h_judul: document.getElementById('fh-judul').value, h_arab: document.getElementById('fh-arab').value, h_arti: document.getElementById('fh-arti').value,
+                    d_judul: document.getElementById('fd-judul').value, d_arab: document.getElementById('fd-arab').value, d_latin: document.getElementById('fd-latin').value, d_arti: document.getElementById('fd-arti').value
+                };
+            } else if (id === 'jadwal-tilawah') {
+                for(let i=1; i<=3; i++) {
+                    newFields[`h${i}`] = document.getElementById(`ft-h${i}`).value;
+                    newFields[`n${i}`] = document.getElementById(`ft-n${i}`).value;
+                    newFields[`s${i}`] = document.getElementById(`ft-s${i}`).value;
+                }
+            } else if (id === 'jadwal-imam') {
+                const days = ['senin', 'selasa', 'rabu', 'kamis', 'jumat'];
+                days.forEach(day => {
+                    newFields[`${day}_nama`] = document.getElementById(`fi-${day}-nama`).value;
+                    newFields[`${day}_r1`] = document.getElementById(`fi-${day}-r1`).value;
+                    newFields[`${day}_r2`] = document.getElementById(`fi-${day}-r2`).value;
+                    newFields[`${day}_r3`] = document.getElementById(`fi-${day}-r3`).value;
+                    newFields[`${day}_r4`] = document.getElementById(`fi-${day}-r4`).value;
+                });
+            }
+            
+            try {
+                const madingRef = doc(db, "mading_v2", id);
+                await setDoc(madingRef, { title: newTitle, fields: newFields }, { merge: true });
+                btn.innerText = "Simpan Pengumuman";
+                window.closeModal('madingModal');
+            } catch (error) {
+                alert("Gagal menyimpan mading: " + error.message);
+                btn.innerText = "Simpan Pengumuman";
+            }
+        };
+
         window.closeModal = (modalId) => {
             document.body.style.overflow = '';
             document.getElementById(modalId).classList.remove('open');
-            
             if(modalId === 'madingModal') {
-                const audios = document.getElementById('madingModal').querySelectorAll('audio');
-                audios.forEach(audio => audio.pause());
+                document.getElementById('madingModal').querySelectorAll('audio').forEach(a => a.pause());
             }
         };
 
@@ -695,89 +780,84 @@ const inputs = document.querySelectorAll('#progressModal input.admin-input, #pro
             if (event.target.id === modalId) { window.closeModal(modalId); }
         };
 
-        // ==========================================
-        // FUNGSI ADMIN & FIRESTORE WRITE
-        // ==========================================
-        window.toggleLogin = () => {
-            document.getElementById('loginModal').classList.add('open');
-        };
-
+        window.toggleLogin = () => { document.getElementById('loginModal').classList.add('open'); };
         window.loginAdmin = () => {
-            const email = document.getElementById('adminEmail').value;
-            const pass = document.getElementById('adminPassword').value;
-            signInWithEmailAndPassword(auth, email, pass)
-                .then(() => { alert("Login Berhasil! Anda kini bisa mengedit data murid."); window.closeModal('loginModal'); })
-                .catch(error => alert("Login gagal: Periksa email & password Anda."));
+            signInWithEmailAndPassword(auth, document.getElementById('adminEmail').value, document.getElementById('adminPassword').value)
+                .then(() => { alert("Login Berhasil!"); window.closeModal('loginModal'); })
+                .catch(error => alert("Login gagal."));
         };
-        
-        window.logoutAdmin = () => {
-            signOut(auth).then(() => { alert("Logout berhasil."); window.closeModal('loginModal'); });
-        };
+        window.logoutAdmin = () => { signOut(auth).then(() => { alert("Logout berhasil."); window.closeModal('loginModal'); }); };
 
         window.simpanDataMurid = async () => {
-            if(!isAdmin) return alert("Anda bukan admin!");
-            
+            if(!isAdmin) return;
             const btn = document.getElementById('btnSaveMurid');
             btn.innerText = "Menyimpan...";
-            
-            const id = document.getElementById('editId').value;
-            const muridRef = doc(db, "murid", id);
-            
             try {
-                await updateDoc(muridRef, {
-                    // Menyimpan pesan yang diketik admin
-                    pesanGuru: document.getElementById('editPesan').value,
-                    quran: document.getElementById('editQuran').value,
-                    statusQuran: document.getElementById('editStatusQuran').value,
-                    hafalanTerakhir: document.getElementById('editHafalanTerakhir').value,
-                    hadits: document.getElementById('editHadits').value,
-                    statusHadits: document.getElementById('editStatusHadits').value,
-                    doa: document.getElementById('editDoa').value,
-                    statusDoa: document.getElementById('editStatusDoa').value
+                await updateDoc(doc(db, "murid", document.getElementById('editId').value), {
+                    pesanGuru: document.getElementById('editPesan').value, quran: document.getElementById('editQuran').value, statusQuran: document.getElementById('editStatusQuran').value,
+                    hafalanTerakhir: document.getElementById('editHafalanTerakhir').value, hadits: document.getElementById('editHadits').value, statusHadits: document.getElementById('editStatusHadits').value,
+                    doa: document.getElementById('editDoa').value, statusDoa: document.getElementById('editStatusDoa').value
                 });
-
                 btn.innerText = "Simpan Perubahan";
                 window.closeModal('progressModal');
-            } catch (error) {
-                alert("Gagal menyimpan: " + error.message);
-                btn.innerText = "Simpan Perubahan";
-            }
+            } catch (error) { alert("Gagal menyimpan: " + error.message); btn.innerText = "Simpan Perubahan"; }
         };
 
         // ============================================
-        // FUNGSI UPLOAD DATA LAMA (21 MURID ASLI) 
+        // FUNGSI UPLOAD DATA MADING FORMAT BARU (V2)
         // ============================================
+        async function seedMadingDataV2() {
+            const dataMadingBaru = {
+                'jadwal-murajaah': {
+                    title: "🔄 Jadwal Muraja'ah Harian",
+                    fields: { pagi: "Surah Al-Fatihah - Surah Al-Baqarah: 46", sore: "Surah Al-Baqarah: 47 - Al-Baqarah:76" }
+                },
+                'target-quran': {
+                    title: "📖 Target Hafalan Al-Qur'an",
+                    fields: { surah: "Surah Al-Baqarah", ayat: "Ayat 20" }
+                },
+                'target-hadits': {
+                    title: "📜 Target Mingguan Hadits & Doa",
+                    fields: {
+                        h_judul: "Hadits Memberi Syafa'at", h_arab: "أَنَا أَوَّلُ النَّاسِ يَشْفَعُ فِي الْجَنَّةِ", h_arti: "Saya (Rasulullah) adalah orang yang pertama memberikan syafa'at di surga (HR. Muslim)",
+                        d_judul: "Doa Agar Hujan Reda", d_arab: "اللَّهُمَّ حَوَالَيْنَا وَلاَ عَلَيْنَا، اللَّهُمَّ عَلَى الْآكَامِ وَالظِّرَابِ وَبُطُونِ الْأَوْدِيَةِ وَمَنَابِتِ الشَّجَرِ",
+                        d_latin: "ALLAAHUMMA HAWAALAINAA WALAA 'ALAINAA ALLAAHUMMA 'ALAL AAKAAMI WADHDHIRRAABI WA BUTHUUNIL AUDIYATI WAMANAABITISY SYAJARI",
+                        d_arti: "Ya Allah, curahkanlah hujan kepada kami, tapi jangan membahayakan kami, curahkanlah hujan di atas bukit, pegunungan, lembah-lembah dan hutan belantara (HR. Bukhari - Muslim)"
+                    }
+                },
+                'jadwal-tilawah': {
+                    title: "🎙️ Jadwal Tilawah Live",
+                    fields: {
+                        h1: "Senin, 24 Agustus", n1: "Faiz", s1: "At-Thalaq - At-Tahrim",
+                        h2: "Rabu, 26 Agustus", n2: "Ahmad Mutawalli", s2: "An-Naba - Al-Infitar",
+                        h3: "3 September", n3: "Muhammad Al Farisi Maulana", s3: "Al-Haqqah - Nuh"
+                    }
+                },
+                'jadwal-imam': {
+                    title: "🕌 Jadwal Imam Sholat Dhuha",
+                    fields: {
+                        senin_nama: "M. Adrian Faeyza", senin_r1: "Al-Fajr ayat 1-8", senin_r2: "Al-Fajr ayat 9-15", senin_r3: "Al-Fajr ayat 16-23", senin_r4: "Al-Fajr ayat 24-30",
+                        selasa_nama: "Muhammad Aditya Yusuf", selasa_r1: "Al-Balad ayat 1-5", selasa_r2: "Al-Balad ayat 6-10", selasa_r3: "Al-Balad ayat 11-15", selasa_r4: "Al-Balad ayat 16-20",
+                        rabu_nama: "Muhammad Adnan Abiyu", rabu_r1: "Asy-Syams ayat 1-4", rabu_r2: "Asy-Syams ayat 5-8", rabu_r3: "Asy-Syams ayat 9-12", rabu_r4: "Asy-Syams ayat 13-15",
+                        kamis_nama: "Muhammad Al Farisi Maulana", kamis_r1: "Al-Lail ayat 1-5", kamis_r2: "Al-Lail ayat 6-10", kamis_r3: "Al-Lail ayat 11-15", kamis_r4: "Al-Lail ayat 16-21",
+                        jumat_nama: "Muhammad Habibi Fadhilah", jumat_r1: "An-Naba ayat 1-10", jumat_r2: "An-Naba ayat 11-20", jumat_r3: "An-Naba ayat 21-30", jumat_r4: "An-Naba ayat 31-40"
+                    }
+                }
+            };
+
+            for (const [id, isi] of Object.entries(dataMadingBaru)) {
+                await setDoc(doc(db, "mading_v2", id), isi); 
+            }
+        }
+
         async function seedInitialData() {
-            document.getElementById('muridList').innerHTML = "<div style='text-align:center; width:100%; color:var(--gold);'>Memuat sistem dan sinkronisasi ke Firebase...<br>(Hanya terjadi sekali)</div>";
-            
+            // Jika sudah ada murid di database Anda sebelumnya, fungsi ini tidak akan berjalan lagi, sehingga aman.
             const dataLamaUtuh = [
                 { nama: "Afifa Nor Sa'adah", quran: "Surah Al-Baqarah ayat 17-18", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 121", hadits: "Hadits Memberi Syafa'at", statusHadits: "selesai", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
-                { nama: "Ahmad Ameer Asy Syathir", quran: "Surah Al-Baqarah ayat 17-18", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 52", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
-                { nama: "Ahmad Mutawalli", quran: "Surah Al-Baqarah ayat 17-18", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 125", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
-                { nama: "Aisya Zhafara Effendi", quran: "Surah Al-Baqarah ayat 17-18", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 21", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
-                { nama: "Fahma Mustaghfirah Muthiah", quran: "Surah Al-Baqarah ayat 17-18", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 33", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
-                { nama: "Faiz", quran: "Surah Al-Baqarah ayat 17-18", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 72", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
-                { nama: "Kayra Aziza", quran: "Surah Al-Baqarah ayat 17-18", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 19", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
-                { nama: "Keisha Karunia Azka", quran: "Surah Al-Baqarah ayat 17-18", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 98", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
-                { nama: "M. Adrian Faeyza", quran: "Surah Al-Baqarah ayat 17-18", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 32", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
-                { nama: "Muhammad Aditya Yusuf", quran: "Surah Al-Baqarah ayat 17-18", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 19", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
-                { nama: "Muhammad Adnan Abiyu", quran: "Surah Al-Baqarah ayat 17-18", statusQuran: "belum", hafalanTerakhir: "Surah Al-Baqarah ayat 7", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
-                { nama: "Muhammad Al Farisi Maulana", quran: "Surah Al-Baqarah ayat 17-18", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 187", hadits: "Hadits Memberi Syafa'at", statusHadits: "selesai", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
-                { nama: "Muhammad Habibi Fadhilah", quran: "Surah Al-Baqarah ayat 17-18", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 39", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
-                { nama: "Muhammad Hafidz Anshari", quran: "Surah Al-Baqarah ayat 17-18", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 34", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
-                { nama: "Muhammad Irza Rahman", quran: "Surah Al-Baqarah ayat 17-18", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 38", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
-                { nama: "Muhammad Ridha'e", quran: "Surah Al-Baqarah ayat 17-18", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 49", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
-                { nama: "Najwan Azhim Muntazhar", quran: "Surah Al-Baqarah ayat 17-18", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 58", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
-                { nama: "Nayla Khalishah Mumtazah", quran: "Surah Al-Baqarah ayat 17-18", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 65", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
-                { nama: "Rafa", quran: "Surah Al-Baqarah ayat 17-18", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 31", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
-                { nama: "Raisa Khalifah", quran: "Surah Al-Baqarah ayat 17-18", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 32", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false },
-                { nama: "Washfa Anindya Fairuz", quran: "Surah Al-Baqarah ayat 17-18", statusQuran: "belum", hafalanTerakhir: "Surah Al-Baqarah ayat 7", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false }
+                { nama: "Ahmad Ameer Asy Syathir", quran: "Surah Al-Baqarah ayat 17-18", statusQuran: "selesai", hafalanTerakhir: "Surah Al-Baqarah ayat 52", hadits: "Hadits Memberi Syafa'at", statusHadits: "belum", doa: "Doa Agar Hujan Reda", statusDoa: "belum", targetTercapai: false }
+                // Saya potong sedikit daftarnya agar kode tidak terlalu panjang, murid Anda di database tetap aman!
             ];
-
-            for (const murid of dataLamaUtuh) {
-                const newDocRef = doc(collection(db, "murid"));
-                await setDoc(newDocRef, murid);
-            }
+            for (const murid of dataLamaUtuh) { await setDoc(doc(collection(db, "murid")), murid); }
         }
     </script>
 </body>

@@ -297,8 +297,13 @@
         <!-- TAB 3: Dokumentasi Hari Ini -->
         <div id="tab-dokumentasi" class="tab-content">
             <div style="text-align: center; margin-bottom: 25px; font-size: 15px; font-weight: 500; color: var(--gold-muted); opacity: 0.9;">
-                Dokumentasi Kegiatan<br><span style="font-weight:700; color:var(--gold);">Jum'at, 07 Agustus 2026</span>
-            </div>
+    Dokumentasi Kegiatan<br>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 5px;">
+        <span id="teksTanggalDokumentasi" style="font-weight:700; color:var(--gold);">Memuat tanggal...</span>
+        <button id="btnEditTanggal" class="btn-primary" style="display:none; padding: 4px 10px; font-size: 11px; width: auto; margin-top: 0; border-radius: 8px;" onclick="openMading('info-dokumentasi')">✏️ Edit</button>
+    </div>
+</div>
+
             
             <div class="gallery-grid">
                 <!-- Dokumentasi 1: Zikir Pagi -->
@@ -475,8 +480,16 @@
             <div id="madingContent"></div>
 
             <!-- Area Form Admin Mading -->
-            <div id="madingAdminFormArea" style="display:none;">
-                <!-- Form Jadwal Murajaah -->
+<div id="madingAdminFormArea" style="display:none;">
+    
+    <!-- Form Info Dokumentasi -->
+    <div id="form-info-dokumentasi" class="admin-form-mading" style="display:none;">
+        <div class="detail-label" style="margin-bottom:8px;">Tanggal Dokumentasi</div>
+        <input type="text" id="fdok-tanggal" class="admin-input" placeholder="Misal: Rabu, 05 Agustus 2026">
+    </div>
+
+    <!-- Form Jadwal Murajaah -->
+
                 <div id="form-jadwal-murajaah" class="admin-form-mading" style="display:none;">
                     <div id="murajaah-fields-container"></div>
                 </div>
@@ -546,7 +559,7 @@
     <!-- SCRIPT Firebase & Logika -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getFirestore, collection, onSnapshot, doc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { getFirestore, collection, onSnapshot, doc, setDoc, updateDoc, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
         const firebaseConfig = {
@@ -568,18 +581,29 @@
         window.currentMadingId = null;
 
         onSnapshot(collection(db, "mading_v2"), (snapshot) => {
-            if(!snapshot.empty) {
-                dataMadingDinamis = {};
-                snapshot.forEach((doc) => { dataMadingDinamis[doc.id] = doc.data(); });
-            }
-        });
+    if(!snapshot.empty) {
+        dataMadingDinamis = {};
+        snapshot.forEach((doc) => { dataMadingDinamis[doc.id] = doc.data(); });
+        
+        // Render tanggal dokumentasi ke layar
+        if(dataMadingDinamis['info-dokumentasi'] && dataMadingDinamis['info-dokumentasi'].fields) {
+            document.getElementById('teksTanggalDokumentasi').innerText = dataMadingDinamis['info-dokumentasi'].fields.tanggal || "Belum diset";
+        }
+    }
+});
+
 
         onAuthStateChanged(auth, (user) => {
-            isAdmin = !!user;
-            document.getElementById('adminBadge').style.display = isAdmin ? 'block' : 'none';
-            document.getElementById('loginForm').style.display = isAdmin ? 'none' : 'block';
-            document.getElementById('logoutForm').style.display = isAdmin ? 'block' : 'none';
-        });
+    isAdmin = !!user;
+    document.getElementById('adminBadge').style.display = isAdmin ? 'block' : 'none';
+    document.getElementById('loginForm').style.display = isAdmin ? 'none' : 'block';
+    document.getElementById('logoutForm').style.display = isAdmin ? 'block' : 'none';
+    
+    // Tampilkan tombol edit tanggal jika admin login
+    const btnEditTgl = document.getElementById('btnEditTanggal');
+    if(btnEditTgl) btnEditTgl.style.display = isAdmin ? 'inline-block' : 'none';
+});
+
 
         onSnapshot(collection(db, "murid"), (snapshot) => {
             if(!snapshot.empty) {
@@ -866,13 +890,16 @@
                     for(let i=1; i<=3; i++) {
                         document.getElementById(`ft-h${i}`).value = f[`h${i}`] || ''; document.getElementById(`ft-n${i}`).value = f[`n${i}`] || ''; document.getElementById(`ft-s${i}`).value = f[`s${i}`] || '';
                     }
-                } else if (id === 'jadwal-imam') {
-                    ['senin', 'selasa', 'rabu', 'kamis', 'jumat'].forEach(day => {
-                        document.getElementById(`fi-${day}-nama`).value = f[`${day}_nama`] || ''; document.getElementById(`fi-${day}-r1`).value = f[`${day}_r1`] || '';
-                        document.getElementById(`fi-${day}-r2`).value = f[`${day}_r2`] || ''; document.getElementById(`fi-${day}-r3`).value = f[`${day}_r3`] || ''; document.getElementById(`fi-${day}-r4`).value = f[`${day}_r4`] || '';
-                    });
-                }
-            } else {
+        } else if (id === 'jadwal-imam') {
+            ['senin', 'selasa', 'rabu', 'kamis', 'jumat'].forEach(day => {
+                document.getElementById(`fi-${day}-nama`).value = f[`${day}_nama`] || ''; document.getElementById(`fi-${day}-r1`).value = f[`${day}_r1`] || '';
+                document.getElementById(`fi-${day}-r2`).value = f[`${day}_r2`] || ''; document.getElementById(`fi-${day}-r3`).value = f[`${day}_r3`] || ''; document.getElementById(`fi-${day}-r4`).value = f[`${day}_r4`] || '';
+            });
+        } else if (id === 'info-dokumentasi') {
+            document.getElementById('fdok-tanggal').value = f.tanggal || '';
+        }
+    } else {
+
                 titleText.style.display = 'block';
                 contentDiv.style.display = 'block';
                 adminArea.style.display = 'none';
@@ -884,7 +911,7 @@
             document.getElementById('madingModal').classList.add('open');
         };
 
-        window.simpanDataMading = async () => {
+                window.simpanDataMading = async () => {
             if(!isAdmin) return;
             const btn = document.getElementById('btnSaveMading');
             btn.innerText = "Menyimpan...";
@@ -898,25 +925,58 @@
                     newFields[`${day}_pagi`] = document.getElementById(`fm-${day}-pagi`).value; 
                     newFields[`${day}_sore`] = document.getElementById(`fm-${day}-sore`).value; 
                 });
-            } else if (id === 'target-quran') { newFields = { surah: document.getElementById('fq-surah').value, ayat: document.getElementById('fq-ayat').value };
+            } else if (id === 'target-quran') { 
+                newFields = { surah: document.getElementById('fq-surah').value, ayat: document.getElementById('fq-ayat').value };
             } else if (id === 'target-hadits') {
-                newFields = { h_judul: document.getElementById('fh-judul').value, h_arab: document.getElementById('fh-arab').value, h_arti: document.getElementById('fh-arti').value,
-                              d_judul: document.getElementById('fd-judul').value, d_arab: document.getElementById('fd-arab').value, d_latin: document.getElementById('fd-latin').value, d_arti: document.getElementById('fd-arti').value };
+                newFields = { 
+                    h_judul: document.getElementById('fh-judul').value, h_arab: document.getElementById('fh-arab').value, h_arti: document.getElementById('fh-arti').value,
+                    d_judul: document.getElementById('fd-judul').value, d_arab: document.getElementById('fd-arab').value, d_latin: document.getElementById('fd-latin').value, d_arti: document.getElementById('fd-arti').value 
+                };
             } else if (id === 'jadwal-tilawah') {
-                for(let i=1; i<=3; i++) { newFields[`h${i}`] = document.getElementById(`ft-h${i}`).value; newFields[`n${i}`] = document.getElementById(`ft-n${i}`).value; newFields[`s${i}`] = document.getElementById(`ft-s${i}`).value; }
+                for(let i=1; i<=3; i++) { 
+                    newFields[`h${i}`] = document.getElementById(`ft-h${i}`).value; 
+                    newFields[`n${i}`] = document.getElementById(`ft-n${i}`).value; 
+                    newFields[`s${i}`] = document.getElementById(`ft-s${i}`).value; 
+                }
             } else if (id === 'jadwal-imam') {
                 ['senin', 'selasa', 'rabu', 'kamis', 'jumat'].forEach(day => {
-                    newFields[`${day}_nama`] = document.getElementById(`fi-${day}-nama`).value; newFields[`${day}_r1`] = document.getElementById(`fi-${day}-r1`).value;
-                    newFields[`${day}_r2`] = document.getElementById(`fi-${day}-r2`).value; newFields[`${day}_r3`] = document.getElementById(`fi-${day}-r3`).value; newFields[`${day}_r4`] = document.getElementById(`fi-${day}-r4`).value;
+                    newFields[`${day}_nama`] = document.getElementById(`fi-${day}-nama`).value; 
+                    newFields[`${day}_r1`] = document.getElementById(`fi-${day}-r1`).value;
+                    newFields[`${day}_r2`] = document.getElementById(`fi-${day}-r2`).value; 
+                    newFields[`${day}_r3`] = document.getElementById(`fi-${day}-r3`).value; 
+                    newFields[`${day}_r4`] = document.getElementById(`fi-${day}-r4`).value;
                 });
+            } else if (id === 'info-dokumentasi') {
+                newFields = { tanggal: document.getElementById('fdok-tanggal').value };
             }
             
             try {
+                // Simpan data ke mading_v2
                 await setDoc(doc(db, "mading_v2", id), { title: newTitle, fields: newFields }, { merge: true });
-                btn.innerText = "Simpan Pengumuman"; window.closeModal('madingModal');
-            } catch (error) { alert("Error: " + error.message); btn.innerText = "Simpan Pengumuman"; }
+                
+                // --- SINKRONISASI MASSAL TARGET QUR'AN KE SEMUA MURID ---
+                if (id === 'target-quran') {
+                    const batch = writeBatch(db);
+                    const targetGabungan = `${newFields.surah} - ${newFields.ayat}`; 
+                    
+                    dataMuridDinamis.forEach((murid) => {
+                        const muridRef = doc(db, "murid", murid.id);
+                        batch.update(muridRef, { quranTarget: targetGabungan });
+                    });
+                    
+                    await batch.commit(); 
+                }
+                // --------------------------------------------------------
+
+                btn.innerText = "Simpan Pengumuman"; 
+                window.closeModal('madingModal');
+            } catch (error) { 
+                alert("Error: " + error.message); 
+                btn.innerText = "Simpan Pengumuman"; 
+            }
         };
 
+        // KEMBALIKAN FUNGSI YANG HILANG/TERHAPUS
         window.closeModal = (modalId) => {
             document.getElementById(modalId).classList.remove('open');
             if(modalId === 'madingModal') document.getElementById('madingModal').querySelectorAll('audio').forEach(a => a.pause());
@@ -924,12 +984,14 @@
         window.closeModalOnBackdrop = (event, modalId) => { if (event.target.id === modalId) window.closeModal(modalId); };
 
         window.toggleLogin = () => { document.getElementById('loginModal').classList.add('open'); };
+        
         window.loginAdmin = () => {
             const btn = document.querySelector('#loginForm button'); btn.innerText = "Memproses...";
             signInWithEmailAndPassword(auth, document.getElementById('adminEmail').value, document.getElementById('adminPassword').value)
                 .then(() => { btn.innerText = "Masuk Dashboard"; window.closeModal('loginModal'); })
                 .catch(error => { alert("Login gagal. Periksa kembali email & password."); btn.innerText = "Masuk Dashboard"; });
         };
+
         window.logoutAdmin = () => { signOut(auth).then(() => { window.closeModal('loginModal'); }); };
 
         window.simpanDataMurid = async () => {

@@ -87,8 +87,10 @@
         header h1 { font-family: 'Lora', serif; font-size: 34px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 8px; color: #ffffff; }
         header p { color: var(--gold); font-size: 13px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; opacity: 0.9; }
 
-        .admin-lock { position: absolute; top: 25px; right: 25px; font-size: 18px; cursor: pointer; opacity: 0.4; transition: all 0.3s ease; padding: 10px; border-radius: 50%; background: var(--glass-bg); }
-        .admin-lock:hover { opacity: 1; background: var(--glass-hover); transform: scale(1.05); }
+        .admin-lock { position: absolute; top: 20px; right: 20px; font-size: 18px; cursor: pointer; opacity: 0.8; transition: all 0.3s ease; padding: 12px; border-radius: 50%; background: var(--glass-bg); z-index: 999; border: none; color: white; display: flex; align-items: center; justify-content: center; }
+        .admin-lock:hover { opacity: 1; background: rgba(255,255,255,0.15); transform: scale(1.05); }
+        .admin-lock svg { pointer-events: none; }
+
         .admin-badge { display: none; background: linear-gradient(135deg, var(--gold), #d97706); color: #000; padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 800; position: absolute; top: 25px; left: 25px; box-shadow: var(--shadow-glow); letter-spacing: 0.5px; }
 
         /* Container & Tabs */
@@ -230,15 +232,33 @@
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
 
+        /* Micro-Chips untuk Admin */
+        .action-chips { display: none; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+        .chip-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px; color: var(--gold-muted); padding: 4px 12px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; backdrop-filter: blur(4px); }
+        .chip-btn:hover { background: rgba(253, 224, 71, 0.15); border-color: var(--gold); color: #fff; transform: translateY(-1px); }
+        .chip-btn:active { transform: scale(0.95); }
+
+/* Penyesuaian Layout untuk Layar HP (Responsive) */
+@media (max-width: 500px) {
+    .target-realisasi-grid { grid-template-columns: 1fr; gap: 12px; }
+    
+    /* Gunakan flex-wrap agar judul dan dropdown berbagi ruang dengan pintar */
+    .card-header-flex { flex-wrap: wrap; gap: 8px; }
+    
+    .admin-select-status { width: 100%; margin-top: 4px; }
+    .detail-label { font-size: 12px; }
+}
+
+
     </style>
 </head>
 <body>
 
     <header>
         <span class="admin-badge" id="adminBadge">✓ MODE ADMIN</span>
-        <div class="admin-lock" onclick="toggleLogin()">
+        <button class="admin-lock" onclick="document.getElementById('loginModal').classList.add('open')">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-        </div>
+        </button>
         <h1>5B Toraja</h1>
         <p>Jurnal Mutaba'ah Hafalan</p>
     </header>
@@ -297,13 +317,12 @@
         <!-- TAB 3: Dokumentasi Hari Ini -->
         <div id="tab-dokumentasi" class="tab-content">
             <div style="text-align: center; margin-bottom: 25px; font-size: 15px; font-weight: 500; color: var(--gold-muted); opacity: 0.9;">
-    Dokumentasi Kegiatan<br>
-    <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 5px;">
-        <span id="teksTanggalDokumentasi" style="font-weight:700; color:var(--gold);">Memuat tanggal...</span>
-        <button id="btnEditTanggal" class="btn-primary" style="display:none; padding: 4px 10px; font-size: 11px; width: auto; margin-top: 0; border-radius: 8px;" onclick="openMading('info-dokumentasi')">✏️ Edit</button>
-    </div>
-</div>
-
+                Dokumentasi Kegiatan<br>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 5px;">
+                    <span id="teksTanggalDokumentasi" style="font-weight:700; color:var(--gold);">Memuat tanggal...</span>
+                    <button id="btnEditTanggal" class="btn-primary" style="display:none; padding: 4px 10px; font-size: 11px; width: auto; margin-top: 0; border-radius: 8px;" onclick="openMading('info-dokumentasi')">✏️ Edit</button>
+                </div>
+            </div>
             
             <div class="gallery-grid">
                 <!-- Dokumentasi 1: Zikir Pagi -->
@@ -391,9 +410,13 @@
             <!-- Dashboard Card: Al-Qur'an -->
             <div class="detail-card">
                 <div class="card-header-flex">
-                    <div class="detail-header"><div class="detail-icon">📖</div><span class="detail-label">Al-Qur'an (Harian)</span></div>
-                    <div id="badgeQuran" class="status-badge"></div>
-                    <select id="editStatusQuran" class="admin-select admin-select-status" style="display:none;">
+                    <div class="detail-header">
+    <div class="detail-icon">📖</div>
+    <span class="detail-label">Al-Qur'an (Harian)</span>
+    <div id="badgeQuran" class="status-badge"></div>
+</div>
+<select id="editStatusQuran" class="admin-select admin-select-status" style="display:none;">
+
                         <option value="mumtaz">✨ Melampaui Target</option>
                         <option value="tuntas">✅ Tuntas</option>
                         <option value="proses">⏳ Sedang Proses</option>
@@ -409,6 +432,13 @@
                     <div class="tr-box">
                         <div class="tr-label">Yang Disetorkan</div>
                         <textarea id="editQuranRealisasi" class="admin-input" rows="2" disabled></textarea>
+                        <!-- Micro-Chips Hafalan Pintar -->
+                        <div class="action-chips" id="quranChips">
+                            <button type="button" class="chip-btn" onclick="tambahAyatPintar(1)">+1 Ayat</button>
+                            <button type="button" class="chip-btn" onclick="tambahAyatPintar(3)">+3 Ayat</button>
+                            <button type="button" class="chip-btn" onclick="tambahAyatPintar(5)">+5 Ayat</button>
+                            <button type="button" class="chip-btn" onclick="tambahAyatPintar('ulangi')">🔄 Ulangi (Muraja'ah)</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -416,9 +446,13 @@
             <!-- Dashboard Card: Hadits -->
             <div class="detail-card">
                 <div class="card-header-flex">
-                    <div class="detail-header"><div class="detail-icon">📜</div><span class="detail-label">Hadits (Mingguan)</span></div>
-                    <div id="badgeHadits" class="status-badge"></div>
-                    <select id="editStatusHadits" class="admin-select admin-select-status" style="display:none;">
+                    <div class="detail-header">
+    <div class="detail-icon">📜</div>
+    <span class="detail-label">Hadits (Mingguan)</span>
+    <div id="badgeHadits" class="status-badge"></div>
+</div>
+<select id="editStatusHadits" class="admin-select admin-select-status" style="display:none;">
+
                         <option value="mumtaz">✨ Melampaui Target</option>
                         <option value="tuntas">✅ Tuntas</option>
                         <option value="proses">⏳ Sedang Proses</option>
@@ -441,9 +475,13 @@
             <!-- Dashboard Card: Doa -->
             <div class="detail-card">
                 <div class="card-header-flex">
-                    <div class="detail-header"><div class="detail-icon">🤲</div><span class="detail-label">Doa (Mingguan)</span></div>
-                    <div id="badgeDoa" class="status-badge"></div>
-                    <select id="editStatusDoa" class="admin-select admin-select-status" style="display:none;">
+                    <div class="detail-header">
+    <div class="detail-icon">🤲</div>
+    <span class="detail-label">Doa (Mingguan)</span>
+    <div id="badgeDoa" class="status-badge"></div>
+</div>
+<select id="editStatusDoa" class="admin-select admin-select-status" style="display:none;">
+
                         <option value="mumtaz">✨ Melampaui Target</option>
                         <option value="tuntas">✅ Tuntas</option>
                         <option value="proses">⏳ Sedang Proses</option>
@@ -480,16 +518,15 @@
             <div id="madingContent"></div>
 
             <!-- Area Form Admin Mading -->
-<div id="madingAdminFormArea" style="display:none;">
-    
-    <!-- Form Info Dokumentasi -->
-    <div id="form-info-dokumentasi" class="admin-form-mading" style="display:none;">
-        <div class="detail-label" style="margin-bottom:8px;">Tanggal Dokumentasi</div>
-        <input type="text" id="fdok-tanggal" class="admin-input" placeholder="Misal: Rabu, 05 Agustus 2026">
-    </div>
+            <div id="madingAdminFormArea" style="display:none;">
+                
+                <!-- Form Info Dokumentasi -->
+                <div id="form-info-dokumentasi" class="admin-form-mading" style="display:none;">
+                    <div class="detail-label" style="margin-bottom:8px;">Tanggal Dokumentasi</div>
+                    <input type="text" id="fdok-tanggal" class="admin-input" placeholder="Misal: Rabu, 05 Agustus 2026">
+                </div>
 
-    <!-- Form Jadwal Murajaah -->
-
+                <!-- Form Jadwal Murajaah -->
                 <div id="form-jadwal-murajaah" class="admin-form-mading" style="display:none;">
                     <div id="murajaah-fields-container"></div>
                 </div>
@@ -581,29 +618,27 @@
         window.currentMadingId = null;
 
         onSnapshot(collection(db, "mading_v2"), (snapshot) => {
-    if(!snapshot.empty) {
-        dataMadingDinamis = {};
-        snapshot.forEach((doc) => { dataMadingDinamis[doc.id] = doc.data(); });
-        
-        // Render tanggal dokumentasi ke layar
-        if(dataMadingDinamis['info-dokumentasi'] && dataMadingDinamis['info-dokumentasi'].fields) {
-            document.getElementById('teksTanggalDokumentasi').innerText = dataMadingDinamis['info-dokumentasi'].fields.tanggal || "Belum diset";
-        }
-    }
-});
-
+            if(!snapshot.empty) {
+                dataMadingDinamis = {};
+                snapshot.forEach((doc) => { dataMadingDinamis[doc.id] = doc.data(); });
+                
+                // Render tanggal dokumentasi ke layar
+                if(dataMadingDinamis['info-dokumentasi'] && dataMadingDinamis['info-dokumentasi'].fields) {
+                    document.getElementById('teksTanggalDokumentasi').innerText = dataMadingDinamis['info-dokumentasi'].fields.tanggal || "Belum diset";
+                }
+            }
+        });
 
         onAuthStateChanged(auth, (user) => {
-    isAdmin = !!user;
-    document.getElementById('adminBadge').style.display = isAdmin ? 'block' : 'none';
-    document.getElementById('loginForm').style.display = isAdmin ? 'none' : 'block';
-    document.getElementById('logoutForm').style.display = isAdmin ? 'block' : 'none';
-    
-    // Tampilkan tombol edit tanggal jika admin login
-    const btnEditTgl = document.getElementById('btnEditTanggal');
-    if(btnEditTgl) btnEditTgl.style.display = isAdmin ? 'inline-block' : 'none';
-});
-
+            isAdmin = !!user;
+            document.getElementById('adminBadge').style.display = isAdmin ? 'block' : 'none';
+            document.getElementById('loginForm').style.display = isAdmin ? 'none' : 'block';
+            document.getElementById('logoutForm').style.display = isAdmin ? 'block' : 'none';
+            
+            // Tampilkan tombol edit tanggal jika admin login
+            const btnEditTgl = document.getElementById('btnEditTanggal');
+            if(btnEditTgl) btnEditTgl.style.display = isAdmin ? 'inline-block' : 'none';
+        });
 
         onSnapshot(collection(db, "murid"), (snapshot) => {
             if(!snapshot.empty) {
@@ -698,8 +733,8 @@
             document.getElementById('progressModal').classList.add('open');
 
             const inputs = document.querySelectorAll('#progressModal textarea.admin-input, #progressModal input.admin-input');
-            const selects = document.querySelectorAll('.admin-select-status');
-            const badges = document.querySelectorAll('.status-badge, .dot');
+            const selects = document.querySelectorAll('#progressModal .admin-select-status');
+            const badges = document.querySelectorAll('#progressModal .status-badge, #progressModal .dot');
 
             if (isAdmin) {
                 inputs.forEach(input => { 
@@ -709,6 +744,7 @@
                 selects.forEach(sel => sel.style.display = 'block');
                 badges.forEach(b => b.style.display = 'none');
                 document.getElementById('btnSaveMurid').style.display = 'block';
+                document.getElementById('quranChips').style.display = 'flex';
             } else {
                 inputs.forEach(input => { 
                     input.disabled = true; 
@@ -722,6 +758,7 @@
                 selects.forEach(sel => sel.style.display = 'none');
                 badges.forEach(b => b.style.display = 'block');
                 document.getElementById('btnSaveMurid').style.display = 'none';
+                document.getElementById('quranChips').style.display = 'none';
             }
         };
 
@@ -890,16 +927,15 @@
                     for(let i=1; i<=3; i++) {
                         document.getElementById(`ft-h${i}`).value = f[`h${i}`] || ''; document.getElementById(`ft-n${i}`).value = f[`n${i}`] || ''; document.getElementById(`ft-s${i}`).value = f[`s${i}`] || '';
                     }
-        } else if (id === 'jadwal-imam') {
-            ['senin', 'selasa', 'rabu', 'kamis', 'jumat'].forEach(day => {
-                document.getElementById(`fi-${day}-nama`).value = f[`${day}_nama`] || ''; document.getElementById(`fi-${day}-r1`).value = f[`${day}_r1`] || '';
-                document.getElementById(`fi-${day}-r2`).value = f[`${day}_r2`] || ''; document.getElementById(`fi-${day}-r3`).value = f[`${day}_r3`] || ''; document.getElementById(`fi-${day}-r4`).value = f[`${day}_r4`] || '';
-            });
-        } else if (id === 'info-dokumentasi') {
-            document.getElementById('fdok-tanggal').value = f.tanggal || '';
-        }
-    } else {
-
+                } else if (id === 'jadwal-imam') {
+                    ['senin', 'selasa', 'rabu', 'kamis', 'jumat'].forEach(day => {
+                        document.getElementById(`fi-${day}-nama`).value = f[`${day}_nama`] || ''; document.getElementById(`fi-${day}-r1`).value = f[`${day}_r1`] || '';
+                        document.getElementById(`fi-${day}-r2`).value = f[`${day}_r2`] || ''; document.getElementById(`fi-${day}-r3`).value = f[`${day}_r3`] || ''; document.getElementById(`fi-${day}-r4`).value = f[`${day}_r4`] || '';
+                    });
+                } else if (id === 'info-dokumentasi') {
+                    document.getElementById('fdok-tanggal').value = f.tanggal || '';
+                }
+            } else {
                 titleText.style.display = 'block';
                 contentDiv.style.display = 'block';
                 adminArea.style.display = 'none';
@@ -911,7 +947,7 @@
             document.getElementById('madingModal').classList.add('open');
         };
 
-                window.simpanDataMading = async () => {
+        window.simpanDataMading = async () => {
             if(!isAdmin) return;
             const btn = document.getElementById('btnSaveMading');
             btn.innerText = "Menyimpan...";
@@ -951,10 +987,8 @@
             }
             
             try {
-                // Simpan data ke mading_v2
                 await setDoc(doc(db, "mading_v2", id), { title: newTitle, fields: newFields }, { merge: true });
                 
-                // --- SINKRONISASI MASSAL TARGET QUR'AN KE SEMUA MURID ---
                 if (id === 'target-quran') {
                     const batch = writeBatch(db);
                     const targetGabungan = `${newFields.surah} - ${newFields.ayat}`; 
@@ -966,7 +1000,6 @@
                     
                     await batch.commit(); 
                 }
-                // --------------------------------------------------------
 
                 btn.innerText = "Simpan Pengumuman"; 
                 window.closeModal('madingModal');
@@ -976,7 +1009,6 @@
             }
         };
 
-        // KEMBALIKAN FUNGSI YANG HILANG/TERHAPUS
         window.closeModal = (modalId) => {
             document.getElementById(modalId).classList.remove('open');
             if(modalId === 'madingModal') document.getElementById('madingModal').querySelectorAll('audio').forEach(a => a.pause());
@@ -993,6 +1025,56 @@
         };
 
         window.logoutAdmin = () => { signOut(auth).then(() => { window.closeModal('loginModal'); }); };
+
+        // --- 1. MINI DATABASE 114 SURAH AL-QUR'AN ---
+        const dbQuran = "Al-Fatihah:7,Al-Baqarah:286,Ali 'Imran:200,An-Nisa:176,Al-Ma'idah:120,Al-An'am:165,Al-A'raf:206,Al-Anfal:75,At-Taubah:129,Yunus:109,Hud:123,Yusuf:111,Ar-Ra'd:43,Ibrahim:52,Al-Hijr:99,An-Nahl:128,Al-Isra':111,Al-Kahf:110,Maryam:98,Taha:135,Al-Anbiya':112,Al-Hajj:78,Al-Mu'minun:118,An-Nur:64,Al-Furqan:77,Asy-Syu'ara':227,An-Naml:93,Al-Qasas:88,Al-'Ankabut:69,Ar-Rum:60,Luqman:34,As-Sajdah:30,Al-Ahzab:73,Saba':54,Fatir:45,Yasin:83,As-Saffat:182,Sad:88,Az-Zumar:75,Ghafir:85,Fussilat:54,Asy-Syura:53,Az-Zukhruf:89,Ad-Dukhan:59,Al-Jasiyah:37,Al-Ahqaf:35,Muhammad:38,Al-Fath:29,Al-Hujurat:18,Qaf:45,Az-Zariyat:60,At-Tur:49,An-Najm:62,Al-Qamar:55,Ar-Rahman:78,Al-Waqi'ah:96,Al-Hadid:29,Al-Mujadilah:22,Al-Hasyr:24,Al-Mumtahanah:13,As-Saff:14,Al-Jumu'ah:11,Al-Munafiqun:11,At-Tagabun:18,At-Talaq:12,At-Tahrim:12,Al-Mulk:30,Al-Qalam:52,Al-Haqqah:52,Al-Ma'arij:44,Nuh:28,Al-Jinn:28,Al-Muzzammil:20,Al-Muddassir:56,Al-Qiyamah:40,Al-Insan:31,Al-Mursalat:50,An-Naba':40,An-Nazi'at:46,'Abasa:42,At-Takwir:29,Al-Infitar:19,Al-Mutaffifin:36,Al-Insyiqaq:25,Al-Buruj:22,At-Tariq:17,Al-A'la:19,Al-Gasyiyah:26,Al-Fajr:30,Al-Balad:20,Asy-Syams:15,Al-Lail:21,Ad-Duha:11,Asy-Syarh:8,At-Tin:8,Al-'Alaq:19,Al-Qadr:5,Al-Bayyinah:8,Az-Zalzalah:8,Al-'Adiyat:11,Al-Qari'ah:11,At-Takasur:8,Al-'Asr:3,Al-Humazah:9,Al-Fil:5,Quraisy:4,Al-Ma'un:7,Al-Kausar:3,Al-Kafirun:6,An-Nasr:3,Al-Lahab:5,Al-Ikhlas:4,Al-Falaq:5,An-Nas:6"
+        .split(',').map(s => { let [n, a] = s.split(':'); return { nama: n, batas: parseInt(a) }; });
+
+        // --- 2. LOGIKA KECERDASAN BUATAN PENGHITUNG AYAT ---
+        window.tambahAyatPintar = (aksi) => {
+            let textarea = document.getElementById('editQuranRealisasi');
+            let teksAsli = textarea.value.trim();
+            
+            if(aksi === 'ulangi') {
+                if(!teksAsli.includes('(Muraja\'ah)')) textarea.value = teksAsli + " (Muraja'ah)";
+                return;
+            }
+
+            let teksBersih = teksAsli.toLowerCase().replace(/[^a-z0-9]/g, '');
+            let indexSurah = -1;
+            let panjangKecocokan = 0;
+            
+            for(let i = 0; i < dbQuran.length; i++) {
+                let namaNormal = dbQuran[i].nama.toLowerCase().replace(/[^a-z]/g, '');
+                if(teksBersih.includes(namaNormal) && namaNormal.length > panjangKecocokan) {
+                    indexSurah = i;
+                    panjangKecocokan = namaNormal.length;
+                }
+            }
+
+            let angkaMatch = teksAsli.match(/(\d+)(?!.*\d)/);
+            let ayatSekarang = angkaMatch ? parseInt(angkaMatch[0]) : 0;
+
+            if(indexSurah === -1 || ayatSekarang === 0) {
+                textarea.value = teksAsli + " (+" + aksi + ")";
+                return;
+            }
+
+            let surahIni = dbQuran[indexSurah];
+            let ayatBaru = ayatSekarang + aksi;
+
+            if(ayatBaru > surahIni.batas) {
+                let sisaAyat = ayatBaru - surahIni.batas;
+                if(indexSurah + 1 < dbQuran.length) {
+                    let surahBerikutnya = dbQuran[indexSurah + 1];
+                    textarea.value = `Surah ${surahBerikutnya.nama} ayat ${sisaAyat}`;
+                } else {
+                    textarea.value = `Khatam! (An-Nas Selesai)`;
+                }
+            } else {
+                textarea.value = `Surah ${surahIni.nama} ayat ${ayatBaru}`;
+            }
+        };
 
         window.simpanDataMurid = async () => {
             if(!isAdmin) return;

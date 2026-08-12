@@ -118,6 +118,54 @@
             contain-intrinsic-size: 80px; 
         }
         
+        /* Efek Glow Keemasan Khusus yang Sudah Setor */
+        .murid-card.sudah-setor {
+            border: 1px solid var(--gold);
+            box-shadow: 0 0 15px rgba(253, 224, 71, 0.15);
+            background: linear-gradient(145deg, var(--glass-bg) 0%, rgba(253, 224, 71, 0.05) 100%);
+        }
+        .murid-card.sudah-setor:hover {
+            box-shadow: 0 0 25px rgba(253, 224, 71, 0.35);
+            transform: translateY(-3px);
+            border-color: #fde047;
+        }
+
+        /* Badge Status Harian di Modal */
+        .badge-harian {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        /* Tombol Pilihan Admin (Chips) */
+        .admin-setoran-container {
+            display: none; 
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed rgba(255,255,255,0.1);
+        }
+        .setoran-btn {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-muted);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .setoran-btn:hover { background: rgba(255,255,255,0.1); color: white; }
+        .setoran-btn.active { background: rgba(253, 224, 71, 0.2); border-color: var(--gold); color: var(--gold); }
+
         .murid-card:hover { background: var(--glass-hover); transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.3); border-color: rgba(255,255,255,0.15); }
         .murid-card:active { transform: translateY(0) scale(0.98); }
         
@@ -238,17 +286,13 @@
         .chip-btn:hover { background: rgba(253, 224, 71, 0.15); border-color: var(--gold); color: #fff; transform: translateY(-1px); }
         .chip-btn:active { transform: scale(0.95); }
 
-/* Penyesuaian Layout untuk Layar HP (Responsive) */
-@media (max-width: 500px) {
-    .target-realisasi-grid { grid-template-columns: 1fr; gap: 12px; }
-    
-    /* Gunakan flex-wrap agar judul dan dropdown berbagi ruang dengan pintar */
-    .card-header-flex { flex-wrap: wrap; gap: 8px; }
-    
-    .admin-select-status { width: 100%; margin-top: 4px; }
-    .detail-label { font-size: 12px; }
-}
-
+        /* Penyesuaian Layout untuk Layar HP (Responsive) */
+        @media (max-width: 500px) {
+            .target-realisasi-grid { grid-template-columns: 1fr; gap: 12px; }
+            .card-header-flex { flex-wrap: wrap; gap: 8px; }
+            .admin-select-status { width: 100%; margin-top: 4px; }
+            .detail-label { font-size: 12px; }
+        }
 
     </style>
 </head>
@@ -404,19 +448,33 @@
             <div class="modal-header">
                 <div class="modal-avatar" id="modalInitials">AF</div>
                 <h2 id="modalNama">Nama Ananda</h2>
+                
+                <!-- Tampilan Badge untuk Semua Orang (Berubah Dinamis) -->
+                <div id="badgeSetoranHarian" class="badge-harian">⏳ Belum Setor</div>
+                
+                <!-- Tombol Khusus Admin -->
+                <div id="adminSetoranHarianContainer" class="admin-setoran-container">
+                    <button type="button" class="setoran-btn" data-val="sudah" onclick="pilihSetoranHarian('sudah')">✅ Sudah Setor</button>
+                    <button type="button" class="setoran-btn" data-val="berhalangan" onclick="pilihSetoranHarian('berhalangan')">🛑 Berhalangan</button>
+                    <button type="button" class="setoran-btn" data-val="izin" onclick="pilihSetoranHarian('izin')">🏥 Izin/Sakit</button>
+                    <button type="button" class="setoran-btn" data-val="belum" onclick="pilihSetoranHarian('belum')">❌ Belum Setor</button>
+                </div>
+                
+                <!-- Input tersembunyi untuk menyimpan nilai ke Firebase -->
+                <input type="hidden" id="valSetoranHarian" value="belum">
             </div>
+
             <input type="hidden" id="editId">
             
             <!-- Dashboard Card: Al-Qur'an -->
             <div class="detail-card">
                 <div class="card-header-flex">
                     <div class="detail-header">
-    <div class="detail-icon">📖</div>
-    <span class="detail-label">Al-Qur'an (Harian)</span>
-    <div id="badgeQuran" class="status-badge"></div>
-</div>
-<select id="editStatusQuran" class="admin-select admin-select-status" style="display:none;">
-
+                        <div class="detail-icon">📖</div>
+                        <span class="detail-label">Al-Qur'an (Harian)</span>
+                        <div id="badgeQuran" class="status-badge"></div>
+                    </div>
+                    <select id="editStatusQuran" class="admin-select admin-select-status" style="display:none;">
                         <option value="mumtaz">✨ Melampaui Target</option>
                         <option value="tuntas">✅ Tuntas</option>
                         <option value="proses">⏳ Sedang Proses</option>
@@ -447,12 +505,11 @@
             <div class="detail-card">
                 <div class="card-header-flex">
                     <div class="detail-header">
-    <div class="detail-icon">📜</div>
-    <span class="detail-label">Hadits (Mingguan)</span>
-    <div id="badgeHadits" class="status-badge"></div>
-</div>
-<select id="editStatusHadits" class="admin-select admin-select-status" style="display:none;">
-
+                        <div class="detail-icon">📜</div>
+                        <span class="detail-label">Hadits (Mingguan)</span>
+                        <div id="badgeHadits" class="status-badge"></div>
+                    </div>
+                    <select id="editStatusHadits" class="admin-select admin-select-status" style="display:none;">
                         <option value="mumtaz">✨ Melampaui Target</option>
                         <option value="tuntas">✅ Tuntas</option>
                         <option value="proses">⏳ Sedang Proses</option>
@@ -476,12 +533,11 @@
             <div class="detail-card">
                 <div class="card-header-flex">
                     <div class="detail-header">
-    <div class="detail-icon">🤲</div>
-    <span class="detail-label">Doa (Mingguan)</span>
-    <div id="badgeDoa" class="status-badge"></div>
-</div>
-<select id="editStatusDoa" class="admin-select admin-select-status" style="display:none;">
-
+                        <div class="detail-icon">🤲</div>
+                        <span class="detail-label">Doa (Mingguan)</span>
+                        <div id="badgeDoa" class="status-badge"></div>
+                    </div>
+                    <select id="editStatusDoa" class="admin-select admin-select-status" style="display:none;">
                         <option value="mumtaz">✨ Melampaui Target</option>
                         <option value="tuntas">✅ Tuntas</option>
                         <option value="proses">⏳ Sedang Proses</option>
@@ -617,12 +673,17 @@
         let dataMadingDinamis = {};
         window.currentMadingId = null;
 
+        // FUNGSI BARU: Mengambil Tanggal Hari Ini
+        window.getTanggalHariIni = () => {
+            const d = new Date();
+            return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, '0') + "-" + String(d.getDate()).padStart(2, '0');
+        };
+
         onSnapshot(collection(db, "mading_v2"), (snapshot) => {
             if(!snapshot.empty) {
                 dataMadingDinamis = {};
                 snapshot.forEach((doc) => { dataMadingDinamis[doc.id] = doc.data(); });
                 
-                // Render tanggal dokumentasi ke layar
                 if(dataMadingDinamis['info-dokumentasi'] && dataMadingDinamis['info-dokumentasi'].fields) {
                     document.getElementById('teksTanggalDokumentasi').innerText = dataMadingDinamis['info-dokumentasi'].fields.tanggal || "Belum diset";
                 }
@@ -635,7 +696,6 @@
             document.getElementById('loginForm').style.display = isAdmin ? 'none' : 'block';
             document.getElementById('logoutForm').style.display = isAdmin ? 'block' : 'none';
             
-            // Tampilkan tombol edit tanggal jika admin login
             const btnEditTgl = document.getElementById('btnEditTanggal');
             if(btnEditTgl) btnEditTgl.style.display = isAdmin ? 'inline-block' : 'none';
         });
@@ -654,13 +714,20 @@
         window.renderMurid = () => {
             const list = document.getElementById('muridList');
             list.innerHTML = '';
+            
+            let hariIni = window.getTanggalHariIni();
+
             dataMuridDinamis.forEach((murid, index) => {
                 let stQ = murid.quranStatus || murid.statusQuran || "belum";
                 let stH = murid.haditsStatus || murid.statusHadits || "belum";
                 let stD = murid.doaStatus || murid.statusDoa || "belum";
 
+                // LOGIKA OTOMATIS TANGGAL
+                let statusHarian = (murid.tanggalSetor === hariIni) ? (murid.setoranHarian || "belum") : "belum";
+                let glowClass = (statusHarian === 'sudah') ? 'sudah-setor' : '';
+
                 list.innerHTML += `
-                    <div class="glass-panel murid-card" onclick="window.openModal(${index})">
+                    <div class="glass-panel murid-card ${glowClass}" onclick="window.openModal(${index})">
                         <div class="avatar">${window.getInitials(murid.nama)}</div>
                         <div class="murid-info">
                             <div class="murid-nama">${murid.nama}</div>
@@ -712,6 +779,11 @@
             let hStatus = murid.haditsStatus || murid.statusHadits || "belum";
             let dStatus = murid.doaStatus || murid.statusDoa || "belum";
 
+            // LOGIKA OTOMATIS TANGGAL UNTUK BADGE
+            let hariIni = window.getTanggalHariIni();
+            let statusHarian = (murid.tanggalSetor === hariIni) ? (murid.setoranHarian || "belum") : "belum";
+            window.pilihSetoranHarian(statusHarian);
+
             // Al-Qur'an
             document.getElementById('editQuranTarget').value = murid.quranTarget || murid.quran || "";
             document.getElementById('editQuranRealisasi').value = murid.quranRealisasi || "-";
@@ -745,6 +817,7 @@
                 badges.forEach(b => b.style.display = 'none');
                 document.getElementById('btnSaveMurid').style.display = 'block';
                 document.getElementById('quranChips').style.display = 'flex';
+                document.getElementById('adminSetoranHarianContainer').style.display = 'flex';
             } else {
                 inputs.forEach(input => { 
                     input.disabled = true; 
@@ -759,6 +832,7 @@
                 badges.forEach(b => b.style.display = 'block');
                 document.getElementById('btnSaveMurid').style.display = 'none';
                 document.getElementById('quranChips').style.display = 'none';
+                document.getElementById('adminSetoranHarianContainer').style.display = 'none';
             }
         };
 
@@ -1076,11 +1150,47 @@
             }
         };
 
+        // FUNGSI BARU: Pengubah Visual Badge
+        window.pilihSetoranHarian = (status) => {
+            document.getElementById('valSetoranHarian').value = status;
+            
+            document.querySelectorAll('.setoran-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-val') === status) btn.classList.add('active');
+            });
+
+            const badge = document.getElementById('badgeSetoranHarian');
+            if (status === 'sudah') {
+                badge.innerHTML = "✅ Alhamdulillah, Sudah Setor";
+                badge.style.background = "rgba(16, 185, 129, 0.2)";
+                badge.style.color = "var(--success)";
+                badge.style.border = "1px solid rgba(16, 185, 129, 0.5)";
+            } else if (status === 'berhalangan') {
+                badge.innerHTML = "🛑 Berhalangan / Udzhur";
+                badge.style.background = "rgba(245, 158, 11, 0.2)";
+                badge.style.color = "var(--warning)";
+                badge.style.border = "1px solid rgba(245, 158, 11, 0.5)";
+            } else if (status === 'izin') {
+                badge.innerHTML = "🏥 Izin / Sakit";
+                badge.style.background = "rgba(59, 130, 246, 0.2)";
+                badge.style.color = "var(--mumtaz)";
+                badge.style.border = "1px solid rgba(59, 130, 246, 0.5)";
+            } else {
+                badge.innerHTML = "⏳ Belum Setor Hari Ini";
+                badge.style.background = "rgba(239, 68, 68, 0.2)";
+                badge.style.color = "var(--danger)";
+                badge.style.border = "1px solid rgba(239, 68, 68, 0.5)";
+            }
+        };
+
         window.simpanDataMurid = async () => {
             if(!isAdmin) return;
             const btn = document.getElementById('btnSaveMurid'); btn.innerText = "Menyimpan...";
             try {
                 await updateDoc(doc(db, "murid", document.getElementById('editId').value), {
+                    setoranHarian: document.getElementById('valSetoranHarian').value,
+                    tanggalSetor: window.getTanggalHariIni(), // MENYIMPAN STEMPEL TANGGAL
+                    
                     quranTarget: document.getElementById('editQuranTarget').value,
                     quranRealisasi: document.getElementById('editQuranRealisasi').value,
                     quranStatus: document.getElementById('editStatusQuran').value,

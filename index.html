@@ -7,17 +7,18 @@
     <!-- Font Premium -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,500;0,600;1,500&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* Palet Warna Premium */
-            --bg-dark: #021f17; 
-            --primary: #064e3b;
-            --primary-light: #0f766e;
-            --gold: #fde047;
+            /* Palet Warna Disinkronkan dengan Rapor (Dark Elegant) */
+            --bg-dark: #01120a; 
+            --primary: #032418;
+            --primary-light: #033624;
+            --gold: #d4af37;
             --gold-muted: #fef08a;
-            --text-main: #f8fafc;
+            --gold-dark: #997a15;
+            --text-main: #ffffff;
             --text-muted: #94a3b8;
             
             /* Status Colors */
@@ -27,12 +28,12 @@
             --danger: #ef4444;  
 
             /* Premium Glassmorphism */
-            --glass-bg: rgba(255, 255, 255, 0.04);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-bg: rgba(255, 255, 255, 0.02);
+            --glass-border: rgba(255, 255, 255, 0.06);
             --glass-hover: rgba(255, 255, 255, 0.08);
-            --glass-blur: blur(6px);
-            --shadow-subtle: 0 4px 20px -2px rgba(0, 0, 0, 0.2);
-            --shadow-glow: 0 0 15px rgba(253, 224, 71, 0.15);
+            --glass-blur: blur(16px);
+            --shadow-subtle: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 15px rgba(212, 175, 55, 0.15);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
@@ -40,9 +41,8 @@
         body { 
             background-color: var(--bg-dark);
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(15, 118, 110, 0.3) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(6, 78, 59, 0.5) 0%, transparent 40%),
-                radial-gradient(circle at 50% 50%, rgba(253, 224, 71, 0.03) 0%, transparent 60%);
+                radial-gradient(circle at 15% 0%, rgba(3, 54, 36, 0.6) 0%, transparent 40%),
+                radial-gradient(circle at 85% 100%, rgba(212, 175, 55, 0.08) 0%, transparent 40%);
             color: var(--text-main);
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
@@ -87,11 +87,20 @@
         header h1 { font-family: 'Lora', serif; font-size: 34px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 8px; color: #ffffff; }
         header p { color: var(--gold); font-size: 13px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; opacity: 0.9; }
 
-        .admin-lock { position: absolute; top: 20px; right: 20px; font-size: 18px; cursor: pointer; opacity: 0.8; transition: all 0.3s ease; padding: 12px; border-radius: 50%; background: var(--glass-bg); z-index: 999; border: none; color: white; display: flex; align-items: center; justify-content: center; }
-        .admin-lock:hover { opacity: 1; background: rgba(255,255,255,0.15); transform: scale(1.05); }
-        .admin-lock svg { pointer-events: none; }
+        /* Tombol Header Kiri & Kanan (Simetri Sempurna) */
+        .header-btn {
+            position: absolute; top: 20px; width: 44px; height: 44px;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: var(--text-muted); cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 999; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+        }
+        .header-btn:hover { background: rgba(212, 175, 55, 0.1); color: var(--gold); border-color: rgba(212, 175, 55, 0.3); transform: scale(1.08); }
+        .header-btn svg { pointer-events: none; }
+        .menu-btn { left: 20px; }
+        .admin-lock { right: 20px; }
 
-        .admin-badge { display: none; background: linear-gradient(135deg, var(--gold), #d97706); color: #000; padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 800; position: absolute; top: 25px; left: 25px; box-shadow: var(--shadow-glow); letter-spacing: 0.5px; }
+        .admin-badge { display: none; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #000; padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 800; position: absolute; top: 25px; left: 50%; transform: translateX(-50%); box-shadow: var(--shadow-glow); letter-spacing: 0.5px; z-index: 1000; }
 
         /* Container & Tabs */
         .container { padding: 0 20px 120px; max-width: 850px; margin: auto; }
@@ -121,55 +130,27 @@
         /* Efek Glow Keemasan Khusus yang Sudah Setor */
         .murid-card.sudah-setor {
             border: 1px solid var(--gold);
-            box-shadow: 0 0 15px rgba(253, 224, 71, 0.15);
-            background: linear-gradient(145deg, var(--glass-bg) 0%, rgba(253, 224, 71, 0.05) 100%);
+            box-shadow: var(--shadow-glow);
+            background: linear-gradient(145deg, var(--glass-bg) 0%, rgba(212, 175, 55, 0.05) 100%);
         }
         .murid-card.sudah-setor:hover {
-            box-shadow: 0 0 25px rgba(253, 224, 71, 0.35);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
             transform: translateY(-3px);
-            border-color: #fde047;
         }
 
         /* Badge Status Harian di Modal */
-        .badge-harian {
-            display: inline-block;
-            margin-top: 12px;
-            font-size: 12px;
-            font-weight: 700;
-            padding: 6px 16px;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-            letter-spacing: 0.5px;
-        }
+        .badge-harian { display: inline-block; margin-top: 12px; font-size: 12px; font-weight: 700; padding: 6px 16px; border-radius: 20px; transition: all 0.3s ease; letter-spacing: 0.5px; }
 
         /* Tombol Pilihan Admin (Chips) */
-        .admin-setoran-container {
-            display: none; 
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px dashed rgba(255,255,255,0.1);
-        }
-        .setoran-btn {
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: var(--text-muted);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
+        .admin-setoran-container { display: none; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 15px; padding-top: 15px; border-top: 1px dashed rgba(255,255,255,0.1); }
+        .setoran-btn { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
         .setoran-btn:hover { background: rgba(255,255,255,0.1); color: white; }
-        .setoran-btn.active { background: rgba(253, 224, 71, 0.2); border-color: var(--gold); color: var(--gold); }
+        .setoran-btn.active { background: rgba(212, 175, 55, 0.2); border-color: var(--gold); color: var(--gold); }
 
-        .murid-card:hover { background: var(--glass-hover); transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.3); border-color: rgba(255,255,255,0.15); }
+        .murid-card:hover { background: var(--glass-hover); transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.4); border-color: rgba(255,255,255,0.15); }
         .murid-card:active { transform: translateY(0) scale(0.98); }
         
-        .avatar { width: 48px; height: 48px; border-radius: 16px; flex-shrink: 0; background: linear-gradient(135deg, var(--gold), #d97706); display: flex; justify-content: center; align-items: center; font-weight: 700; font-size: 18px; color: #021f17; box-shadow: 0 4px 10px rgba(253, 224, 71, 0.2); }
+        .avatar { width: 48px; height: 48px; border-radius: 16px; flex-shrink: 0; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); display: flex; justify-content: center; align-items: center; font-weight: 700; font-size: 18px; color: #000; box-shadow: 0 4px 10px rgba(212, 175, 55, 0.2); }
         .murid-info { flex: 1; min-width: 0; }
         .murid-nama { font-weight: 600; font-size: 15px; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -0.2px; }
         
@@ -186,7 +167,7 @@
         /* MADING GRID */
         .mading-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
         .mading-card { padding: 30px 20px; text-align: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; overflow: hidden; position: relative; }
-        .mading-card:hover { transform: translateY(-5px); background: var(--glass-hover); border-color: rgba(253, 224, 71, 0.3); box-shadow: var(--shadow-glow); }
+        .mading-card:hover { transform: translateY(-5px); background: var(--glass-hover); border-color: rgba(212, 175, 55, 0.3); box-shadow: var(--shadow-glow); }
         .mading-icon { font-size: 42px; filter: drop-shadow(0 8px 12px rgba(0,0,0,0.3)); transition: transform 0.3s ease; }
         .mading-card:hover .mading-icon { transform: scale(1.1) rotate(-5deg); }
         .mading-title { font-size: 14px; font-weight: 600; color: var(--gold); line-height: 1.4; letter-spacing: 0.3px; }
@@ -196,7 +177,7 @@
         .info-row:last-child { border-bottom: none; }
         .info-label { font-size: 13px; color: var(--text-muted); font-weight: 500; }
         .info-value { font-size: 15px; font-weight: 600; color: #fff; text-align: right; }
-        .hari-badge { background: rgba(253, 224, 71, 0.1); padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; color: var(--gold); display: inline-block; border: 1px solid rgba(253, 224, 71, 0.2); margin-top: 15px; margin-bottom: 5px; }
+        .hari-badge { background: rgba(212, 175, 55, 0.1); padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; color: var(--gold); display: inline-block; border: 1px solid rgba(212, 175, 55, 0.2); margin-top: 15px; margin-bottom: 5px; }
 
         /* Gallery */
         .gallery-grid { display: grid; grid-template-columns: 1fr; gap: 24px; } 
@@ -210,25 +191,34 @@
         .download-btn { background: var(--glass-bg); color: #fff; border: 1px solid var(--glass-border); padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; backdrop-filter: var(--glass-blur); }
         .download-btn:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
 
-        /* Floating Nav */
-        .floating-nav { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; display: flex; padding: 8px; border-radius: 30px; z-index: 100; background: rgba(2, 31, 23, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        /* Floating Nav (Warna digelapkan agar senada) */
+        .floating-nav { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; display: flex; padding: 8px; border-radius: 30px; z-index: 100; background: rgba(3, 36, 24, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
         .floating-nav button { flex: 1; background: transparent; border: none; color: var(--text-muted); padding: 12px 0; font-size: 12px; font-weight: 500; border-radius: 24px; cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; position: relative; }
         .floating-nav button svg { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .floating-nav button.active { color: var(--gold); background: rgba(255,255,255,0.06); font-weight: 600; }
-        .floating-nav button.active svg { transform: translateY(-2px); filter: drop-shadow(0 2px 5px rgba(253, 224, 71, 0.4)); }
+        .floating-nav button.active svg { transform: translateY(-2px); filter: drop-shadow(0 2px 5px rgba(212, 175, 55, 0.4)); }
 
-        /* Modals */
+        /* Modals (Warna Background Disamakan dengan Tema Dark Rapor) */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); justify-content: center; align-items: flex-end; z-index: 1000; padding: 20px; transition: opacity 0.3s ease; }
         .modal.open { display: flex; }
         .modal.center-modal { align-items: center; }
         
-        .modal-content { background: #064e3b; background: linear-gradient(160deg, #064e3b 0%, #022c22 100%); width: 100%; max-width: 480px; padding: 40px 25px; border-radius: 32px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); animation: modalPop 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; position: relative; max-height: 85vh; overflow-y: auto; overflow-x: hidden; }
+        .modal-content { 
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(3, 54, 36, 0.8) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(212, 175, 55, 0.08) 0%, transparent 50%);
+            width: 100%; max-width: 480px; padding: 40px 25px; border-radius: 32px; 
+            border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); 
+            animation: modalPop 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; position: relative; 
+            max-height: 85vh; overflow-y: auto; overflow-x: hidden; 
+        }
         
         .close-btn { position: absolute; top: 20px; right: 25px; width: 36px; height: 36px; border-radius: 50%; background: rgba(0,0,0,0.2); color: rgba(255,255,255,0.8); display: flex; justify-content: center; align-items: center; font-size: 20px; cursor: pointer; transition: all 0.2s; border: 1px solid rgba(255,255,255,0.05); }
         .close-btn:hover { background: rgba(255,255,255,0.1); color: #fff; transform: rotate(90deg); }
 
         .modal-header { text-align: center; margin-bottom: 30px; }
-        .modal-avatar { width: 80px; height: 80px; border-radius: 24px; background: linear-gradient(135deg, var(--gold), #d97706); display: inline-flex; justify-content: center; align-items: center; font-weight: 800; font-size: 32px; color: #021f17; margin-bottom: 16px; box-shadow: 0 10px 25px rgba(253, 224, 71, 0.3); }
+        .modal-avatar { width: 80px; height: 80px; border-radius: 24px; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); display: inline-flex; justify-content: center; align-items: center; font-weight: 800; font-size: 32px; color: #000; margin-bottom: 16px; box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3); }
         #modalNama { font-size: 22px; font-weight: 700; color: white; letter-spacing: -0.5px; }
 
         /* Target vs Realisasi Dashboard Design */
@@ -248,29 +238,22 @@
 
         /* Inputs Admin */
         .admin-input, .admin-select { width: 100%; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.4); color: white; font-size: 14px; padding: 12px 14px; transition: all 0.3s; outline: none; }
-        .admin-input:focus, .admin-select:focus { border-color: var(--gold); background: rgba(0,0,0,0.6); box-shadow: 0 0 0 4px rgba(253, 224, 71, 0.1); }
+        .admin-input:focus, .admin-select:focus { border-color: var(--gold); background: rgba(0,0,0,0.6); box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1); }
         
-        /* Overrides for inputs inside TR boxes */
         .tr-box .admin-input { padding: 8px; font-size: 13px; margin-top: 4px; line-height: 1.4; }
         .tr-box .admin-input:not(:disabled) { min-height: 75px; resize: vertical; } 
         .admin-select-status { font-size: 12px; padding: 6px 10px; border-radius: 20px; font-weight: 700; cursor: pointer; width: auto; background: rgba(255,255,255,0.1); }
 
-        /* Disabled states for view mode */
         .admin-input:disabled { background: transparent; border: none; padding: 0; font-size: 14px; color: #fff; line-height: 1.5; font-family: 'Inter', sans-serif; opacity: 0.95; resize: none; margin-top: 2px; }
-        .tr-box .admin-input:disabled { 
-            font-weight: 400; 
-            font-size: 13px;  
-            color: rgba(255, 255, 255, 0.9); 
-            line-height: 1.5;
-        }
+        .tr-box .admin-input:disabled { font-weight: 400; font-size: 13px; color: rgba(255, 255, 255, 0.9); line-height: 1.5; }
 
         /* Audio Element */
         audio { width: 100%; height: 44px; border-radius: 22px; outline: none; margin-top: 15px; }
         audio::-webkit-media-controls-panel { background-color: rgba(255, 255, 255, 0.9); }
 
         /* Buttons */
-        .btn-primary { width: 100%; background: linear-gradient(135deg, var(--gold), #d97706); color: #000; border: none; padding: 16px; border-radius: 16px; font-weight: 700; font-size: 15px; margin-top: 24px; cursor: pointer; transition: all 0.3s; box-shadow: 0 8px 20px rgba(217, 119, 6, 0.3); letter-spacing: 0.5px; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(217, 119, 6, 0.4); }
+        .btn-primary { width: 100%; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #000; border: none; padding: 16px; border-radius: 16px; font-weight: 700; font-size: 15px; margin-top: 24px; cursor: pointer; transition: all 0.3s; box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3); letter-spacing: 0.5px; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(212, 175, 55, 0.4); }
         .btn-primary:active { transform: scale(0.98); }
         
         .btn-danger { background: linear-gradient(135deg, #ef4444, #b91c1c); color: white; box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3); }
@@ -283,26 +266,101 @@
         /* Micro-Chips untuk Admin */
         .action-chips { display: none; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
         .chip-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px; color: var(--gold-muted); padding: 4px 12px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; backdrop-filter: blur(4px); }
-        .chip-btn:hover { background: rgba(253, 224, 71, 0.15); border-color: var(--gold); color: #fff; transform: translateY(-1px); }
+        .chip-btn:hover { background: rgba(212, 175, 55, 0.15); border-color: var(--gold); color: #fff; transform: translateY(-1px); }
         .chip-btn:active { transform: scale(0.95); }
 
-        /* Penyesuaian Layout untuk Layar HP (Responsive) */
+        /* SIDEBAR MENU UTAMA (SUPER SMOOTH GPU ACCELERATED) */
+        .sidebar-overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0, 0, 0, 0.7); 
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); 
+            z-index: 2000; opacity: 0; visibility: hidden; 
+            transition: opacity 0.3s ease, visibility 0.3s ease; 
+            transform: translateZ(0); 
+        }
+        .sidebar-overlay.open { opacity: 1; visibility: visible; }
+        
+        .sidebar-menu { 
+            position: absolute; top: 0; left: 0; 
+            transform: translateX(-100%); 
+            width: 320px; max-width: 85%; height: 100%; 
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(3, 54, 36, 0.8) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(212, 175, 55, 0.08) 0%, transparent 50%);
+            border-right: 1px solid rgba(255,255,255,0.05); 
+            box-shadow: 20px 0 50px rgba(0,0,0,0.5); 
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+            display: flex; flex-direction: column; 
+            will-change: transform; 
+        }
+        .sidebar-overlay.open .sidebar-menu { transform: translateX(0); }
+        
+        .sidebar-header { padding: 30px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .sidebar-header-text h2 { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 4px; line-height: 1; }
+        .sidebar-header-text p { font-size: 10px; font-weight: 700; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin: 0; }
+        
+        .sidebar-close-btn { width: 36px; height: 36px; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
+        .sidebar-close-btn:hover { background: rgba(239, 68, 68, 0.2); color: var(--danger); border-color: rgba(239, 68, 68, 0.4); transform: rotate(90deg); }
+
+        .sidebar-content { padding: 24px; flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+        
+        .sidebar-item {
+            background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px;
+            padding: 16px; display: flex; align-items: center; gap: 16px; cursor: pointer;
+            text-decoration: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative; overflow: hidden;
+        }
+        .sidebar-item::before {
+            content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+            background: var(--gold); transform: scaleY(0); transition: transform 0.3s ease;
+            border-radius: 4px 0 0 4px;
+        }
+        .sidebar-item:hover {
+            background: rgba(212, 175, 55, 0.05); border-color: rgba(212, 175, 55, 0.3);
+            transform: translateX(5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .sidebar-item:hover::before { transform: scaleY(1); }
+        
+        .sidebar-icon-wrap {
+            width: 44px; height: 44px; border-radius: 14px; flex-shrink: 0;
+            background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center;
+            color: var(--gold); border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+        .sidebar-item:hover .sidebar-icon-wrap {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #000; box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3); border-color: transparent;
+        }
+        
+        .sidebar-text { flex: 1; }
+        .sidebar-text-title { color: #fff; font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+        .sidebar-text-desc { color: var(--text-muted); font-size: 11px; font-weight: 500; line-height: 1.4; }
+        
+        .sidebar-footer { padding: 20px; text-align: center; border-top: 1px dashed rgba(255,255,255,0.05); color: rgba(255,255,255,0.2); font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
+
         @media (max-width: 500px) {
             .target-realisasi-grid { grid-template-columns: 1fr; gap: 12px; }
             .card-header-flex { flex-wrap: wrap; gap: 8px; }
             .admin-select-status { width: 100%; margin-top: 4px; }
             .detail-label { font-size: 12px; }
         }
-
     </style>
 </head>
 <body>
 
     <header>
+        <!-- Tombol Hamburger Header (SIMETRIS DENGAN GEMBOK) -->
+        <button class="header-btn menu-btn" onclick="toggleSidebarMenu()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+
         <span class="admin-badge" id="adminBadge">✓ MODE ADMIN</span>
-        <button class="admin-lock" onclick="document.getElementById('loginModal').classList.add('open')">
+        
+        <!-- Tombol Admin Header (SIMETRIS DENGAN HAMBURGER) -->
+        <button class="header-btn admin-lock" onclick="document.getElementById('loginModal').classList.add('open')">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
         </button>
+        
         <h1>5B Toraja</h1>
         <p>Jurnal Mutaba'ah Hafalan</p>
     </header>
@@ -649,6 +707,40 @@
         </div>
     </div>
 
+    <!-- SIDEBAR MENU UTAMA (PREMIUM DARK & SUPER SMOOTH) -->
+    <div class="sidebar-overlay" id="mainSidebar" onclick="if(event.target===this) toggleSidebarMenu()">
+        <div class="sidebar-menu">
+            
+            <div class="sidebar-header">
+                <div class="sidebar-header-text">
+                    <h2>5B Toraja</h2>
+                    <p>Executive Menu</p>
+                </div>
+                <div class="sidebar-close-btn" onclick="toggleSidebarMenu()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </div>
+            </div>
+            
+            <div class="sidebar-content">
+                <!-- Tautan ke Halaman Rapor Semester -->
+                <a href="rapor-mutabaah.html" class="sidebar-item">
+                    <div class="sidebar-icon-wrap">
+                        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    </div>
+                    <div class="sidebar-text">
+                        <div class="sidebar-text-title">Rapor Semester</div>
+                        <div class="sidebar-text-desc">Lihat dasbor evaluasi ketuntasan hafalan ananda.</div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="sidebar-footer">
+                Sistem Jurnal Terintegrasi v2.0
+            </div>
+            
+        </div>
+    </div>
+
     <!-- SCRIPT Firebase & Logika -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -672,6 +764,12 @@
         let isAdmin = false;
         let dataMadingDinamis = {};
         window.currentMadingId = null;
+
+        // FUNGSI BARU: Buka Tutup Sidebar Menu
+        window.toggleSidebarMenu = () => {
+            const sb = document.getElementById('mainSidebar');
+            sb.classList.toggle('open');
+        };
 
         // FUNGSI BARU: Mengambil Tanggal Hari Ini
         window.getTanggalHariIni = () => {
@@ -722,7 +820,6 @@
                 let stH = murid.haditsStatus || murid.statusHadits || "belum";
                 let stD = murid.doaStatus || murid.statusDoa || "belum";
 
-                // LOGIKA OTOMATIS TANGGAL
                 let statusHarian = (murid.tanggalSetor === hariIni) ? (murid.setoranHarian || "belum") : "belum";
                 let glowClass = (statusHarian === 'sudah') ? 'sudah-setor' : '';
 
@@ -779,24 +876,20 @@
             let hStatus = murid.haditsStatus || murid.statusHadits || "belum";
             let dStatus = murid.doaStatus || murid.statusDoa || "belum";
 
-            // LOGIKA OTOMATIS TANGGAL UNTUK BADGE
             let hariIni = window.getTanggalHariIni();
             let statusHarian = (murid.tanggalSetor === hariIni) ? (murid.setoranHarian || "belum") : "belum";
             window.pilihSetoranHarian(statusHarian);
 
-            // Al-Qur'an
             document.getElementById('editQuranTarget').value = murid.quranTarget || murid.quran || "";
             document.getElementById('editQuranRealisasi').value = murid.quranRealisasi || "-";
             document.getElementById('editStatusQuran').value = qStatus;
             setBadge('badgeQuran', qStatus);
 
-            // Hadits
             document.getElementById('editHaditsTarget').value = murid.haditsTarget || murid.hadits || "";
             document.getElementById('editHaditsRealisasi').value = murid.haditsRealisasi || "-";
             document.getElementById('editStatusHadits').value = hStatus;
             setBadge('badgeHadits', hStatus);
 
-            // Doa
             document.getElementById('editDoaTarget').value = murid.doaTarget || murid.doa || "";
             document.getElementById('editDoaRealisasi').value = murid.doaRealisasi || "-";
             document.getElementById('editStatusDoa').value = dStatus;
@@ -809,10 +902,7 @@
             const badges = document.querySelectorAll('#progressModal .status-badge, #progressModal .dot');
 
             if (isAdmin) {
-                inputs.forEach(input => { 
-                    input.disabled = false; 
-                    input.style.height = "auto"; 
-                });
+                inputs.forEach(input => { input.disabled = false; input.style.height = "auto"; });
                 selects.forEach(sel => sel.style.display = 'block');
                 badges.forEach(b => b.style.display = 'none');
                 document.getElementById('btnSaveMurid').style.display = 'block';
@@ -820,13 +910,8 @@
                 document.getElementById('adminSetoranHarianContainer').style.display = 'flex';
             } else {
                 inputs.forEach(input => { 
-                    input.disabled = true; 
-                    input.style.height = 'auto'; 
-                    if(input.tagName === 'TEXTAREA') {
-                        setTimeout(() => {
-                            input.style.height = (input.scrollHeight + 2) + 'px'; 
-                        }, 50); 
-                    }
+                    input.disabled = true; input.style.height = 'auto'; 
+                    if(input.tagName === 'TEXTAREA') { setTimeout(() => { input.style.height = (input.scrollHeight + 2) + 'px'; }, 50); }
                 });
                 selects.forEach(sel => sel.style.display = 'none');
                 badges.forEach(b => b.style.display = 'block');
@@ -1100,11 +1185,9 @@
 
         window.logoutAdmin = () => { signOut(auth).then(() => { window.closeModal('loginModal'); }); };
 
-        // --- 1. MINI DATABASE 114 SURAH AL-QUR'AN ---
         const dbQuran = "Al-Fatihah:7,Al-Baqarah:286,Ali 'Imran:200,An-Nisa:176,Al-Ma'idah:120,Al-An'am:165,Al-A'raf:206,Al-Anfal:75,At-Taubah:129,Yunus:109,Hud:123,Yusuf:111,Ar-Ra'd:43,Ibrahim:52,Al-Hijr:99,An-Nahl:128,Al-Isra':111,Al-Kahf:110,Maryam:98,Taha:135,Al-Anbiya':112,Al-Hajj:78,Al-Mu'minun:118,An-Nur:64,Al-Furqan:77,Asy-Syu'ara':227,An-Naml:93,Al-Qasas:88,Al-'Ankabut:69,Ar-Rum:60,Luqman:34,As-Sajdah:30,Al-Ahzab:73,Saba':54,Fatir:45,Yasin:83,As-Saffat:182,Sad:88,Az-Zumar:75,Ghafir:85,Fussilat:54,Asy-Syura:53,Az-Zukhruf:89,Ad-Dukhan:59,Al-Jasiyah:37,Al-Ahqaf:35,Muhammad:38,Al-Fath:29,Al-Hujurat:18,Qaf:45,Az-Zariyat:60,At-Tur:49,An-Najm:62,Al-Qamar:55,Ar-Rahman:78,Al-Waqi'ah:96,Al-Hadid:29,Al-Mujadilah:22,Al-Hasyr:24,Al-Mumtahanah:13,As-Saff:14,Al-Jumu'ah:11,Al-Munafiqun:11,At-Tagabun:18,At-Talaq:12,At-Tahrim:12,Al-Mulk:30,Al-Qalam:52,Al-Haqqah:52,Al-Ma'arij:44,Nuh:28,Al-Jinn:28,Al-Muzzammil:20,Al-Muddassir:56,Al-Qiyamah:40,Al-Insan:31,Al-Mursalat:50,An-Naba':40,An-Nazi'at:46,'Abasa:42,At-Takwir:29,Al-Infitar:19,Al-Mutaffifin:36,Al-Insyiqaq:25,Al-Buruj:22,At-Tariq:17,Al-A'la:19,Al-Gasyiyah:26,Al-Fajr:30,Al-Balad:20,Asy-Syams:15,Al-Lail:21,Ad-Duha:11,Asy-Syarh:8,At-Tin:8,Al-'Alaq:19,Al-Qadr:5,Al-Bayyinah:8,Az-Zalzalah:8,Al-'Adiyat:11,Al-Qari'ah:11,At-Takasur:8,Al-'Asr:3,Al-Humazah:9,Al-Fil:5,Quraisy:4,Al-Ma'un:7,Al-Kausar:3,Al-Kafirun:6,An-Nasr:3,Al-Lahab:5,Al-Ikhlas:4,Al-Falaq:5,An-Nas:6"
         .split(',').map(s => { let [n, a] = s.split(':'); return { nama: n, batas: parseInt(a) }; });
 
-        // --- 2. LOGIKA KECERDASAN BUATAN PENGHITUNG AYAT ---
         window.tambahAyatPintar = (aksi) => {
             let textarea = document.getElementById('editQuranRealisasi');
             let teksAsli = textarea.value.trim();
@@ -1150,7 +1233,6 @@
             }
         };
 
-        // FUNGSI BARU: Pengubah Visual Badge
         window.pilihSetoranHarian = (status) => {
             document.getElementById('valSetoranHarian').value = status;
             
@@ -1189,16 +1271,13 @@
             try {
                 await updateDoc(doc(db, "murid", document.getElementById('editId').value), {
                     setoranHarian: document.getElementById('valSetoranHarian').value,
-                    tanggalSetor: window.getTanggalHariIni(), // MENYIMPAN STEMPEL TANGGAL
-                    
+                    tanggalSetor: window.getTanggalHariIni(),
                     quranTarget: document.getElementById('editQuranTarget').value,
                     quranRealisasi: document.getElementById('editQuranRealisasi').value,
                     quranStatus: document.getElementById('editStatusQuran').value,
-                    
                     haditsTarget: document.getElementById('editHaditsTarget').value,
                     haditsRealisasi: document.getElementById('editHaditsRealisasi').value,
                     haditsStatus: document.getElementById('editStatusHadits').value,
-                    
                     doaTarget: document.getElementById('editDoaTarget').value,
                     doaRealisasi: document.getElementById('editDoaRealisasi').value,
                     doaStatus: document.getElementById('editStatusDoa').value
@@ -1206,7 +1285,6 @@
                 btn.innerText = "Simpan Perubahan Dasbor"; window.closeModal('progressModal');
             } catch (error) { alert("Error: " + error.message); btn.innerText = "Simpan Perubahan Dasbor"; }
         };
-
     </script>
 </body>
 </html>
